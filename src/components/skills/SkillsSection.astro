@@ -1,0 +1,106 @@
+---
+import type { Skill } from '../../types/cv';
+import SkillCategory from './SkillCategory.astro';
+
+interface Props {
+  skills: Skill[];
+}
+
+const { skills } = Astro.props;
+
+// Group skills by primary keyword (category)
+const groupedSkills = skills.reduce((acc, skill) => {
+  const category = skill.keywords[0];
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(skill);
+  return acc;
+}, {} as Record<string, Skill[]>);
+
+// Sort categories by importance
+const categoryOrder = [
+  "Web development",
+  "Databases",
+  "Version control",
+  "Game Development",
+  "Design",
+  "Development Tools"
+];
+
+const sortedCategories = Object.entries(groupedSkills).sort(([a], [b]) => {
+  return categoryOrder.indexOf(a) - categoryOrder.indexOf(b);
+});
+---
+
+<section class="skills-section crt" id="skills">
+  <div class="terminal-header">
+    <div class="terminal-buttons">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <h2 class="glitch">SKILLS.EXE</h2>
+  </div>
+  <div class="terminal-content">
+    {sortedCategories.map(([category, categorySkills]) => (
+      <SkillCategory category={category} skills={categorySkills} />
+    ))}
+  </div>
+</section>
+
+<style>
+  .skills-section {
+    margin: 4rem 0;
+    background: var(--color-bg-secondary);
+    border: 2px solid var(--color-accent-purple);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+  }
+
+  .terminal-header {
+    background: var(--color-bg-tertiary);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 2px solid var(--color-accent-purple);
+  }
+
+  .terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-accent-purple);
+    opacity: 0.5;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--color-accent-green);
+    text-shadow: 0 0 10px var(--color-accent-green);
+    letter-spacing: 0.2em;
+  }
+
+  .terminal-content {
+    padding: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .terminal-content {
+      padding: 1rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
+  }
+</style>

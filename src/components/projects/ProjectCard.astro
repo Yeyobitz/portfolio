@@ -1,0 +1,120 @@
+---
+import type { Project } from '../../types/cv';
+import ProjectImage from './ProjectImage.astro';
+import ProjectLinks from './ProjectLinks.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+// Get first image or use placeholder
+const displayImage = project.images?.[0] || '/projects/placeholder.webp';
+---
+
+<article class={`project-card ${project.isActive ? 'active' : 'inactive'}`}>
+  <ProjectImage 
+    src={displayImage}
+    alt={`${project.name} preview`}
+    isActive={project.isActive}
+  />
+  
+  <div class="content">
+    <header class="project-header">
+      <h3>{project.name}</h3>
+      {!project.isActive && <span class="archive-badge">Archived</span>}
+    </header>
+
+    <p class="description">{project.description}</p>
+
+    <ul class="highlights">
+      {project.highlights.map((highlight) => (
+        <li>{highlight}</li>
+      ))}
+    </ul>
+
+    <ProjectLinks url={project.url} github={project.github} />
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(var(--accent-dark), 0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .content {
+    padding: 1.5rem;
+  }
+
+  .project-card.active {
+    background: rgba(var(--accent-dark), 0.3);
+    box-shadow: 
+      0 0 20px rgba(0, 255, 65, 0.1),
+      0 0 40px rgba(0, 255, 65, 0.05);
+  }
+
+  .project-card.inactive {
+    opacity: 0.8;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    color: var(--color-accent-blue);
+    margin: 0;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  }
+
+  .archive-badge {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    background: rgba(var(--accent), 0.2);
+    border: 1px solid rgb(var(--accent));
+    border-radius: 4px;
+    color: rgb(var(--accent-light));
+  }
+
+  .description {
+    margin: 1rem 0;
+    line-height: 1.6;
+    color: var(--color-text);
+  }
+
+  .highlights {
+    list-style: none;
+    margin: 1rem 0;
+    padding: 0;
+  }
+
+  .highlights li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+
+  .highlights li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-purple);
+  }
+
+  @media (max-width: 768px) {
+    .project-card {
+      margin-bottom: 2rem;
+    }
+  }
+</style>

@@ -1,0 +1,71 @@
+---
+import type { Profile } from '../types/cv';
+
+interface Props {
+  email: string;
+  profiles: Profile[];
+}
+
+const { email, profiles } = Astro.props;
+---
+
+<section class="contact" id="contact">
+  <h2>Get in Touch</h2>
+  <div class="contact-links">
+    <a href={`mailto:${email}`} class="button">Email Me</a>
+    {profiles.map((profile) => (
+      <a href={profile.url} class="button" target="_blank" rel="noopener noreferrer">
+        {profile.network}
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .contact {
+    margin: 4rem 0;
+    padding: 2rem;
+    border-radius: 8px;
+    background: rgba(var(--accent-dark), 0.2);
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: rgb(var(--accent-light));
+    text-align: center;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background: rgb(var(--accent));
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+
+  .button:hover {
+    background: rgb(var(--accent-light));
+    color: rgb(var(--accent-dark));
+  }
+
+  @media (max-width: 768px) {
+    .contact-links {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .button {
+      text-align: center;
+    }
+  }
+</style>

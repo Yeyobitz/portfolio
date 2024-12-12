@@ -1,0 +1,113 @@
+---
+interface Props {
+  name: string;
+  level: string;
+}
+
+const { name, level } = Astro.props;
+
+const getLevelColor = (level: string) => {
+  switch (level.toLowerCase()) {
+    case 'basic': return 'var(--color-level-basic)';
+    case 'intermediate': return 'var(--color-level-intermediate)';
+    case 'advanced': return 'var(--color-level-advanced)';
+    default: return 'var(--color-level-basic)';
+  }
+};
+
+const powerLevel = {
+  'basic': 1,
+  'intermediate': 2,
+  'advanced': 3
+}[level.toLowerCase()] || 1;
+---
+
+<div class="skill-badge" data-level={level.toLowerCase()}>
+  <div class="skill-content">
+    <h4>{name}</h4>
+    <div class="power-meter">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div class={`power-unit ${i < powerLevel ? 'active' : ''}`} />
+      ))}
+    </div>
+  </div>
+</div>
+
+<style define:vars={{ levelColor: getLevelColor(level) }}>
+  .skill-badge {
+    background: var(--color-bg-tertiary);
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(levelColor);
+    box-shadow: 0 0 10px var(levelColor);
+    animation: scanline 2s linear infinite;
+  }
+
+  .skill-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  h4 {
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    margin: 0;
+    color: var(levelColor);
+    text-shadow: 0 0 5px var(levelColor);
+  }
+
+  .power-meter {
+    display: flex;
+    gap: 3px;
+  }
+
+  .power-unit {
+    width: 8px;
+    height: 8px;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(levelColor);
+  }
+
+  .power-unit.active {
+    background: var(levelColor);
+    box-shadow: 0 0 10px var(levelColor);
+    animation: powerPulse 2s infinite;
+  }
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100vh);
+    }
+  }
+
+  @keyframes powerPulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .skill-badge:hover {
+    transform: translateY(-2px);
+    background: var(--color-bg-secondary);
+  }
+</style>

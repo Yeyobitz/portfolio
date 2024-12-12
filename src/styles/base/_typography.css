@@ -1,0 +1,56 @@
+/* Typography Scale */
+:root {
+  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+  --font-size-3xl: clamp(2rem, 1.8rem + 1.25vw, 2.5rem);
+  --font-size-4xl: clamp(2.5rem, 2.2rem + 1.5vw, 3rem);
+  
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-loose: 1.8;
+}
+
+/* Base Typography */
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: var(--line-height-tight);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5em;
+}
+
+h1 { 
+  font-size: var(--font-size-4xl);
+  letter-spacing: 0.1em;
+}
+
+h2 { 
+  font-size: var(--font-size-3xl);
+  letter-spacing: 0.08em;
+}
+
+h3 { 
+  font-size: var(--font-size-2xl);
+  letter-spacing: 0.06em;
+}
+
+h4 { font-size: var(--font-size-xl); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-base); }
+
+/* Responsive Typography Adjustments */
+@media (max-width: 768px) {
+  h1 { letter-spacing: 0.05em; }
+  h2 { letter-spacing: 0.04em; }
+  h3 { letter-spacing: 0.03em; }
+}

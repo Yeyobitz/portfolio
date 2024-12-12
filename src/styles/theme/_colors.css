@@ -1,0 +1,21 @@
+/* Theme Colors */
+:root {
+  --color-bg-primary: #0A0A0A;
+  --color-bg-secondary: #1A1A1A;
+  --color-bg-tertiary: #2A2A2A;
+  --color-accent-purple: #B829E8;
+  --color-accent-blue: #00F0FF;
+  --color-accent-green: #00ff41;
+  --color-text: #F5F5F5;
+  
+  /* Skill level colors */
+  --color-level-basic: #FF5F5F;
+  --color-level-intermediate: #FFB84D;
+  --color-level-advanced: #00ff41;
+  
+  /* Effects */
+  --glow-text: 0 0 8px rgba(245, 245, 245, 0.5);
+  --glow-purple: 0 0 16px rgba(184, 41, 232, 0.5);
+  --glow-blue: 0 0 16px rgba(0, 240, 255, 0.5);
+  --glow-green: 0 0 16px rgba(0, 255, 65, 0.5);
+}

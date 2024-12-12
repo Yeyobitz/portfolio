@@ -1,0 +1,56 @@
+---
+---
+
+<div class="sun-container">
+  <div class="sun"></div>
+  <div class="glow"></div>
+</div>
+
+<style>
+  .sun-container {
+    position: absolute;
+    top: 20%;
+    right: 20%;
+    width: 200px;
+    height: 200px;
+    z-index: 0;
+  }
+
+  .sun {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(
+      45deg,
+      rgb(var(--accent)) 0%,
+      rgb(var(--accent-light)) 100%
+    );
+    animation: sunPulse 4s ease-in-out infinite;
+  }
+
+  .glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(var(--accent-light), 0.2) 0%,
+      transparent 70%
+    );
+    filter: blur(20px);
+    transform: scale(1.5);
+  }
+
+  @keyframes sunPulse {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+    }
+  }
+</style>

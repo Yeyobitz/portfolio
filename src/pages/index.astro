@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/hero/Hero.astro';
+import About from '../components/About.astro';
+import ProjectsSection from '../components/projects/ProjectsSection.astro';
+import SkillsSection from '../components/skills/SkillsSection.astro';
+import ContactSection from '../components/contact/ContactSection.astro';
+import cv from '../data/cv.json';
+---
+
+<Layout title="Yeyo Bitz - Web Developer">
+  <main>
+    <Hero 
+      name={cv.basics.name}
+      label={cv.basics.label}
+      image={cv.basics.image}
+    />
+    
+    <About summary={cv.basics.summary} />
+    
+    <ProjectsSection projects={cv.projects} />
+    
+    <SkillsSection skills={cv.skills} />
+    
+    <ContactSection 
+      email={cv.basics.email}
+      profiles={cv.basics.profiles}
+    />
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1rem;
+    width: 1200px;
+    max-width: calc(100% - 2rem);
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+</style>

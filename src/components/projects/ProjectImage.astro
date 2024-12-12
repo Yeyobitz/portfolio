@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: string;
+  alt: string;
+  isActive?: boolean;
+}
+
+const { src, alt, isActive = false } = Astro.props;
+---
+
+<div class={`project-image-container ${isActive ? 'active' : ''}`}>
+  <Image 
+    src={src} 
+    alt={alt}
+    width={800}
+    height={450}
+    loading="lazy"
+    class="project-image"
+  />
+  {isActive && <div class="active-badge">Active</div>}
+</div>
+
+<style>
+  .project-image-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .project-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  /* Active project styles */
+  .active {
+    transform: scale(1.02);
+  }
+
+  .active .project-image {
+    filter: brightness(1.1);
+  }
+
+  .active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid #00ff41;
+    border-radius: 8px;
+    animation: neonPulse 3s infinite;
+    pointer-events: none;
+  }
+
+  .active-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #00ff41;
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 0 10px #00ff41;
+    animation: neonPulse 3s infinite;
+  }
+
+  @keyframes neonPulse {
+    0%, 100% {
+      opacity: 1;
+      box-shadow: 0 0 10px #00ff41;
+    }
+    50% {
+      opacity: 0.8;
+      box-shadow: 0 0 20px #00ff41;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .project-image-container {
+      margin-bottom: 1rem;
+    }
+  }
+</style>

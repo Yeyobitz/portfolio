@@ -1,0 +1,70 @@
+---
+import type { Skill } from '../../types/cv';
+import SkillBadge from './SkillBadge.astro';
+
+interface Props {
+  category: string;
+  skills: Skill[];
+}
+
+const { category, skills } = Astro.props;
+---
+
+<div class="skill-category">
+  <div class="category-header">
+    <h3 class="category-title">{category}</h3>
+    <div class="pixel-decoration"></div>
+  </div>
+  <div class="skills-grid">
+    {skills.map(skill => (
+      <SkillBadge name={skill.name} level={skill.level} />
+    ))}
+  </div>
+</div>
+
+<style>
+  .skill-category {
+    margin-bottom: 2rem;
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .category-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--color-accent-blue);
+    text-shadow: 0 0 10px var(--color-accent-blue);
+    margin: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .pixel-decoration {
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--color-accent-blue),
+      var(--color-accent-blue) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .skills-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,147 @@
+{
+  "basics": {
+    "name": "Diego Alexander QM",
+    "label": "Programmer",
+    "image": "https://raw.githubusercontent.com/Yeyobitz/Front-End/3198fec59cf120b03a80ab73fcba19de46af7377/certamen1/assets/img/yeyo-T.png",
+    "email": "diegoqm96@hotmail.com",
+    "url": "https://yeyobitz.dev",
+    "summary": "Programming analyst focused on web development with a solid background in Audiovisual and Multimedia Direction. Passionate about new technologies and gamification. What are we doing today?",
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "Diego Quiñones Montecinos",
+        "url": "https://www.linkedin.com/in/diego-qui%C3%B1ones-montecinos-650010249/"
+      },
+      {
+        "network": "GitHub",
+        "username": "Yeyobitz",
+        "url": "https://github.com/Yeyobitz"
+      }
+    ]
+  },
+  "skills": [
+    {
+      "name": "HTML",
+      "level": "Intermediate",
+      "keywords": ["Web development", "Frontend"]
+    },
+    {
+      "name": "CSS",
+      "level": "Intermediate",
+      "keywords": ["Web development", "Frontend", "Responsive Design"]
+    },
+    {
+      "name": "JavaScript",
+      "level": "Intermediate",
+      "keywords": ["Web development", "Frontend"]
+    },
+    {
+      "name": "Tailwind",
+      "level": "Intermediate",
+      "keywords": ["Web development", "Frontend", "CSS Framework"]
+    },
+    {
+      "name": "Python",
+      "level": "Intermediate",
+      "keywords": ["Web development", "Backend", "Data Science"]
+    },
+    {
+      "name": "Django",
+      "level": "Basic",
+      "keywords": ["Web development", "Backend", "Python"]
+    },
+    {
+      "name": "MySQL",
+      "level": "Advanced",
+      "keywords": ["Databases", "Backend"]
+    },
+    {
+      "name": "Git",
+      "level": "Basic",
+      "keywords": ["Version control", "Development Tools"]
+    },
+    {
+      "name": "React",
+      "level": "Basic",
+      "keywords": ["Web development", "Frontend"]
+    },
+    {
+      "name": "API Integration",
+      "level": "Intermediate",
+      "keywords": ["Web development", "Backend"]
+    },
+    {
+      "name": "C#",
+      "level": "Basic",
+      "keywords": ["Game Development"]
+    },
+    {
+      "name": "Astro",
+      "level": "Basic",
+      "keywords": ["Web development", "Frontend"]
+    },
+    {
+      "name": "Unity",
+      "level": "Basic",
+      "keywords": ["Game Development"]
+    },
+    {
+      "name": "Unreal Engine 4",
+      "level": "Basic",
+      "keywords": ["Game Development"]
+    },
+    {
+      "name": "Photoshop",
+      "level": "Intermediate",
+      "keywords": ["Design"]
+    },
+    {
+      "name": "Make.com",
+      "level": "Basic",
+      "keywords": ["Development Tools"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Multidimensional Tic-Tac-Toe",
+      "isActive": true,
+      "description": "A SUPER version of the classic Tic-Tac-Toe game with a retro design and multiple difficulty levels.",
+      "highlights": [
+        "Game mode: 1 vs CPU or 1 vs 1",
+        "Adjustable difficulty: Easy, Medium, Hard"
+      ],
+      "url": "https://multiuniversalgato.netlify.app/"
+    },
+    {
+      "name": "Tregua Project",
+      "isActive": true,
+      "description": "A restaurant management system built with React 18 and Vitejs, using Firebase as backend.",
+      "highlights": [
+        "Reservation and menu management system",
+        "Administration panel"
+      ],
+      "url": "https://treguarestaurant.netlify.app/",
+      "github": "https://github.com/Yeyobitz/treguaReact"
+    },
+    {
+      "name": "TetrisJS",
+      "isActive": false,
+      "description": "Implementation of Tetris game using JavaScript, CSS and HTML.",
+      "highlights": [
+        "Fully functional browser game",
+        "Efficient use of JavaScript for game logic"
+      ],
+      "github": "https://github.com/Yeyobitz/TetrisJS"
+    },
+    {
+      "name": "Space Shooter",
+      "isActive": false,
+      "description": "A space shooting game where players must face waves of enemies with simple mechanics and intuitive controls.",
+      "highlights": [
+        "Developed in Unity using C#",
+        "Implementation of spaceship controls and enemy logic"
+      ],
+      "github": "https://github.com/Yeyobitz/SpaceShooter"
+    }
+  ]
+}

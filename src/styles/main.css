@@ -1,0 +1,42 @@
+/* Import Base Styles */
+@import './base/_reset.css';
+@import './base/_typography.css';
+@import './base/_variables.css';
+
+/* Import Theme */
+@import './theme/_colors.css';
+@import './theme/_effects.css';
+
+/* Import Layout Components */
+@import './layout/_grid.css';
+@import './layout/_spacing.css';
+@import './layout/_navigation.css';
+
+/* Import Components */
+@import './components/_hero-background.css';
+
+/* Import Utilities */
+@import './utils/_breakpoints.css';
+
+/* Root Styles */
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+main {
+  margin-top: 4rem;
+  min-height: calc(100vh - 8rem);
+}
+
+footer {
+  text-align: center;
+  padding: var(--space-3);
+  margin-top: auto;
+  border-top: 1px solid var(--color-accent-purple);
+}

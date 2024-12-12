@@ -1,0 +1,27 @@
+---
+interface Props {
+  summary: string;
+}
+
+const { summary } = Astro.props;
+---
+
+<section class="about" id="about">
+  <h2>About Me</h2>
+  <p>{summary}</p>
+</section>
+
+<style>
+  .about {
+    margin: 4rem 0;
+    padding: 2rem;
+    border-radius: 8px;
+    background: rgba(var(--accent-dark), 0.2);
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: rgb(var(--accent-light));
+  }
+</style>

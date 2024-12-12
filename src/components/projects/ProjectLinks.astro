@@ -1,0 +1,47 @@
+---
+interface Props {
+  url?: string;
+  github?: string;
+}
+
+const { url, github } = Astro.props;
+---
+
+<div class="project-links">
+  {url && (
+    <a href={url} class="button" target="_blank" rel="noopener noreferrer">
+      View Project
+    </a>
+  )}
+  {github && (
+    <a href={github} class="button" target="_blank" rel="noopener noreferrer">
+      GitHub
+    </a>
+  )}
+</div>
+
+<style>
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    background: rgb(var(--accent));
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .button:hover {
+    background: transparent;
+    border-color: rgb(var(--accent-light));
+    color: rgb(var(--accent-light));
+    text-shadow: 0 0 5px rgba(var(--accent-light), 0.5);
+  }
+</style>

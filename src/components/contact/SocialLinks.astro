@@ -1,0 +1,63 @@
+---
+interface Props {
+  profiles: Array<{
+    network: string;
+    url: string;
+  }>;
+}
+
+const { profiles } = Astro.props;
+---
+
+<div class="social-links">
+  {profiles.map(profile => (
+    <a 
+      href={profile.url} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      class="social-link crt"
+    >
+      {profile.network}
+    </a>
+  ))}
+</div>
+
+<style>
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .social-link {
+    padding: 0.5rem 1rem;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-accent-blue);
+    color: var(--color-accent-blue);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .social-link:hover {
+    background: var(--color-accent-blue);
+    color: var(--color-bg-primary);
+    box-shadow: 0 0 15px var(--color-accent-blue);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .social-links {
+      gap: 0.5rem;
+    }
+
+    .social-link {
+      font-size: 0.7rem;
+      padding: 0.4rem 0.8rem;
+    }
+  }
+</style>

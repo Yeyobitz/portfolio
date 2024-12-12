@@ -1,0 +1,45 @@
+/* Power On Animation */
+@keyframes powerOn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  20% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+  40% {
+    opacity: 0.2;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.power-on {
+  animation: powerOn 1s cubic-bezier(.25, .46, .45, .94) forwards;
+}
+
+/* Neon Pulse Animation */
+@keyframes neonPulse {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+.neon-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}

@@ -1,0 +1,38 @@
+/* Grid System */
+.container {
+  width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  gap: var(--grid-gap);
+}
+
+/* Responsive Grid Columns */
+@media (min-width: 320px) {
+  .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 481px) {
+  .grid { grid-template-columns: repeat(8, 1fr); }
+}
+
+@media (min-width: 769px) {
+  .grid { grid-template-columns: repeat(12, 1fr); }
+}
+
+/* Grid Column Spans */
+.col-full { grid-column: 1 / -1; }
+.col-half { grid-column: span 6; }
+.col-third { grid-column: span 4; }
+.col-quarter { grid-column: span 3; }
+
+@media (max-width: 768px) {
+  .col-half,
+  .col-third,
+  .col-quarter {
+    grid-column: 1 / -1;
+  }
+}
