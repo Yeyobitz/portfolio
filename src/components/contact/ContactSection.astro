@@ -1,6 +1,5 @@
 ---
 import ContactForm from './ContactForm.astro';
-import SocialLinks from './SocialLinks.astro';
 
 interface Props {
   email: string;
@@ -26,15 +25,29 @@ const { email, profiles } = Astro.props;
   <div class="contact-content">
     <div class="contact-info">
       <p class="contact-text">
-        Ready to start a project or just want to chat? Drop me a line!
+        > Booting up contact protocol...
       </p>
-      <a href={`mailto:${email}`} class="email-link">
-        {email}
-      </a>
+      <p class="contact-text">
+        > Available channels:
+      </p>
+      <div class="social-links">
+        <a href={`mailto:${email}`} class="social-link">
+          EMAIL.exe
+        </a>
+        {profiles.map(profile => (
+          <a 
+            href={profile.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="social-link"
+          >
+            {profile.network.toUpperCase()}.exe
+          </a>
+        ))}
+      </div>
     </div>
 
     <ContactForm />
-    <SocialLinks profiles={profiles} />
   </div>
 
   <div class="background-grid"></div>
@@ -93,26 +106,40 @@ const { email, profiles } = Astro.props;
 
   .contact-info {
     text-align: center;
-    margin-bottom: 2rem;
-  }
-
-  .contact-text {
-    font-size: 1.2rem;
-    color: var(--color-text);
     margin-bottom: 1rem;
   }
 
-  .email-link {
+  .contact-text {
+    font-family: var(--font-mono);
+    color: var(--color-accent-green);
+    margin: 0.5rem 0;
+    text-shadow: var(--glow-green);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .social-link {
+    padding: 0.5rem 1rem;
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-accent-blue);
     color: var(--color-accent-blue);
     text-decoration: none;
-    font-family: var(--font-heading);
-    font-size: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    border-radius: 4px;
     transition: all 0.3s ease;
   }
 
-  .email-link:hover {
-    color: var(--color-accent-green);
-    text-shadow: var(--glow-green);
+  .social-link:hover {
+    background: var(--color-accent-blue);
+    color: var(--color-bg-primary);
+    box-shadow: 0 0 15px var(--color-accent-blue);
   }
 
   .background-grid {
@@ -138,8 +165,13 @@ const { email, profiles } = Astro.props;
       font-size: 1.2rem;
     }
 
-    .contact-text {
-      font-size: 1rem;
+    .social-links {
+      gap: 0.5rem;
+    }
+
+    .social-link {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
     }
   }
-</style>
+</style> 

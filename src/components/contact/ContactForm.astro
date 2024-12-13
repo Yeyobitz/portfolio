@@ -1,7 +1,22 @@
 ---
 ---
 
-<form class="contact-form crt">
+<form 
+  name="contact" 
+  method="POST" 
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action="/success"
+  class="contact-form crt"
+>
+  <p class="hidden">
+    <label>
+      Don't fill this out if you're human: <input name="bot-field" />
+    </label>
+  </p>
+  
+  <input type="hidden" name="form-name" value="contact" />
+
   <div class="form-group">
     <label for="name">NAME:</label>
     <input 
@@ -101,6 +116,11 @@
     box-shadow: 0 0 15px var(--color-accent-green);
   }
 
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
   .btn-glitch {
     position: absolute;
     top: 0;
@@ -123,9 +143,55 @@
     100% { transform: translateX(100%); }
   }
 
+  .hidden {
+    display: none;
+  }
+
   @media (max-width: 768px) {
     .contact-form {
       padding: 1.5rem;
     }
   }
 </style>
+
+<script>
+  // Obtener referencias a los elementos del formulario
+  const form = document.querySelector('form');
+  const submitBtn = form?.querySelector('.submit-btn');
+  const btnText = submitBtn?.querySelector('.btn-text');
+
+  if (form && submitBtn && btnText) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Deshabilitar el botón y mostrar estado de carga
+      submitBtn.disabled = true;
+      btnText.textContent = 'SENDING...';
+
+      try {
+        const formData = new FormData(form);
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData).toString()
+        });
+
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        // Éxito - redirigir a la página de éxito
+        window.location.href = '/success';
+
+      } catch (error) {
+        console.error('Error:', error);
+        btnText.textContent = 'ERROR!';
+        
+        // Restaurar botón después de 3 segundos
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          btnText.textContent = 'SEND MESSAGE';
+        }, 3000);
+      }
+    });
+  }
+</script>
