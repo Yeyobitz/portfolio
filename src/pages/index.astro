@@ -8,7 +8,7 @@ import ContactSection from '../components/contact/ContactSection.astro';
 import cv from '../data/cv.json';
 ---
 
-<Layout title="Yeyo Bitz - Web Developer">
+<Layout title="Yeyobitz - Web Developer">
   <main>
     <Hero 
       name={cv.basics.name}
@@ -32,11 +32,22 @@ import cv from '../data/cv.json';
 <style>
   main {
     margin: auto;
-    padding: 1rem;
+    padding: 4rem;
     width: 1200px;
     max-width: calc(100% - 2rem);
     color: white;
     font-size: 20px;
     line-height: 1.6;
+  }
+  @media screen and (max-width: 768px) {
+    main {
+      padding: 2rem;
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    main {
+      padding: 1rem;
+    }
   }
 </style>

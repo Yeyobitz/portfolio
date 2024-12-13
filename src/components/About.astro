@@ -6,22 +6,104 @@ interface Props {
 const { summary } = Astro.props;
 ---
 
-<section class="about" id="about">
-  <h2>About Me</h2>
-  <p>{summary}</p>
+<section class="about crt" id="about">
+  <div class="terminal-header">
+    <div class="terminal-buttons">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <h2 class="glitch">ABOUT_ME.EXE</h2>
+  </div>
+  <div class="terminal-content">
+    <p class="typewriter">{summary}</p>
+  </div>
 </section>
 
 <style>
   .about {
     margin: 4rem 0;
-    padding: 2rem;
-    border-radius: 8px;
-    background: rgba(var(--accent-dark), 0.2);
+    background: var(--color-bg-secondary);
+    border: 2px solid var(--color-accent-purple);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+  }
+
+  .terminal-header {
+    background: var(--color-bg-tertiary);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 2px solid var(--color-accent-purple);
+  }
+
+  .terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-accent-purple);
+    opacity: 0.5;
   }
 
   h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: rgb(var(--accent-light));
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--color-accent-green);
+    text-shadow: 0 0 10px var(--color-accent-green);
+    letter-spacing: 0.2em;
+  }
+
+  .terminal-content {
+    padding: 2rem;
+  }
+
+  .typewriter {
+    font-family: var(--font-mono);
+    line-height: 1.6;
+    color: var(--color-text);
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    position: relative;
+  }
+
+  .typewriter::after {
+    content: "_";
+    position: absolute;
+    right: -1ch;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @media (max-width: 768px) {
+    .terminal-content {
+      padding: 1rem;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+    }
   }
 </style>

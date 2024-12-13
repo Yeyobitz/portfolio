@@ -17,7 +17,6 @@
 
 /* CRT Screen Effect */
 .crt {
-  position: relative;
   overflow: hidden;
 }
 

@@ -11,6 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.15.3"
+    "@astrojs/netlify": "^5.0.0",
+    "@astrojs/react": "^4.1.0",
+    "@emailjs/browser": "^4.4.1",
+    "astro": "^4.15.3",
+    "react": "^19.0.0"
   }
 }

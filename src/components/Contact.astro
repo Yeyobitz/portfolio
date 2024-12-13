@@ -1,71 +1,160 @@
 ---
-import type { Profile } from '../types/cv';
-
-interface Props {
-  email: string;
-  profiles: Profile[];
-}
-
-const { email, profiles } = Astro.props;
 ---
 
-<section class="contact" id="contact">
-  <h2>Get in Touch</h2>
-  <div class="contact-links">
-    <a href={`mailto:${email}`} class="button">Email Me</a>
-    {profiles.map((profile) => (
-      <a href={profile.url} class="button" target="_blank" rel="noopener noreferrer">
-        {profile.network}
-      </a>
-    ))}
+<section id="contact" class="contact-section">
+  <div class="terminal-container">
+    <div class="terminal-header">
+      <span class="terminal-button"></span>
+      <span class="terminal-button"></span>
+      <span class="terminal-button"></span>
+      <h2 class="terminal-title">CONTACT.EXE</h2>
+    </div>
+
+    <form 
+      name="contact" 
+      method="POST" 
+      data-netlify="true"
+      class="terminal-content"
+      netlify-honeypot="bot-field"
+    >
+      <p class="hidden">
+        <label>
+          Don't fill this out if you're human: <input name="bot-field" />
+        </label>
+      </p>
+      
+      <input type="hidden" name="form-name" value="contact" />
+      
+      <div class="form-group">
+        <label for="name">$ USER.name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">$ USER.email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">$ USER.message:</label>
+        <textarea id="message" name="message" required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        SEND_MESSAGE.exe
+      </button>
+    </form>
   </div>
 </section>
 
 <style>
-  .contact {
-    margin: 4rem 0;
+  .contact-section {
     padding: 2rem;
-    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .terminal-container {
     background: rgba(var(--accent-dark), 0.2);
+    border: 2px solid rgb(var(--accent));
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 
+      0 0 20px rgba(var(--accent), 0.1),
+      0 0 40px rgba(var(--accent), 0.05);
   }
 
-  h2 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: rgb(var(--accent-light));
-    text-align: center;
-  }
-
-  .contact-links {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-  }
-
-  .button {
-    display: inline-block;
+  .terminal-header {
+    background: rgb(var(--accent-dark));
     padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .terminal-title {
+    color: var(--color-accent-green);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin: 0;
+    margin-left: 1rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  }
+
+  .terminal-content {
+    padding: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    color: var(--color-accent-blue);
+    font-family: var(--font-mono);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    background: rgba(var(--accent-dark), 0.3);
+    border: 1px solid rgb(var(--accent));
     border-radius: 4px;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    resize: vertical;
+  }
+
+  textarea {
+    min-height: 150px;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: rgb(var(--accent-light));
+    box-shadow: 0 0 10px rgba(var(--accent-light), 0.3);
+  }
+
+  .submit-btn {
     background: rgb(var(--accent));
     color: white;
-    text-decoration: none;
-    transition: background-color 0.2s;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
   }
 
-  .button:hover {
-    background: rgb(var(--accent-light));
-    color: rgb(var(--accent-dark));
+  .submit-btn:hover {
+    background: transparent;
+    border-color: rgb(var(--accent-light));
+    color: rgb(var(--accent-light));
+    text-shadow: 0 0 5px rgba(var(--accent-light), 0.5);
+  }
+
+  .hidden {
+    display: none;
   }
 
   @media (max-width: 768px) {
-    .contact-links {
-      flex-direction: column;
-      align-items: stretch;
+    .contact-section {
+      padding: 1rem;
     }
 
-    .button {
-      text-align: center;
+    .terminal-content {
+      padding: 1rem;
     }
   }
 </style>

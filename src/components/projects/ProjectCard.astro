@@ -1,6 +1,6 @@
 ---
 import type { Project } from '../../types/cv';
-import ProjectImage from './ProjectImage.astro';
+import ProjectCarousel from './ProjectCarousel.astro';
 import ProjectLinks from './ProjectLinks.astro';
 
 interface Props {
@@ -8,31 +8,26 @@ interface Props {
 }
 
 const { project } = Astro.props;
-
-// Get first image or use placeholder
-const displayImage = project.images?.[0] || '/projects/placeholder.webp';
 ---
 
 <article class={`project-card ${project.isActive ? 'active' : 'inactive'}`}>
-  <ProjectImage 
-    src={displayImage}
-    alt={`${project.name} preview`}
-    isActive={project.isActive}
-  />
+  <ProjectCarousel projectName={project.name} />
   
   <div class="content">
-    <header class="project-header">
-      <h3>{project.name}</h3>
-      {!project.isActive && <span class="archive-badge">Archived</span>}
-    </header>
+    <div class="main-content">
+      <header class="project-header">
+        <h3>{project.name}</h3>
+        {!project.isActive && <span class="archive-badge">Archived</span>}
+      </header>
 
-    <p class="description">{project.description}</p>
+      <p class="description">{project.description}</p>
 
-    <ul class="highlights">
-      {project.highlights.map((highlight) => (
-        <li>{highlight}</li>
-      ))}
-    </ul>
+      <ul class="highlights">
+        {project.highlights.map((highlight) => (
+          <li>{highlight}</li>
+        ))}
+      </ul>
+    </div>
 
     <ProjectLinks url={project.url} github={project.github} />
   </div>
@@ -46,10 +41,18 @@ const displayImage = project.images?.[0] || '/projects/placeholder.webp';
     border-radius: 12px;
     overflow: hidden;
     transition: all 0.3s ease;
+    height: 100%;
   }
 
   .content {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .main-content {
+    flex: 1;
   }
 
   .project-card.active {
