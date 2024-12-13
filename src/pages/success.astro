@@ -1,0 +1,125 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Message Sent - Yeyobitz">
+  <main class="success-page">
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <span class="terminal-button"></span>
+        <span class="terminal-button"></span>
+        <span class="terminal-button"></span>
+        <h1 class="terminal-title">MESSAGE_SENT.EXE</h1>
+      </div>
+
+      <div class="terminal-content">
+        <div class="success-message">
+          <p>> Message sent successfully!</p>
+          <p>> Thank you for contacting me.</p>
+          <p>> I'll get back to you as soon as possible.</p>
+          <p class="blink">> Press any key to continue...</p>
+        </div>
+        <a href="/" class="back-btn">RETURN_HOME.exe</a>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .success-page {
+    display: grid;
+    place-items: center;
+    min-height: calc(100vh - 4rem);
+    padding: 2rem;
+  }
+
+  .terminal-container {
+    background: rgba(var(--accent-dark), 0.2);
+    border: 2px solid rgb(var(--accent));
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 
+      0 0 20px rgba(var(--accent), 0.1),
+      0 0 40px rgba(var(--accent), 0.05);
+    max-width: 600px;
+    width: 100%;
+  }
+
+  .terminal-header {
+    background: rgb(var(--accent-dark));
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .terminal-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .terminal-title {
+    color: var(--color-accent-green);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    margin: 0;
+    margin-left: 1rem;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  }
+
+  .terminal-content {
+    padding: 2rem;
+  }
+
+  .success-message {
+    font-family: var(--font-mono);
+    color: var(--color-accent-green);
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    margin-bottom: 2rem;
+  }
+
+  .success-message p {
+    margin: 0.5rem 0;
+  }
+
+  .blink {
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .back-btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    background: rgb(var(--accent));
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .back-btn:hover {
+    background: transparent;
+    border-color: rgb(var(--accent-light));
+    color: rgb(var(--accent-light));
+    text-shadow: 0 0 5px rgba(var(--accent-light), 0.5);
+  }
+
+  @media (max-width: 768px) {
+    .success-page {
+      padding: 1rem;
+    }
+
+    .terminal-content {
+      padding: 1rem;
+    }
+  }
+</style> 
