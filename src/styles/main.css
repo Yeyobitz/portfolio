@@ -1,41 +1,35 @@
-/* Import Base Styles */
+/* Base */
 @import './base/_reset.css';
-@import './base/_typography.css';
-@import './base/_variables.css';
+@import './theme.css';
 
-/* Import Theme */
-@import './theme/_colors.css';
-@import './theme/_effects.css';
-
-/* Import Layout Components */
+/* Layout */
 @import './layout/_grid.css';
 @import './layout/_spacing.css';
-@import './layout/_navigation.css';
 
-/* Import Components */
-@import './components/_hero-background.css';
+/* Components */
+@import './components/_sections.css';
+@import './components/_controls.css';
 
-/* Import Utilities */
-@import './utils/_breakpoints.css';
+/* Effects */
+@import './theme/_effects.css';
 
-/* Root Styles */
-:root {
-  color-scheme: dark;
+/* Minimize Animation */
+section {
+  transition: max-height 0.3s ease-out;
+  overflow: hidden;
 }
 
-body {
-  background-color: var(--color-bg-primary);
-  color: var(--color-text);
-  font-family: var(--font-body);
+section.minimized {
+  max-height: 4rem;
 }
 
-main {
-  min-height: calc(100vh - 6rem);
+section.minimized .terminal-content,
+section.minimized .project-grid,
+section.minimized .skills-grid,
+section.minimized .contact-form {
+  display: none;
 }
 
-footer {
-  text-align: center;
-  padding: var(--space-4);
-  margin-top: auto;
-  margin-bottom: 1rem;
+section.minimized .terminal-header {
+  border-bottom: none;
 }

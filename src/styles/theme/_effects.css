@@ -1,22 +1,8 @@
-/* Scanlines Effect */
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  background: linear-gradient(
-    to bottom,
-    transparent 50%,
-    rgba(0, 0, 0, 0.15) 50%
-  );
-  background-size: 100% 4px;
-}
+/* CRT and Retro Effects */
 
-/* CRT Screen Effect */
+/* Base CRT Effect */
 .crt {
+  position: relative;
   overflow: hidden;
 }
 
@@ -33,9 +19,41 @@
     rgba(0, 0, 0, 0.15) 150%
   );
   pointer-events: none;
+  z-index: 5;
+}
+
+/* Scanlines Effect */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 50%,
+    rgba(0, 0, 0, 0.15) 51%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* Glitch Effect */
+.glitch {
+  position: relative;
+  transition: var(--transition-glitch);
+}
+
+.glitch:hover {
+  animation: glitch 0.3s var(--transition-glitch) both infinite;
+}
+
 @keyframes glitch {
   0% {
     transform: translate(0);
@@ -57,31 +75,11 @@
   }
 }
 
-.glitch:hover {
-  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-}
-
-/* RGB Split Effect */
-@keyframes rgbSplit {
-  0% {
-    text-shadow: none;
-  }
-  50% {
-    text-shadow: 
-      -2px 0 #ff0000,
-      2px 0 #00ff00,
-      0 0 #0000ff;
-  }
-  100% {
-    text-shadow: none;
-  }
-}
-
-.rgb-split:hover {
-  animation: rgbSplit 0.3s ease-in-out infinite;
-}
-
 /* Power On Animation */
+.power-on {
+  animation: powerOn 1s var(--transition-glitch) forwards;
+}
+
 @keyframes powerOn {
   0% {
     opacity: 0;
@@ -106,11 +104,27 @@
   }
 }
 
-.power-on {
-  animation: powerOn 1s cubic-bezier(.25, .46, .45, .94) forwards;
+/* Neon Glow Effect */
+.neon {
+  transition: var(--transition-smooth);
 }
 
-/* Neon Pulse Animation */
+.neon-purple {
+  text-shadow: var(--glow-purple);
+}
+
+.neon-blue {
+  text-shadow: var(--glow-blue);
+}
+
+.neon-green {
+  text-shadow: var(--glow-green);
+}
+
+.neon-pulse {
+  animation: neonPulse 2s ease-in-out infinite;
+}
+
 @keyframes neonPulse {
   0% {
     filter: brightness(1);
@@ -123,6 +137,29 @@
   }
 }
 
-.neon-pulse {
-  animation: neonPulse 2s ease-in-out infinite;
+/* Scanline Animation */
+@keyframes scanline {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+.scanline-anim::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  animation: scanline 2s linear infinite;
+  z-index: 2;
 }

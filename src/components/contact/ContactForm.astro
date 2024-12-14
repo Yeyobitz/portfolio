@@ -1,152 +1,261 @@
 ---
+interface Props {
+  email: string;
+  profiles: Array<{
+    network: string;
+    url: string;
+  }>;
+}
+
+const { email, profiles } = Astro.props;
 ---
 
-<!-- Formulario oculto para Netlify -->
-<form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name" />
-  <input type="email" name="email" />
-  <textarea name="message"></textarea>
-</form>
+<div class="btn-grid">
+  <a 
+    href={`mailto:${email}`}
+    class="btn btn-green"
+  >
+    <div class="btn-content">
+      <span class="btn-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M0 6 L12 14 L24 6 L24 4 L0 4 L0 6" />
+          <path d="M24 8 L24 20 L0 20 L0 8 L12 16 L24 8" />
+        </svg>
+      </span>
+      <span class="btn-text">EMAIL.exe</span>
+    </div>
+    <div class="btn-glitch"></div>
+    <div class="btn-scanline"></div>
+  </a>
 
-<!-- Formulario visible -->
-<form 
-  name="contact" 
-  method="POST" 
-  data-netlify="true"
-  action="/success"
-  class="contact-form crt"
->
-  <input type="hidden" name="form-name" value="contact" />
-  
-  <div class="form-group">
-    <label for="name">NAME:</label>
-    <input 
-      type="text" 
-      id="name" 
-      name="name" 
-      required 
-      placeholder="_"
-    />
-  </div>
+  {profiles.map(profile => (
+    <a 
+      href={profile.url}
+      target="_blank" 
+      rel="noopener noreferrer"
+      class={`btn ${profile.network.toLowerCase() === 'github' ? 'btn-purple' : 'btn-blue'}`}
+    >
+      <div class="btn-content">
+        <span class="btn-icon">
+          {profile.network === 'GitHub' ? (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3H5C3.895 3 3 3.895 3 5V19C3 20.105 3.895 21 5 21H19C20.105 21 21 20.105 21 19V5C21 3.895 20.105 3 19 3ZM9 17H6.477V10H9V17ZM7.694 8.717C6.923 8.717 6.408 8.203 6.408 7.517C6.408 6.831 6.922 6.317 7.779 6.317C8.55 6.317 9.065 6.831 9.065 7.517C9.065 8.203 8.551 8.717 7.694 8.717ZM18 17H15.558V13.174C15.558 12.116 14.907 11.872 14.663 11.872C14.419 11.872 13.605 12.035 13.605 13.174C13.605 13.337 13.605 17 13.605 17H11.082V10H13.605V10.977C13.93 10.407 14.581 10 15.814 10C17.047 10 18 10.977 18 13.174V17Z"/>
+            </svg>
+          )}
+        </span>
+        <span class="btn-text">{profile.network.toUpperCase()}.exe</span>
+      </div>
+      <div class="btn-glitch"></div>
+      <div class="btn-scanline"></div>
+    </a>
+  ))}
 
-  <div class="form-group">
-    <label for="email">EMAIL:</label>
-    <input 
-      type="email" 
-      id="email" 
-      name="email" 
-      required 
-      placeholder="_"
-    />
-  </div>
-
-  <div class="form-group">
-    <label for="message">MESSAGE:</label>
-    <textarea 
-      id="message" 
-      name="message" 
-      required 
-      rows="5" 
-      placeholder="_"
-    ></textarea>
-  </div>
-
-  <button type="submit" class="submit-btn">
-    <span class="btn-text">SEND MESSAGE</span>
-    <span class="btn-glitch"></span>
-  </button>
-</form>
+  <a 
+    href="https://wa.me/56950944500" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    class="btn btn-green"
+  >
+    <div class="btn-content">
+      <span class="btn-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.029 18.88c-1.161 0-2.305-.292-3.318-.844l-3.677.964.984-3.595c-.607-1.052-.927-2.246-.926-3.468.001-3.825 3.113-6.937 6.937-6.937 1.856.001 3.598.723 4.907 2.034 1.31 1.311 2.031 3.054 2.03 4.908-.001 3.825-3.113 6.938-6.937 6.938z"/>
+        </svg>
+      </span>
+      <span class="btn-text">WHATSAPP.exe</span>
+    </div>
+    <div class="btn-glitch"></div>
+    <div class="btn-scanline"></div>
+  </a>
+</div>
 
 <style>
-  .contact-form {
-    background: var(--color-bg-secondary);
-    padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid var(--color-accent-purple);
-    max-width: 600px;
+  .btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
     width: 100%;
+    padding: 2rem 0;
   }
 
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-
-  label {
-    display: block;
-    font-family: var(--font-heading);
-    font-size: 0.8rem;
-    color: var(--color-accent-green);
-    margin-bottom: 0.5rem;
-    text-shadow: var(--glow-green);
-  }
-
-  input, textarea {
-    width: 100%;
-    background: var(--color-bg-tertiary);
-    border: 1px solid var(--color-accent-purple);
-    color: var(--color-text);
-    padding: 0.8rem;
-    border-radius: 4px;
-    font-family: var(--font-body);
-    transition: all 0.3s ease;
-  }
-
-  input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--color-accent-green);
-    box-shadow: 0 0 10px var(--color-accent-green);
-  }
-
-  .submit-btn {
+  .btn {
     position: relative;
-    width: 100%;
-    padding: 1rem;
     background: var(--color-bg-tertiary);
-    border: 1px solid var(--color-accent-green);
-    color: var(--color-accent-green);
-    font-family: var(--font-heading);
-    font-size: 0.9rem;
-    cursor: pointer;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-decoration: none;
     overflow: hidden;
     transition: all 0.3s ease;
+    border: 2px solid transparent;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .submit-btn:hover {
-    background: var(--color-accent-green);
-    color: var(--color-bg-primary);
-    box-shadow: 0 0 15px var(--color-accent-green);
+  .btn-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 
-  .submit-btn:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  .btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: grayscale(1);
+    transition: all 0.3s ease;
   }
 
+  .btn-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .btn-text {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* Estilos específicos por botón */
+  .btn-green {
+    border-color: var(--color-accent-green);
+    color: var(--color-accent-green);
+  }
+
+  .btn-purple {
+    border-color: var(--color-accent-purple);
+    color: var(--color-accent-purple);
+  }
+
+  .btn-blue {
+    border-color: var(--color-accent-blue);
+    color: var(--color-accent-blue);
+  }
+
+  /* Efectos hover */
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn:hover .btn-icon {
+    filter: grayscale(0);
+    transform: scale(1.2);
+  }
+
+  /* Efecto scanline */
+  .btn-scanline {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      transparent 100%
+    );
+    animation: scan 3s linear infinite;
+  }
+
+  /* Efecto glitch */
   .btn-glitch {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--color-accent-green);
-    transform: translateX(-100%);
-    opacity: 0.3;
-    pointer-events: none;
+    opacity: 0;
+    background: currentColor;
+    z-index: 1;
   }
 
-  .submit-btn:hover .btn-glitch {
-    animation: glitch-effect 0.3s linear infinite;
+  .btn:hover .btn-glitch {
+    opacity: 0.1;
+    animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
   }
 
-  @keyframes glitch-effect {
-    0% { transform: translateX(-100%); }
-    50% { transform: translateX(0); }
-    100% { transform: translateX(100%); }
+  @keyframes scan {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(33.33%);
+    }
+  }
+
+  @keyframes glitch {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-2px, 2px);
+    }
+    40% {
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      transform: translate(2px, 2px);
+    }
+    80% {
+      transform: translate(2px, -2px);
+    }
+    100% {
+      transform: translate(0);
+    }
+  }
+
+  @media (max-width: 1200px) {
+    .btn-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
   }
 
   @media (max-width: 768px) {
-    .contact-form {
-      padding: 1.5rem;
+    .btn-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      padding: 1.5rem 0;
+    }
+
+    .btn {
+      padding: 1.5rem 1rem;
+    }
+
+    .btn-icon {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .btn-text {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .btn-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+
+    .btn {
+      padding: 1.25rem 1rem;
     }
   }
 </style>

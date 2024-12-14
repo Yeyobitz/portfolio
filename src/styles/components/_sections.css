@@ -1,0 +1,169 @@
+/* Secciones */
+section {
+  position: relative;
+  margin: 2rem 0;
+  background: var(--color-bg-secondary);
+  border: 2px solid var(--color-accent-purple);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+  transition: all 0.3s ease-out;
+}
+
+/* Estado minimizado */
+section.minimized {
+  max-height: 4.5rem;
+  margin: 1rem 0;
+}
+
+section.minimized .terminal-header {
+  border-bottom: none;
+}
+
+section.minimized .terminal-content,
+section.minimized .project-grid,
+section.minimized .skills-grid,
+section.minimized .contact-form,
+section.minimized .carousel,
+section.minimized .terminal-window,
+section.minimized .project-carousel,
+section.minimized .project-card,
+section.minimized .contact-section-content,
+section.minimized form {
+  display: none;
+}
+
+/* Efectos hover */
+section:hover {
+  box-shadow: 0 0 40px rgba(var(--accent), 0.15);
+}
+
+section.minimized:hover {
+  transform: translateY(-2px);
+}
+
+/* Animaciones de carga */
+@keyframes borderBottom {
+  0% {
+    border-bottom-color: transparent;
+  }
+  100% {
+    border-bottom-color: var(--color-accent-purple);
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    border-right-color: transparent;
+  }
+  50% {
+    border-right-color: var(--color-accent-green);
+  }
+}
+
+/* Aplicar animaciones */
+section:not(.minimized) .terminal-header {
+  animation: borderBottom 0.3s ease-in forwards;
+}
+
+/* Contenedor para el contenido animado */
+.terminal-content,
+.terminal-window,
+.projects-grid,
+.skills-grid,
+.contact-section-content {
+  position: relative;
+  transform-origin: top;
+}
+
+/* Animaciones específicas por tipo de contenido */
+section:not(.minimized) .terminal-line {
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid var(--color-accent-green);
+  width: 0;
+  animation: 
+    slideDown 0.3s ease-out forwards,
+    typewriter 0.5s steps(40, end) forwards,
+    blink 0.75s step-end infinite;
+}
+
+section:not(.minimized) .terminal-line:nth-child(1) { 
+  animation-delay: 0.2s, 0.2s, 0.2s;
+}
+section:not(.minimized) .terminal-line:nth-child(2) { 
+  animation-delay: 0.4s, 0.4s, 0.4s;
+}
+section:not(.minimized) .terminal-line:nth-child(3) { 
+  animation-delay: 0.6s, 0.6s, 0.6s;
+}
+
+/* Animaciones para proyectos */
+section:not(.minimized) .projects-grid {
+  opacity: 0;
+  animation: slideDown 0.3s ease-out 0.2s forwards;
+}
+
+section:not(.minimized) .project-card {
+  opacity: 0;
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+section:not(.minimized) .project-card:nth-child(1) { animation-delay: 0.3s; }
+section:not(.minimized) .project-card:nth-child(2) { animation-delay: 0.4s; }
+section:not(.minimized) .project-card:nth-child(3) { animation-delay: 0.5s; }
+section:not(.minimized) .project-card:nth-child(4) { animation-delay: 0.6s; }
+
+/* Animaciones para formularios y otros elementos */
+section:not(.minimized) form,
+section:not(.minimized) .contact-section-content {
+  opacity: 0;
+  animation: slideDown 0.3s ease-out 0.2s forwards;
+}
+
+section:not(.minimized) .carousel,
+section:not(.minimized) .project-carousel {
+  opacity: 0;
+  animation: slideDown 0.3s ease-out 0.3s forwards;
+}
+
+/* Contenido general */
+section:not(.minimized) .terminal-content,
+section:not(.minimized) .terminal-window {
+  opacity: 0;
+  animation: slideDown 0.3s ease-out 0.2s forwards;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  section:not(.minimized) .terminal-line {
+    animation-duration: 0.3s, 0.4s, 0.75s;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    margin: 1rem 0;
+  }
+}

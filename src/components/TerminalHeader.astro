@@ -1,0 +1,177 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="terminal-header crt">
+  <div class="terminal-buttons">
+    <button class="minimize-btn active" aria-label="Minimizar sección">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+  <h2 class="glitch neon-green">{title}</h2>
+</div>
+
+<script>
+  // Función para minimizar/maximizar sección
+  function toggleSection(section: Element, shouldMinimize: boolean) {
+    const button = section.querySelector('.minimize-btn');
+    
+    if (shouldMinimize) {
+      section.classList.add('minimized');
+      button?.classList.add('active');
+    } else {
+      // Remover la clase minimized para iniciar la animación
+      section.classList.remove('minimized');
+      button?.classList.remove('active');
+      
+      // Reiniciar las animaciones
+      section.style.animation = 'none';
+      section.offsetHeight; // Forzar reflow
+      section.style.animation = null;
+      
+      // Reiniciar animaciones de los elementos internos
+      const elements = section.querySelectorAll('.terminal-content, .terminal-window, .projects-grid, .skills-grid, .terminal-line, .project-card');
+      elements.forEach(el => {
+        (el as HTMLElement).style.animation = 'none';
+        el.offsetHeight; // Forzar reflow
+        (el as HTMLElement).style.animation = null;
+      });
+    }
+    
+    localStorage.setItem(`section-${section.id}-minimized`, shouldMinimize.toString());
+  }
+
+  // Inicializar todas las secciones como minimizadas al cargar por primera vez
+  if (!localStorage.getItem('has-visited')) {
+    document.querySelectorAll('section[id]').forEach(section => {
+      toggleSection(section, true);
+    });
+    localStorage.setItem('has-visited', 'true');
+  }
+
+  // Restaurar estados guardados si no es la primera visita
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('section[id]').forEach(section => {
+      const sectionId = section.id;
+      const isMinimized = localStorage.getItem(`section-${sectionId}-minimized`) === 'true';
+      toggleSection(section, isMinimized);
+    });
+  });
+
+  // Manejar clics en los botones de minimizar
+  document.querySelectorAll('.minimize-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const section = button.closest('section');
+      if (section) {
+        const isMinimized = !section.classList.contains('minimized');
+        toggleSection(section, isMinimized);
+      }
+    });
+  });
+
+  // Manejar navegación por hash
+  function handleHashChange() {
+    const hash = window.location.hash;
+    if (hash) {
+      const targetSection = document.querySelector(hash);
+      if (targetSection) {
+        toggleSection(targetSection, false);
+        // Pequeño retraso para asegurar que la sección esté expandida antes de hacer scroll
+        setTimeout(() => {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }
+
+  // Escuchar cambios en el hash de la URL
+  window.addEventListener('hashchange', handleHashChange);
+  
+  // Manejar hash inicial al cargar la página
+  if (window.location.hash) {
+    handleHashChange();
+  }
+</script>
+
+<style>
+  .terminal-header {
+    background: var(--color-bg-tertiary);
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 2px solid var(--color-accent-purple);
+    transition: border-bottom-color 0.3s ease;
+  }
+
+  .terminal-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .minimize-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    gap: 3px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+
+  .minimize-btn:hover {
+    background-color: rgba(var(--accent), 0.1);
+  }
+
+  .minimize-btn span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent-purple);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+  }
+
+  .minimize-btn:hover span {
+    opacity: 1;
+    background: var(--color-accent-green);
+    box-shadow: 0 0 5px var(--color-accent-green);
+  }
+
+  .minimize-btn.active span {
+    background: var(--color-accent-green);
+    box-shadow: 0 0 5px var(--color-accent-green);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--color-accent-green);
+    text-shadow: 0 0 10px var(--color-accent-green);
+    letter-spacing: 0.2em;
+  }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    .minimize-btn {
+      padding: 0.3rem;
+    }
+
+    .minimize-btn span {
+      width: 6px;
+      height: 6px;
+    }
+  }
+</style> 
