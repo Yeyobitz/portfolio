@@ -1,52 +1,129 @@
 ---
-import BackToTop from '../components/BackToTop.astro';
-
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { 
+  title,
+  description = "Full Stack Developer who loves to code and create unique digital experiences."
+} = Astro.props;
+
+// Schema.org para Rich Snippets
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yeyobitz",
+  "jobTitle": "Desarrollador Web Full Stack",
+  "url": "https://yeyobitz.dev",
+  "sameAs": [
+    "https://github.com/yeyobitz",
+    "https://www.linkedin.com/in/diego-qui%C3%B1ones-montecinos-650010249/://linkedin.com/in/yeyobitz"
+  ],
+  "description": description
+};
+
+import EasterEggs from '../components/EasterEggs.astro';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Yeyo Bitz - Web Developer Portfolio" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://yeyobitz.dev/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://yeyobitz.dev/" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/og-image.jpg" />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#0a0a0a">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- Schema.org -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+    
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
   </head>
   <body>
-    <div class="crt-overlay"></div>
-    <nav>
-      <div class="nav-content">
-        <div class="nav-links left">
-          <a href="#about" class="nav-link neon glitch" data-glitch="About">About</a>
-          <a href="#skills" class="nav-link neon glitch" data-glitch="Skills">Skills</a>
+    <div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Cargando sitio">
+      <div class="loading-content">
+        <div class="loading-text" aria-live="polite">BOOTING SYSTEM</div>
+        <div class="loading-progress">
+          <div class="progress-bar"></div>
         </div>
-        <a href="/" class="logo neon-green glitch" data-glitch="YEYOBITZ">YEYOBITZ</a>
-        <div class="nav-links right">
-          <a href="#projects" class="nav-link neon glitch" data-glitch="Projects">Projects</a>
-          <a href="#contact" class="nav-link neon glitch" data-glitch="Contact">Contact</a>
+        <div class="loading-status" aria-live="polite">
+          <span class="prompt neon-green" aria-hidden="true">> </span>
+          <span class="command-text"></span>
+          <span class="cursor" aria-hidden="true">_</span>
         </div>
       </div>
-    </nav>
+    </div>
+    <div class="crt-overlay" aria-hidden="true"></div>
+    
+    <header>
+      <nav aria-label="Navegación principal">
+        <div class="nav-content">
+          <div class="nav-links left">
+            <a href="#about" class="nav-link neon glitch" data-glitch="About me">About me</a>
+            <a href="#skills" class="nav-link neon glitch" data-glitch="Skills">Skills</a>
+          </div>
+          <a href="/" class="logo neon-green glitch" data-glitch="YEYOBITZ" aria-label="Inicio">YEYOBITZ</a>
+          <div class="nav-links right">
+            <a href="#projects" class="nav-link neon glitch" data-glitch="Projects">Projects</a>
+            <a href="#contact" class="nav-link neon glitch" data-glitch="Contact">Contact</a>
+          </div>
+          <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+            <span class="menu-line"></span>
+          </button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+          <div class="mobile-menu-content">
+            <a href="#about" class="mobile-nav-link neon glitch" data-glitch="About">About me</a>
+            <a href="#skills" class="mobile-nav-link neon glitch" data-glitch="Skills">Skills</a>
+            <a href="#projects" class="mobile-nav-link neon glitch" data-glitch="Projects">Projects</a>
+            <a href="#contact" class="mobile-nav-link neon glitch" data-glitch="Contact">Contact</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
     <div class="content-wrapper">
-      <main class="power-on">
+      <main id="main-content" class="power-on">
         <slot />
       </main>
-      <footer class="retro-footer">
-        <div class="footer-grid"></div>
-        <div class="footer-scanlines"></div>
+      
+      <footer class="retro-footer" role="contentinfo">
+        <div class="footer-grid" aria-hidden="true"></div>
+        <div class="footer-scanlines" aria-hidden="true"></div>
         <div class="footer-content">
           <div class="footer-section">
             <div class="terminal-text">
-              <span class="prompt neon-white">> </span>
+              <span class="prompt neon-white" aria-hidden="true">> </span>
               <span class="command">status</span>
             </div>
             <div class="status-line">
@@ -61,24 +138,147 @@ const { title } = Astro.props;
             </div>
           </div>
 
-          <div class="footer-divider"></div>
+          <div class="footer-divider" role="separator"></div>
 
           <div class="footer-section">
             <p class="copyright">
-              <span class="neon-white">[</span> 
+              <span class="neon-white" aria-hidden="true">[</span> 
               <span class="neon-purple">©{new Date().getFullYear()}</span> 
               <span class="neon-blue">YEYOBITZ</span> 
-              <span class="neon-white">]</span>
+              <span class="neon-white" aria-hidden="true">]</span>
             </p>
             <p class="credits neon-green">All systems operational</p>
+            <p class="secret-hint">↑↑↓↓←→←→BA</p>
           </div>
         </div>
       </footer>
     </div>
+
+    <EasterEggs />
   </body>
 </html>
 
 <script>
+  // Loading Screen Logic
+  const loadingScreen = document.querySelector('.loading-screen');
+  const commandText = document.querySelector('.command-text');
+  const loadingMessages = [
+    'Iniciando...',
+    'Cargando...',
+    'Listo!'
+  ];
+
+  let currentMessage = 0;
+
+  function updateLoadingProgress(progress) {
+    loadingScreen?.setAttribute('aria-valuenow', progress.toString());
+  }
+
+  function typeMessage(message) {
+    let i = 0;
+    commandText.textContent = '';
+    
+    function type() {
+      if (i < message.length) {
+        commandText.textContent += message.charAt(i);
+        i++;
+        updateLoadingProgress(Math.floor((i / message.length) * 100));
+        setTimeout(type, 30);
+      } else if (currentMessage < loadingMessages.length - 1) {
+        currentMessage++;
+        setTimeout(() => {
+          typeMessage(loadingMessages[currentMessage]);
+        }, 300);
+      } else {
+        setTimeout(() => {
+          loadingScreen?.classList.add('hidden');
+          document.body.classList.add('loaded');
+          localStorage.setItem('loadingShown', 'true');
+        }, 300);
+      }
+    }
+    
+    type();
+  }
+
+  // Iniciar la animación solo si es primera visita
+  document.addEventListener('DOMContentLoaded', () => {
+    const hasSeenLoading = localStorage.getItem('loadingShown');
+    
+    if (!hasSeenLoading) {
+      typeMessage(loadingMessages[0]);
+    } else {
+      loadingScreen?.classList.add('hidden');
+      document.body.classList.add('loaded');
+    }
+  });
+
+  // Variables para el menú móvil
+  const menuToggle = document.querySelector('.menu-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  
+  // Toggle del menú móvil
+  function toggleMenu() {
+    const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+    menuToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+    menuToggle.setAttribute('aria-label', isExpanded ? 'Abrir menú' : 'Cerrar menú');
+    
+    mobileMenu.setAttribute('aria-hidden', isExpanded.toString());
+    menuToggle.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.classList.toggle('menu-open');
+
+    // Manejar el foco
+    if (!isExpanded) {
+      // Cuando se abre el menú, enfocar el primer link
+      mobileLinks[0]?.focus();
+    } else {
+      // Cuando se cierra, devolver el foco al botón
+      menuToggle?.focus();
+    }
+  }
+  
+  // Event listeners
+  menuToggle?.addEventListener('click', toggleMenu);
+  
+  // Manejar navegación por teclado en el menú móvil
+  mobileMenu?.addEventListener('keydown', (e) => {
+    const focusableElements = Array.from(mobileLinks);
+    const firstFocusable = focusableElements[0];
+    const lastFocusable = focusableElements[focusableElements.length - 1];
+    const isTabPressed = e.key === 'Tab';
+    
+    if (!isTabPressed) return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusable) {
+        lastFocusable?.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastFocusable) {
+        firstFocusable?.focus();
+        e.preventDefault();
+      }
+    }
+  });
+  
+  // Cerrar menú al hacer click en un link
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      toggleMenu();
+      // Esperar a que termine la animación antes de hacer scroll
+      setTimeout(() => {
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          toggleSection(targetElement, false);
+        }
+      }, 300);
+    });
+  });
+
   // Función para minimizar/maximizar sección
   function toggleSection(section, shouldMinimize) {
     if (!section) return;
@@ -559,5 +759,212 @@ const { title } = Astro.props;
     .copyright, .credits {
       text-align: center;
     }
+  }
+
+  /* Menú Toggle */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    z-index: 10000;
+  }
+
+  .menu-line {
+    display: block;
+    width: 25px;
+    height: 2px;
+    margin: 5px 0;
+    background-color: var(--color-accent-green);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px var(--color-accent-green);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9998;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .mobile-nav-link {
+    color: var(--color-text);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .mobile-nav-link:hover {
+    color: var(--color-accent-green);
+    text-shadow: var(--glow-green);
+    border-color: var(--color-accent-green);
+    transform: scale(1.1);
+  }
+
+  /* Media Queries */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: block;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .menu-toggle.active .menu-line:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active .menu-line:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active .menu-line:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+
+    .nav-content {
+      grid-template-columns: auto auto;
+    }
+
+    .logo {
+      grid-column: 1;
+      text-align: left;
+    }
+  }
+
+  /* Loading Screen */
+  .loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+
+  .loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .loading-content {
+    text-align: center;
+    font-family: var(--font-mono);
+    color: var(--color-accent-green);
+  }
+
+  .loading-text {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-shadow: var(--glow-green);
+    animation: textFlicker 0.5s infinite;
+  }
+
+  .loading-progress {
+    width: 300px;
+    height: 2px;
+    background: rgba(0, 255, 65, 0.2);
+    margin: 1rem auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--color-accent-green);
+    box-shadow: 0 0 10px var(--color-accent-green);
+    animation: loadProgress 1s ease-out forwards;
+  }
+
+  .loading-status {
+    font-size: 1rem;
+    height: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .command-text {
+    min-width: 10ch;
+    text-align: left;
+  }
+
+  .cursor {
+    animation: cursorBlink 1s infinite;
+  }
+
+  @keyframes loadProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  @keyframes cursorBlink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .secret-hint {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    opacity: 0.1;
+    text-align: right;
+    margin-top: 0.25rem;
+    color: var(--color-accent-blue);
+    transition: opacity 0.3s ease;
+  }
+
+  .secret-hint:hover {
+    opacity: 0.3;
   }
 </style>

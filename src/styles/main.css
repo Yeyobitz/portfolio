@@ -33,3 +33,51 @@ section.minimized .contact-form {
 section.minimized .terminal-header {
   border-bottom: none;
 }
+
+:root {
+  /* Common variables */
+  --font-mono: 'IBM Plex Mono', monospace;
+  --font-heading: 'Press Start 2P', system-ui;
+  --container-width: 1200px;
+  --container-padding: 1rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  /* Colors for dark theme (default) */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #111111;
+  --color-bg-tertiary: #1a1a1a;
+  --color-text: #e0e0e0;
+  --color-accent-blue: #00f0ff;
+  --color-accent-purple: #ff00ff;
+  --color-accent-green: #00ff41;
+  --color-accent-red: #ff0041;
+  --accent: 0, 240, 255;
+  --accent-dark: 0, 0, 0;
+
+  /* Effects */
+  --glow-blue: 0 0 10px rgba(0, 240, 255, 0.5);
+  --glow-purple: 0 0 10px rgba(255, 0, 255, 0.5);
+  --glow-green: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+[data-theme="light"] {
+  --color-bg-primary: #f0f0f0;
+  --color-bg-secondary: #e5e5e5;
+  --color-bg-tertiary: #dadada;
+  --color-text: #1a1a1a;
+  --color-accent-blue: #0077ff;
+  --color-accent-purple: #9900ff;
+  --color-accent-green: #00aa41;
+  --color-accent-red: #aa0041;
+  --accent: 0, 119, 255;
+  --accent-dark: 218, 218, 218;
+
+  /* Effects for light theme */
+  --glow-blue: 0 0 10px rgba(0, 119, 255, 0.3);
+  --glow-purple: 0 0 10px rgba(153, 0, 255, 0.3);
+  --glow-green: 0 0 10px rgba(0, 170, 65, 0.3);
+}

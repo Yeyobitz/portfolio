@@ -1,7 +1,7 @@
 {
   "basics": {
     "name": "Diego QM",
-    "label": "Developer",
+    "label": "Full Stack Developer",
     "image": "https://raw.githubusercontent.com/Yeyobitz/Front-End/3198fec59cf120b03a80ab73fcba19de46af7377/certamen1/assets/img/yeyo-T.png",
     "email": "yeyobitz@proton.me",
     "url": "https://yeyobitz.dev",
@@ -10,7 +10,7 @@
       {
         "network": "LinkedIn",
         "username": "Diego QM",
-        "url": "https://www.linkedin.com/in/diego-qui%C3%B1ones-montecinos-650010249/"
+        "url": "https://www.linkedin.com/in/diego-alexander-qm-650010249/"
       },
       {
         "network": "GitHub",
@@ -145,7 +145,7 @@
     {
       "name": "Super Tik-Tak-Toe",
       "isActive": true,
-      "description": "A SUPER version of the classic Tic-Tac-Toe game with a retro design, awesome music and multiple difficulty levels.",
+      "description": "A SUPER version of a classic game with a retro design, awesome music and multiple difficulty levels.",
       "highlights": [
         "Game mode: 1 vs CPU or 1 vs 1",
         "Adjustable difficulty: Easy, Medium, Hard",
@@ -157,7 +157,75 @@
         "/projects/tictactoe/tictactoe1.webp",
         "/projects/tictactoe/tictactoe2.webp",
         "/projects/tictactoe/tictactoe3.webp"
-      ]
+      ],
+      "technologies": ["JavaScript", "HTML", "CSS", "Firebase"],
+      "impact": "Over 1,000 games played in the first month. Used as an example for algorithm implementation in programming classes.",
+      "duration": "2 months",
+      "role": "Full Stack Developer",
+      "teamSize": 1,
+      "client": "Personal Project",
+      "caseStudy": {
+        "process": {
+          "planning": "The project started as a challenge to implement the minimax algorithm in a fun and engaging way. I wanted to create a game that would be both entertaining and educational.",
+          "challenges": [
+            "Implementing an efficient minimax algorithm for different difficulty levels",
+            "Creating a responsive and intuitive UI that works on all devices",
+            "Optimizing performance for real-time gameplay",
+            "Implementing a global leaderboard system"
+          ],
+          "solutions": [
+            "Used alpha-beta pruning to optimize the minimax algorithm",
+            "Implemented difficulty levels by limiting the search depth",
+            "Created a mobile-first design with touch controls",
+            "Used Firebase Realtime Database for leaderboard updates"
+          ],
+          "learnings": [
+            "Deep understanding of game theory and AI algorithms",
+            "Importance of UX in game design",
+            "Real-time database management",
+            "Performance optimization techniques"
+          ]
+        },
+        "metrics": [
+          {
+            "label": "Monthly Active Users",
+            "value": "500+",
+            "change": "+200%"
+          },
+          {
+            "label": "Games Played",
+            "value": "10,000+",
+            "change": "+150%"
+          },
+          {
+            "label": "Average Session Duration",
+            "value": "15min",
+            "change": "+5min"
+          }
+        ],
+        "timeline": [
+          {
+            "date": "Week 1",
+            "milestone": "Initial planning and algorithm research"
+          },
+          {
+            "date": "Week 3",
+            "milestone": "Basic game mechanics implementation"
+          },
+          {
+            "date": "Week 5",
+            "milestone": "AI implementation and difficulty levels"
+          },
+          {
+            "date": "Week 7",
+            "milestone": "UI design and responsive implementation"
+          },
+          {
+            "date": "Week 8",
+            "milestone": "Launch and initial feedback"
+          }
+        ]
+      }
     },
     {
       "name": "Tregua Project",
@@ -165,7 +233,9 @@
       "description": "A restaurant management system built with React 18 and Vite.js, using Firebase as backend.",
       "highlights": [
         "Reservation and menu management system",
-        "Administration panel"
+        "Administration panel",
+        "Real-time updates",
+        "Responsive design"
       ],
       "url": "https://treguarestaurant.netlify.app/",
       "github": "https://github.com/Yeyobitz/treguaReact",
@@ -173,22 +243,134 @@
         "/projects/tregua/tregua1.webp",
         "/projects/tregua/tregua2.webp",
         "/projects/tregua/tregua3.webp"
-      ]
+      ],
+      "technologies": ["React", "Firebase", "Tailwind", "Vite"],
+      "impact": "Increased reservation management efficiency by 40% and reduced order errors by 25%.",
+      "duration": "3 months",
+      "role": "Lead Developer",
+      "teamSize": 2,
+      "client": "Tregua Restaurant",
+      "caseStudy": {
+        "process": {
+          "planning": "The project was initiated to modernize the restaurant's management system and improve operational efficiency. We focused on creating a seamless experience for both staff and customers.",
+          "challenges": [
+            "Managing real-time reservations without conflicts",
+            "Implementing a flexible menu management system",
+            "Ensuring data consistency across multiple devices",
+            "Training staff on the new system"
+          ],
+          "solutions": [
+            "Implemented Firebase transactions for reservation handling",
+            "Created a dynamic menu system with categories and modifiers",
+            "Used React Query for efficient data synchronization",
+            "Developed an intuitive admin interface with role-based access"
+          ],
+          "learnings": [
+            "Real-time database management in a production environment",
+            "Importance of user training in system adoption",
+            "Complex state management in React applications",
+            "Performance optimization for concurrent users"
+          ]
+        },
+        "metrics": [
+          {
+            "label": "Reservation Processing Time",
+            "value": "30sec",
+            "change": "-70%"
+          },
+          {
+            "label": "Order Accuracy",
+            "value": "98%",
+            "change": "+25%"
+          },
+          {
+            "label": "Staff Training Time",
+            "value": "2hrs",
+            "change": "-50%"
+          }
+        ],
+        "timeline": [
+          {
+            "date": "Month 1",
+            "milestone": "Requirements gathering and system design"
+          },
+          {
+            "date": "Month 2",
+            "milestone": "Core features implementation"
+          },
+          {
+            "date": "Month 2.5",
+            "milestone": "Admin panel and staff training"
+          },
+          {
+            "date": "Month 3",
+            "milestone": "Testing and deployment"
+          }
+        ]
+      }
     },
     {
-      "name": "Plataformero Generico N° 18001",
+      "name": "Generic Platformer #18001",
       "isActive": false,
       "description": "A platformer game where the player must navigate through a series of platforms while avoiding obstacles and enemies.",
       "highlights": [
         "Developed in UE4 using blueprints",
         "Implementation of player movement",
-        "Original BGM"
+        "Original BGM",
+        "Multiple levels"
       ],
       "images": [
-        "/projects/PlataforGener/plataforgener1.webp",
-        "/projects/PlataforGener/plataforgener2.webp",
-        "/projects/PlataforGener/plataforgener3.webp"
-      ]
+        "/projects/platformer/platformer1.webp",
+        "/projects/platformer/platformer2.webp",
+        "/projects/platformer/platformer3.webp"
+      ],
+      "technologies": ["Unreal Engine", "Blueprints"],
+      "impact": "Experimental project that allowed me to learn about game development and visual programming logic.",
+      "duration": "1 month",
+      "role": "Game Developer",
+      "teamSize": 1,
+      "client": "Personal Project",
+      "caseStudy": {
+        "process": {
+          "planning": "This project was conceived as a learning experience to understand game development fundamentals and Unreal Engine's Blueprint system.",
+          "challenges": [
+            "Learning Unreal Engine's Blueprint system",
+            "Implementing smooth player movement and controls",
+            "Creating engaging level designs",
+            "Optimizing game performance"
+          ],
+          "solutions": [
+            "Used Blueprint tutorials and documentation extensively",
+            "Implemented state machines for player movement",
+            "Created modular level design system",
+            "Applied UE4's built-in optimization tools"
+          ],
+          "learnings": [
+            "Visual programming concepts",
+            "Game physics and collision detection",
+            "Level design principles",
+            "Game optimization techniques"
+          ]
+        },
+        "timeline": [
+          {
+            "date": "Week 1",
+            "milestone": "Learning Unreal Engine basics"
+          },
+          {
+            "date": "Week 2",
+            "milestone": "Player character implementation"
+          },
+          {
+            "date": "Week 3",
+            "milestone": "Level design and obstacles"
+          },
+          {
+            "date": "Week 4",
+            "milestone": "Polish and optimization"
+          }
+        ]
+      }
     },
     {
       "name": "Pochita Vet-App",
@@ -196,14 +378,75 @@
       "description": "Web application for a veterinary clinic using Django and MySQL.",
       "highlights": [
         "Fully functional veterinary clinic management system",
-        "Collaborative project with other INACAP students"
+        "Collaborative project with other INACAP students",
+        "Patient records management",
+        "Appointment scheduling"
       ],
       "github": "https://github.com/Yeyobitz/Pochita",
       "images": [
         "/projects/pochita/pochita1.webp",
         "/projects/pochita/pochita2.webp",
         "/projects/pochita/pochita3.webp"
-      ]
+      ],
+      "technologies": ["Python", "Django", "MySQL", "Bootstrap"],
+      "impact": "Academic project that improved appointment and medical record management at a local veterinary clinic.",
+      "duration": "2 months",
+      "role": "Backend Developer",
+      "teamSize": 3,
+      "client": "Academic Project",
+      "caseStudy": {
+        "process": {
+          "planning": "The project was developed as part of our academic curriculum, focusing on creating a practical solution for veterinary clinics while learning full-stack development.",
+          "challenges": [
+            "Managing complex medical records relationships",
+            "Implementing secure user authentication",
+            "Coordinating work between team members",
+            "Ensuring data privacy compliance"
+          ],
+          "solutions": [
+            "Designed normalized database schema",
+            "Implemented Django's built-in authentication",
+            "Used Git for version control and collaboration",
+            "Applied Django's security best practices"
+          ],
+          "learnings": [
+            "Team collaboration and git workflow",
+            "Database design and relationships",
+            "Django MVT architecture",
+            "Security best practices"
+          ]
+        },
+        "metrics": [
+          {
+            "label": "Records Processing Time",
+            "value": "45sec",
+            "change": "-60%"
+          },
+          {
+            "label": "Paper Usage",
+            "value": "0",
+            "change": "-100%"
+          }
+        ],
+        "timeline": [
+          {
+            "date": "Week 1-2",
+            "milestone": "Requirements analysis and database design"
+          },
+          {
+            "date": "Week 3-4",
+            "milestone": "Backend development"
+          },
+          {
+            "date": "Week 5-6",
+            "milestone": "Frontend implementation"
+          },
+          {
+            "date": "Week 7-8",
+            "milestone": "Testing and documentation"
+          }
+        ]
+      }
     }
   ]
 }

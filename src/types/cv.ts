@@ -33,5 +33,21 @@ export interface Project {
   highlights: string[];
   url?: string;
   github?: string;
-  images?: string[]; // Added images array for carousel
+  images?: string[];
+  technologies: string[];
+  impact?: string;
+  duration?: string;
+  role?: string;
+  teamSize?: number;
+  client?: string;
+  caseStudy?: CaseStudy;
+}
+
+export interface CaseStudy {
+  process: {
+    planning?: string;
+    challenges?: string[];
+    solutions?: string[];
+    learnings?: string[];
+  };
 }

@@ -1,0 +1,172 @@
+---
+interface Props {
+  process: {
+    planning?: string;
+    challenges?: string[];
+    solutions?: string[];
+    learnings?: string[];
+  };
+}
+
+const { process } = Astro.props;
+---
+
+<div class="case-study">
+  {process && (
+    <div class="process-section">
+      {process.planning && (
+        <div class="planning">
+          <h4 class="section-title">
+            <span class="icon">📋</span>
+            Process Overview
+          </h4>
+          <p>{process.planning}</p>
+        </div>
+      )}
+
+      <div class="details-grid">
+        {process.challenges && (
+          <div class="challenges">
+            <h5 class="subsection-title">
+              <span class="icon">🎯</span>
+              Challenges
+            </h5>
+            <ul>
+              {process.challenges.map(challenge => (
+                <li>{challenge}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {process.solutions && (
+          <div class="solutions">
+            <h5 class="subsection-title">
+              <span class="icon">💡</span>
+              Solutions
+            </h5>
+            <ul>
+              {process.solutions.map(solution => (
+                <li>{solution}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {process.learnings && (
+        <div class="learnings">
+          <h5 class="subsection-title">
+            <span class="icon">🎓</span>
+            Key Learnings
+          </h5>
+          <ul class="learnings-list">
+            {process.learnings.map(learning => (
+              <li>{learning}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+</div>
+
+<style>
+  .case-study {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(var(--accent-dark), 0.1);
+    border-radius: 8px;
+    border: 1px solid var(--color-accent-purple);
+  }
+
+  .process-section > div {
+    margin-bottom: 1.5rem;
+  }
+
+  .process-section > div:last-child {
+    margin-bottom: 0;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--color-accent-blue);
+    margin: 0 0 0.75rem;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  }
+
+  .subsection-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--color-accent-purple);
+    margin: 0 0 0.75rem;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+  }
+
+  .icon {
+    font-size: 1rem;
+  }
+
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
+  }
+
+  li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-purple);
+  }
+
+  .learnings-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+  }
+
+  .learnings-list li {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .case-study {
+      padding: 0.75rem;
+    }
+
+    .details-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .learnings-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style> 

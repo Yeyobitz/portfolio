@@ -63,7 +63,7 @@ const { email, profiles } = Astro.props;
   .contact-form-wrapper {
     opacity: 0;
     animation: fadeIn 0.5s ease-out forwards;
-    animation-delay: 4s;
+    animation-delay: 2s;
   }
 
   .typing-effect {
@@ -71,7 +71,7 @@ const { email, profiles } = Astro.props;
                blink 0.75s step-end infinite;
     white-space: nowrap;
     border-right: 2px solid transparent;
-    animation-delay: 0.5s;
+    animation-delay: 0.3s;
   }
 
   .typing-effect-2 {
@@ -79,7 +79,7 @@ const { email, profiles } = Astro.props;
                blink 0.75s step-end infinite;
     white-space: nowrap;
     border-right: 2px solid transparent;
-    animation-delay: 2.5s;
+    animation-delay: 1.2s;
   }
 
   @keyframes typing {
@@ -159,7 +159,7 @@ const { email, profiles } = Astro.props;
         } else {
           clearInterval(interval);
         }
-      }, Math.random() * 50 + 50); // Velocidad de escritura aleatoria entre 50ms y 100ms
+      }, Math.random() * 30 + 30);
     }, startDelay);
   }
 
@@ -172,13 +172,13 @@ const { email, profiles } = Astro.props;
         
         lines.forEach((line, index) => {
           const text = line.querySelector('.terminal-text')?.textContent || '';
-          typeText(line as HTMLElement, text, index * 2000); // 2 segundos de retraso entre líneas
+          typeText(line as HTMLElement, text, index * 900);
         });
         
         observer.unobserve(section);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.2 });
 
   // Observar la sección de contacto
   const contactSection = document.querySelector('#contact');
