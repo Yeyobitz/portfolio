@@ -84,17 +84,27 @@ const { email, profiles } = Astro.props;
 
   .btn {
     position: relative;
-    background: var(--color-bg-tertiary);
-    border-radius: 8px;
-    padding: 2rem 1.5rem;
-    text-decoration: none;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    height: 100%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    overflow: hidden;
+    transition: all var(--transition-smooth);
+  }
+
+  .btn:hover {
+    background: rgba(17, 17, 17, 0.75);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
 
   .btn-content {
@@ -257,5 +267,26 @@ const { email, profiles } = Astro.props;
     .btn {
       padding: 1.25rem 1rem;
     }
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--color-accent-purple);
+    border-radius: 6px;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--color-accent-blue);
+    background: rgba(17, 17, 17, 0.75);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
   }
 </style>

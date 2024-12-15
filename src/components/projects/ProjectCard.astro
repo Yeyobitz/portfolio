@@ -73,7 +73,9 @@ const { project } = Astro.props;
 
 <style>
   .project-card {
-    background: rgba(var(--accent-dark), 0.1);
+    background: rgba(17, 17, 17, 0.4) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--color-accent-purple);
     border-radius: 12px;
     padding: 1.5rem;
@@ -81,6 +83,7 @@ const { project } = Astro.props;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0;
     transform: translateY(20px);
+    will-change: transform, opacity, background;
   }
 
   .project-card.visible {
@@ -90,7 +93,8 @@ const { project } = Astro.props;
 
   .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(var(--accent-dark), 0.2);
+    box-shadow: 0 5px 15px rgba(var(--accent), 0.2);
+    background: rgba(17, 17, 17, 0.6) !important;
   }
 
   .project-header {
@@ -139,16 +143,20 @@ const { project } = Astro.props;
     font-size: 0.9rem;
     text-decoration: none;
     transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
   }
 
   .project-link.demo {
-    background: var(--color-accent-blue);
-    color: var(--color-bg-primary);
+    background: rgba(0, 240, 255, 0.2);
+    color: var(--color-accent-blue);
+    border: 1px solid var(--color-accent-blue);
   }
 
   .project-link.github {
-    background: var(--color-accent-purple);
-    color: var(--color-bg-primary);
+    background: rgba(184, 41, 232, 0.2);
+    color: var(--color-accent-purple);
+    border: 1px solid var(--color-accent-purple);
   }
 
   .project-link:hover {
@@ -200,7 +208,9 @@ const { project } = Astro.props;
   }
 
   .tech-tag {
-    background: rgba(var(--accent-dark), 0.2);
+    background: rgba(17, 17, 17, 0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     color: var(--color-accent-green);
     padding: 0.25rem 0.75rem;
     border-radius: 4px;

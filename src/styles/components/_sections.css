@@ -2,12 +2,27 @@
 section {
   position: relative;
   margin: 2rem 0;
-  background: var(--color-bg-secondary);
+  background: rgba(17, 17, 17, 0.6) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 2px solid var(--color-accent-purple);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 30px rgba(var(--accent), 0.1);
   transition: all 0.3s ease-out;
+  will-change: transform, opacity;
+}
+
+/* Terminal Header */
+.terminal-header {
+  background: rgba(26, 26, 26, 0.8) !important;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-bottom: 2px solid var(--color-accent-purple);
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Estado minimizado */
@@ -35,7 +50,8 @@ section.minimized form {
 
 /* Efectos hover */
 section:hover {
-  box-shadow: 0 0 40px rgba(var(--accent), 0.15);
+  box-shadow: 0 0 40px rgba(var(--accent), 0.2);
+  background: rgba(17, 17, 17, 0.75) !important;
 }
 
 section.minimized:hover {

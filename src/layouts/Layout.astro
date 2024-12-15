@@ -24,6 +24,7 @@ const schemaData = {
 };
 
 import EasterEggs from '../components/EasterEggs.astro';
+import ParticleBackground from '../components/ParticleBackground.astro';
 ---
 
 <!doctype html>
@@ -68,6 +69,7 @@ import EasterEggs from '../components/EasterEggs.astro';
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>
+    <ParticleBackground />
     <div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Cargando sitio">
       <div class="loading-content">
         <div class="loading-text" aria-live="polite">BOOTING SYSTEM</div>
@@ -463,6 +465,8 @@ import EasterEggs from '../components/EasterEggs.astro';
     flex-direction: column;
     overflow-y: auto;
     background: var(--color-bg-primary);
+    position: relative;
+    z-index: 1;
   }
 
   .crt-overlay {
@@ -472,7 +476,7 @@ import EasterEggs from '../components/EasterEggs.astro';
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 9998;
+    z-index: 3;
   }
 
   .crt-overlay::before {
@@ -510,7 +514,7 @@ import EasterEggs from '../components/EasterEggs.astro';
     flex: 1;
     padding-top: 3.5rem;
     position: relative;
-    z-index: 1;
+    z-index: 4;
   }
 
   /* Navigation Styles */
@@ -521,7 +525,7 @@ import EasterEggs from '../components/EasterEggs.astro';
     width: 100%;
     background: rgba(26, 26, 26, 0.95);
     backdrop-filter: blur(10px);
-    z-index: 9999;
+    z-index: 100;
     padding: 0.5rem 0;
     border-bottom: 1px solid var(--color-accent-green);
   }
@@ -988,7 +992,7 @@ import EasterEggs from '../components/EasterEggs.astro';
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10000;
+    z-index: 1000;
     opacity: 1;
     visibility: visible;
     transition: opacity 0.5s ease, visibility 0.5s ease;
