@@ -154,7 +154,12 @@ import EasterEggs from '../components/EasterEggs.astro';
       </footer>
     </div>
 
-    <EasterEggs />
+    <!-- Easter Egg Overlay -->
+    <div class="easter-egg-overlay" aria-hidden="true">
+      <div class="scanlines"></div>
+      <div class="crt-effect"></div>
+      <div class="glitch-text">KONAMI CODE ACTIVATED</div>
+    </div>
   </body>
 </html>
 
@@ -340,6 +345,107 @@ import EasterEggs from '../components/EasterEggs.astro';
   if (window.location.hash) {
     handleHashChange();
   }
+
+  // Easter Egg Logic
+  const easterEggSound = new Audio('/sounds/easteregg.mp3');
+  easterEggSound.volume = 0.5;
+  easterEggSound.preload = 'auto';
+
+  const konamiCode = [
+    'ArrowUp', 'ArrowUp',
+    'ArrowDown', 'ArrowDown',
+    'ArrowLeft', 'ArrowRight',
+    'ArrowLeft', 'ArrowRight',
+    'b', 'a'
+  ];
+  let konamiIndex = 0;
+
+  const chaosClasses = ['chaos-mode', 'chaos-mode-reverse', 'chaos-mode-delayed'];
+
+  async function handleKonami() {
+    // Iniciar la música inmediatamente
+    easterEggSound.currentTime = 0;
+    const playPromise = easterEggSound.play();
+
+    // Guardar la posición actual del scroll
+    const scrollPos = window.scrollY;
+    
+    // Bloquear el scroll
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPos}px`;
+    document.body.style.width = '100%';
+
+    // Aplicar todos los efectos de una sola vez
+    const overlay = document.querySelector('.easter-egg-overlay');
+    const mainContent = document.querySelector('main');
+    const elements = document.querySelectorAll('section, .project-card, .terminal-section, .hero-content');
+    
+    requestAnimationFrame(() => {
+      // Activar overlay
+      overlay?.classList.add('active');
+      
+      // Hacer que el contenido principal se aleje
+      if (mainContent) {
+        mainContent.style.transform = 'scale(0.95) translateZ(-100px)';
+        mainContent.style.filter = 'blur(2px)';
+        mainContent.style.transition = 'all 0.3s ease';
+      }
+
+      // Aplicar efectos de caos
+      document.body.style.animation = 'glitchEffect 0.5s infinite';
+      elements.forEach(element => {
+        element.classList.add(chaosClasses[Math.floor(Math.random() * chaosClasses.length)]);
+      });
+    });
+
+    // Limpiar todo después de 7 segundos
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        overlay?.classList.remove('active');
+        document.body.style.animation = '';
+        
+        // Restaurar el contenido principal
+        if (mainContent) {
+          mainContent.style.transform = '';
+          mainContent.style.filter = '';
+        }
+
+        elements.forEach(element => {
+          chaosClasses.forEach(className => element.classList.remove(className));
+        });
+        easterEggSound.pause();
+        easterEggSound.currentTime = 0;
+
+        // Restaurar el scroll
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollPos);
+      });
+    }, 7000);
+
+    // Manejar errores de reproducción sin bloquear la animación
+    playPromise?.catch(error => {
+      console.log('Error al reproducir sonido:', error);
+    });
+  }
+
+  // Optimizar el detector de teclas
+  const keyHandler = (e) => {
+    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+    
+    if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
+      if (++konamiIndex === konamiCode.length) {
+        konamiIndex = 0;
+        handleKonami();
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  };
+
+  document.addEventListener('keydown', keyHandler);
+  document.addEventListener('astro:page-load', () => konamiIndex = 0);
 </script>
 
 <style is:global>
@@ -966,5 +1072,185 @@ import EasterEggs from '../components/EasterEggs.astro';
 
   .secret-hint:hover {
     opacity: 0.3;
+  }
+
+  /* Easter Egg Styles */
+  .easter-egg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .easter-egg-overlay.active {
+    display: flex !important;
+    will-change: opacity;
+    animation: overlayIn 0.2s ease-out forwards;
+  }
+
+  .scanlines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent 50%,
+      rgba(0, 255, 65, 0.1) 50%
+    );
+    background-size: 100% 4px;
+    animation: scanlines 0.5s linear infinite;
+    mix-blend-mode: overlay;
+  }
+
+  .crt-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: crtEffect 0.15s infinite;
+    mix-blend-mode: screen;
+  }
+
+  .glitch-text {
+    position: fixed;
+    left: 50%;
+    top: 50vh;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: min(2.5rem, 8vw);
+    color: var(--color-accent-green);
+    text-shadow: 
+      2px 2px var(--color-accent-blue),
+      -2px -2px var(--color-accent-purple);
+    animation: glitchText 0.5s infinite;
+    z-index: 10000;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.9);
+    padding: min(1.5rem, 4vw);
+    border-radius: 1rem;
+    box-shadow: 
+      0 0 50px rgba(0, 255, 65, 0.5),
+      0 0 100px rgba(0, 255, 65, 0.3),
+      inset 0 0 20px rgba(0, 255, 65, 0.3);
+    white-space: nowrap;
+    margin: 0;
+    line-height: 1;
+    backdrop-filter: blur(5px);
+  }
+
+  /* Chaos Effect Classes */
+  .chaos-mode {
+    animation: chaosRotate 0.5s linear infinite !important;
+    transform-origin: center center;
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .chaos-mode-reverse {
+    animation: chaosRotateReverse 0.7s linear infinite !important;
+    transform-origin: center center;
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .chaos-mode-delayed {
+    animation: chaosRotate 0.6s linear infinite !important;
+    animation-delay: 0.2s !important;
+    transform-origin: center center;
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+    position: relative;
+    z-index: 100;
+  }
+
+  /* Animations */
+  @keyframes overlayIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes scanlines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+  }
+
+  @keyframes crtEffect {
+    0% {
+      background: 
+        radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.5) 100%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.1), rgba(0, 0, 255, 0.1));
+    }
+    50% {
+      background: 
+        radial-gradient(circle at center, rgba(0, 0, 0, 0.5) 50%, transparent 100%),
+        linear-gradient(90deg, rgba(0, 0, 255, 0.1), rgba(255, 0, 0, 0.1), rgba(0, 255, 0, 0.1));
+    }
+    100% {
+      background: 
+        radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.5) 100%),
+        linear-gradient(90deg, rgba(0, 255, 0, 0.1), rgba(0, 0, 255, 0.1), rgba(255, 0, 0, 0.1));
+    }
+  }
+
+  @keyframes glitchText {
+    0%, 100% {
+      text-shadow: 
+        2px 2px var(--color-accent-blue),
+        -2px -2px var(--color-accent-purple);
+    }
+    25% {
+      text-shadow: 
+        -2px 2px var(--color-accent-purple),
+        2px -2px var(--color-accent-blue);
+    }
+    50% {
+      text-shadow: 
+        2px -2px var(--color-accent-blue),
+        -2px 2px var(--color-accent-purple);
+    }
+    75% {
+      text-shadow: 
+        -2px -2px var(--color-accent-purple),
+        2px 2px var(--color-accent-blue);
+    }
+  }
+
+  @keyframes chaosRotate {
+    0% { transform: rotate(0deg) scale(1) translateZ(0); }
+    25% { transform: rotate(180deg) scale(1.2) translateZ(0); }
+    50% { transform: rotate(360deg) scale(0.8) translateZ(0); }
+    75% { transform: rotate(540deg) scale(1.2) translateZ(0); }
+    100% { transform: rotate(720deg) scale(1) translateZ(0); }
+  }
+
+  @keyframes chaosRotateReverse {
+    0% { transform: rotate(720deg) scale(1) translateZ(0); }
+    25% { transform: rotate(540deg) scale(1.2) translateZ(0); }
+    50% { transform: rotate(360deg) scale(0.8) translateZ(0); }
+    75% { transform: rotate(180deg) scale(1.2) translateZ(0); }
+    100% { transform: rotate(0deg) scale(1) translateZ(0); }
+  }
+
+  @keyframes glitchEffect {
+    0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
+    25% { transform: translate(2px, 2px); filter: hue-rotate(90deg); }
+    50% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
+    75% { transform: translate(2px, -2px); filter: hue-rotate(270deg); }
   }
 </style>

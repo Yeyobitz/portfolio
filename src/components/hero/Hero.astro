@@ -560,16 +560,29 @@ const { name, label, image } = Astro.props;
 </style>
 
 <script>
+  // Precargar los sonidos
+  const kritterSound = new Audio('/sounds/KritterSFX.mp3');
+  kritterSound.preload = 'auto';
+  kritterSound.volume = 0.5;
+
   function initProfileImage() {
     const container = document.querySelector('.profile-image-container');
-    const audio = new Audio('/sounds/wena.mp3');
     
     if (container) {
-      container.addEventListener('click', () => {
+      container.addEventListener('click', async () => {
         container.classList.add('activated');
-        audio.play();
         
-        // Reproducir sonido de "¡WENA CTM!"
+        // Reproducir ambos sonidos inmediatamente
+        kritterSound.currentTime = 0;
+        
+        try {
+          await Promise.all([
+            kritterSound.play()
+          ]);
+        } catch (error) {
+          console.log('Error al reproducir sonido:', error);
+        }
+        
         setTimeout(() => {
           container.classList.remove('activated');
         }, 1000);
@@ -578,7 +591,12 @@ const { name, label, image } = Astro.props;
   }
 
   // Inicializar cuando el documento esté listo
-  document.addEventListener('DOMContentLoaded', initProfileImage);
+  document.addEventListener('DOMContentLoaded', () => {
+    initProfileImage();
+    
+    // Precargar los sonidos
+    kritterSound.load();
+  });
 </script>
 
 <svg style="position: absolute; width: 0; height: 0;">
