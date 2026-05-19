@@ -27,7 +27,7 @@ const { name, label, image } = Astro.props;
   
   <div class="hero-content">
     <div class="profile-image-container">
-      <img src={image} alt={name} class="profile-image" />
+      <img src={image} alt={name} class="profile-image" width="220" height="220" loading="lazy" decoding="async" />
       <div class="profile-image-glow neon-pulse"></div>
       <div class="secret-message">AAAAAAAAAA</div>
     </div>
@@ -504,6 +504,16 @@ const { name, label, image } = Astro.props;
       width: 15vh;
       height: 15vh;
       filter: blur(2vh);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-background > * {
+      animation: none !important;
+    }
+
+    .grid-background {
+      animation: none !important;
     }
   }
 

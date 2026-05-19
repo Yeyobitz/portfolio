@@ -45,7 +45,7 @@ const images = getProjectImages(projectName);
   <div class="slides">
     {images.map((img, index) => (
       <div class={`slide ${index === 0 ? 'active' : ''}`} data-index={index}>
-        <img src={img} alt={`${projectName} screenshot ${index + 1}`} />
+        <img src={img} alt={`${projectName} screenshot ${index + 1}`} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" width="640" height="360" />
       </div>
     ))}
   </div>

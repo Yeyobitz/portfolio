@@ -1,5 +1,5 @@
-<canvas id="particleCanvas" class="particle-canvas desktop-only"></canvas>
-<div class="mobile-background mobile-only"></div>
+<canvas id="particleCanvas" class="particle-canvas desktop-only" aria-hidden="true"></canvas>
+<div class="mobile-background mobile-only" aria-hidden="true"></div>
 
 <style>
   .particle-canvas {
@@ -50,9 +50,20 @@
       display: none;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .particle-canvas,
+    .mobile-background {
+      display: none !important;
+    }
+  }
 </style>
 
 <script>
+function shouldReduceMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 class Particle {
   constructor(x, y, canvas) {
     this.x = x;
@@ -258,7 +269,7 @@ class ParticleSystem {
     document.addEventListener('mousemove', (e) => {
       this.mouseX = e.clientX;
       this.mouseY = e.clientY;
-    });
+    }, { passive: true });
 
     this.createParticles();
 
@@ -348,6 +359,11 @@ let initAttempts = 0;
 const MAX_ATTEMPTS = 10;
 
 function initParticleSystem() {
+  if (shouldReduceMotion()) {
+    console.log('ParticleSystem disabled: prefers-reduced-motion is enabled');
+    return;
+  }
+
   console.log('Attempting to initialize ParticleSystem');
   if (window.innerWidth > 768) {
     const canvas = document.getElementById('particleCanvas');
@@ -381,4 +397,18 @@ window.addEventListener('load', tryInit);
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   tryInit();
 }
+
+window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+  if (e.matches) {
+    const canvas = document.getElementById('particleCanvas');
+    if (canvas) {
+      canvas.style.display = 'none';
+    }
+  } else {
+    const canvas = document.getElementById('particleCanvas');
+    if (canvas && window.innerWidth > 768) {
+      canvas.style.display = '';
+    }
+  }
+});
 </script> 
