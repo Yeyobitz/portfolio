@@ -12,6 +12,22 @@ export interface Basics {
   url: string;
   summary: string;
   profiles: Profile[];
+  education: Education[];
+  certifications: Certification[];
+}
+
+export interface Education {
+  institution: string;
+  degree: string;
+  field: string;
+  startYear: string;
+  endYear: string;
+}
+
+export interface Certification {
+  name: string;
+  issuer: string;
+  year: string;
 }
 
 export interface Profile {

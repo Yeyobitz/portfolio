@@ -1,0 +1,60 @@
+@media print {
+  header, nav, footer, canvas, 
+  .scroll-indicator, .btn-grid, .btn-link,
+  .case-study-toggle, .particle-canvas,
+  .mobile-background {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+
+  h1, h2, h3, h4 {
+    color: black !important;
+    page-break-after: avoid !important;
+  }
+  h1 { font-size: 18pt !important; }
+  h2 { font-size: 14pt !important; border-left: 3px solid black !important; padding-left: 0.5rem !important; }
+  h3 { font-size: 12pt !important; }
+
+  .skill-badge {
+    border: 1px solid #ccc !important;
+    color: black !important;
+    background: white !important;
+  }
+
+  .project-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    page-break-inside: avoid !important;
+  }
+
+  a[href]:after {
+    content: none !important;
+  }
+
+  .skill-dot, .status-dot {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .case-study-content {
+    display: block !important;
+    max-height: none !important;
+  }
+
+  section {
+    padding: 0.5rem 0 !important;
+    margin: 0 !important;
+  }
+
+  .container {
+    max-width: 100% !important;
+    padding: 0 1rem !important;
+  }
+}

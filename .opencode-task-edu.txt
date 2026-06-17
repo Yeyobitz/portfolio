@@ -1,0 +1,66 @@
+Add an Education/Formación section to the portfolio.
+
+FILE 1: src/data/cv.json — Add education and certifications arrays to the basics object.
+
+After the "profiles" array in basics, add:
+
+```json
+"education": [
+  {
+    "institution": "INACAP",
+    "degree": "Analista Programador",
+    "field": "Tecnologías de la Información",
+    "startYear": "2022",
+    "endYear": "2024"
+  }
+],
+"certifications": [
+  {
+    "name": "Inglés C2 (Proficient)",
+    "issuer": "EF SET",
+    "year": "2024"
+  }
+]
+```
+
+Insert these right after the profiles array closes, before the skills array. Keep all existing data intact.
+
+FILE 2: Create src/components/Education.astro — New component for the education section.
+
+Props (it receives from index.astro):
+- education: array of {institution, degree, field, startYear, endYear}
+- certifications: array of {name, issuer, year}
+
+Design:
+- Section id="education", padding: var(--space-2xl) 0
+- Container max-width: var(--container-width)
+- h2: "Formación" with green left border accent (matching About/Skills style)
+- Two subsections:
+
+1. "Educación" — a card/timeline item for each education entry:
+   - Institution name (bold, color-text-primary)
+   - Degree (color-accent-blue)
+   - Field + years (color-text-secondary, smaller)
+   Layout: left border accent, padding-left: 1rem, margin-bottom: 1.5rem
+
+2. "Certificaciones" — simple list:
+   - Each cert: name (bold) + issuer + year (muted)
+
+CSS: Clean, modern. Use existing CSS variables. No terminal/crt styling. 
+
+FILE 3: src/pages/index.astro — Import and use the Education component.
+
+Add after the About section and before the Projects section:
+```astro
+<Education 
+  education={cv.basics.education}
+  certifications={cv.basics.certifications}
+/>
+```
+
+Also add the import:
+```astro
+import Education from '../components/Education.astro';
+```
+
+WRITE all three files completely.

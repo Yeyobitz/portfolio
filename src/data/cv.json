@@ -17,6 +17,22 @@
         "username": "Yeyobitz",
         "url": "https://github.com/Yeyobitz"
       }
+    ],
+    "education": [
+      {
+        "institution": "INACAP",
+        "degree": "Analista Programador",
+        "field": "Tecnologías de la Información",
+        "startYear": "2022",
+        "endYear": "2024"
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Inglés C2 (Proficient)",
+        "issuer": "EF SET",
+        "year": "2024"
+      }
     ]
   },
   "skills": [
