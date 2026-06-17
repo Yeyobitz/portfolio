@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/hero/Hero.astro';
 import About from '../components/About.astro';
-import Education from '../components/Education.astro';
 import ProjectsSection from '../components/projects/ProjectsSection.astro';
 import SkillsSection from '../components/skills/SkillsSection.astro';
 import ContactSection from '../components/contact/ContactSection.astro';
@@ -18,11 +17,6 @@ import cv from '../data/cv.json';
     />
     
     <About summary={cv.basics.summary} />
-
-    <Education 
-      education={cv.basics.education}
-      certifications={cv.basics.certifications}
-    />
 
     <ProjectsSection projects={cv.projects} />
     
