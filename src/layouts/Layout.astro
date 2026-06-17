@@ -12,21 +12,19 @@ const {
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Yeyobitz",
-  "jobTitle": "Desarrollador Web Full Stack",
+  "name": "Diego Quiñones",
+  "jobTitle": "Analista Programador & Automation Specialist",
   "url": "https://yeyobitz.dev",
   "sameAs": [
     "https://github.com/yeyobitz",
-    "https://www.linkedin.com/in/diego-qui%C3%B1ones-montecinos-650010249/://linkedin.com/in/yeyobitz"
+    "https://www.linkedin.com/in/diego-quiñones-montecinos-650010249/"
   ],
   "description": description
 };
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import LoadingScreen from '../components/LoadingScreen.astro';
 import ParticleBackground from '../components/ParticleBackground.astro';
-import EasterEggOverlay from '../components/EasterEggOverlay.astro';
 ---
 
 <!doctype html>
@@ -61,19 +59,17 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#0a0a0a">
+    <meta name="theme-color" content="#0d1117">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   </head>
   <body>
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <ParticleBackground />
-    <LoadingScreen />
-    <EasterEggOverlay />
 
     <Header />
 
@@ -97,81 +93,18 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
   body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    background: var(--color-bg-primary);
-    position: relative;
-    z-index: 1;
-  }
-
-  .crt-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-  }
-
-  .crt-overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-      circle at center,
-      transparent 50%,
-      rgba(0, 0, 0, 0.15) 150%
-    );
-  }
-
-  .crt-overlay::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent 0%,
-      rgba(0, 0, 0, 0.1) 50%,
-      transparent 100%
-    );
-    background-size: 100% 4px;
-    animation: scanlineMove 10s linear infinite;
   }
 
   .content-wrapper {
-    flex: 1;
-    padding-top: 3.5rem;
-    position: relative;
-    z-index: 4;
-  }
-
-  nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--color-accent-green);
+    padding-top: 4rem;
   }
 
   .skip-link {
     position: absolute;
     top: -40px;
     left: 0;
-    background: var(--color-accent-green);
-    color: var(--color-bg-primary);
+    background: var(--color-accent-blue);
+    color: #fff;
     padding: 0.5rem 1rem;
     z-index: 1000;
     font-family: var(--font-mono);
@@ -182,134 +115,6 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
   .skip-link:focus {
     top: 0;
     outline: 2px solid var(--color-accent-blue);
-  }
-
-  .glitch {
-    position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .glitch:hover {
-    animation: textFlicker 0.2s infinite;
-  }
-
-  .glitch:hover::before,
-  .glitch:hover::after {
-    content: attr(data-glitch);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    animation: chromaOffset 3s infinite linear alternate-reverse;
-  }
-
-  .glitch:hover::before {
-    color: #0ff;
-    left: -2px;
-    animation: glitchBefore 2s infinite;
-  }
-
-  .glitch:hover::after {
-    color: #f0f;
-    left: 2px;
-    animation: glitchAfter 2.5s infinite;
-  }
-
-  @keyframes scanlineMove {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(100%); }
-  }
-
-  @keyframes chromaOffset {
-    0%, 95% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-    96%, 97% { clip-path: polygon(0 15%, 100% 15%, 100% 85%, 0 85%); }
-    98%, 100% { clip-path: polygon(0 10%, 100% 10%, 100% 90%, 0 90%); }
-  }
-
-  @keyframes textFlicker {
-    0%, 95% { opacity: 1; }
-    96%, 97% { opacity: 0.8; }
-    98%, 100% { opacity: 0.9; }
-  }
-
-  @keyframes glitchBefore {
-    0%, 95% { transform: translate(0); }
-    96%, 97% { transform: translate(-2px, 2px); }
-    98%, 100% { transform: translate(2px, -2px); }
-  }
-
-  @keyframes glitchAfter {
-    0%, 95% { transform: translate(0); }
-    96%, 97% { transform: translate(2px, -2px); }
-    98%, 100% { transform: translate(-2px, 2px); }
-  }
-
-  .chaos-mode {
-    animation: chaosRotate 0.5s linear infinite !important;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    position: relative;
-    z-index: 100;
-  }
-
-  .chaos-mode-reverse {
-    animation: chaosRotateReverse 0.7s linear infinite !important;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    position: relative;
-    z-index: 100;
-  }
-
-  .chaos-mode-delayed {
-    animation: chaosRotate 0.6s linear infinite !important;
-    animation-delay: 0.2s !important;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    position: relative;
-    z-index: 100;
-  }
-
-  @keyframes chaosRotate {
-    0% { transform: rotate(0deg) scale(1) translateZ(0); }
-    25% { transform: rotate(180deg) scale(1.2) translateZ(0); }
-    50% { transform: rotate(360deg) scale(0.8) translateZ(0); }
-    75% { transform: rotate(540deg) scale(1.2) translateZ(0); }
-    100% { transform: rotate(720deg) scale(1) translateZ(0); }
-  }
-
-  @keyframes chaosRotateReverse {
-    0% { transform: rotate(720deg) scale(1) translateZ(0); }
-    25% { transform: rotate(540deg) scale(1.2) translateZ(0); }
-    50% { transform: rotate(360deg) scale(0.8) translateZ(0); }
-    75% { transform: rotate(180deg) scale(1.2) translateZ(0); }
-    100% { transform: rotate(0deg) scale(1) translateZ(0); }
-  }
-
-  @keyframes glitchEffect {
-    0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
-    25% { transform: translate(2px, 2px); filter: hue-rotate(90deg); }
-    50% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
-    75% { transform: translate(2px, -2px); filter: hue-rotate(270deg); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .chaos-mode,
-    .chaos-mode-reverse,
-    .chaos-mode-delayed {
-      animation: none !important;
-    }
   }
 </style>
 

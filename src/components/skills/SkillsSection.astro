@@ -1,7 +1,6 @@
 ---
 import type { Skill } from '../../types/cv';
-import SkillCategory from './SkillCategory.astro';
-import TerminalHeader from '../TerminalHeader.astro';
+import SkillBadge from './SkillBadge.astro';
 
 interface Props {
   skills: Skill[];
@@ -9,56 +8,63 @@ interface Props {
 
 const { skills } = Astro.props;
 
-// Group skills by primary keyword (category)
 const groupedSkills = skills.reduce((acc, skill) => {
   const category = skill.keywords[0];
-  if (!acc[category]) {
-    acc[category] = [];
-  }
-  acc[category].push(skill);
+  if (!acc.has(category)) acc.set(category, []);
+  acc.get(category)!.push(skill);
   return acc;
-}, {} as Record<string, Skill[]>);
+}, new Map<string, Skill[]>());
 
-// Sort categories by importance
-const categoryOrder = [
-  "Web development",
-  "Databases",
-  "Version control",
-  "Game Development",
-  "Design",
-  "Development Tools"
-];
-
-const sortedCategories = Object.entries(groupedSkills).sort(([a], [b]) => {
-  return categoryOrder.indexOf(a) - categoryOrder.indexOf(b);
-});
+const categories = [...groupedSkills.entries()];
 ---
 
-<section class="skills-section crt" id="skills">
-  <TerminalHeader title="SKILLS.EXE" />
-  <div class="terminal-content">
-    {sortedCategories.map(([category, categorySkills]) => (
-      <SkillCategory category={category} skills={categorySkills} />
+<section id="skills">
+  <div class="container">
+    <h2>Skills</h2>
+    {categories.map(([category, categorySkills]) => (
+      <div class="category">
+        <h3 class="category-title">{category}</h3>
+        <div class="skills-grid">
+          {categorySkills.map(skill => (
+            <SkillBadge name={skill.name} level={skill.level} />
+          ))}
+        </div>
+      </div>
     ))}
   </div>
 </section>
 
 <style>
-  .skills-section {
-    margin: 4rem 0;
-    border: 2px solid var(--color-accent-purple);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+  #skills {
+    padding: var(--space-2xl) 0;
   }
 
-  .terminal-content {
-    padding: 2rem;
+  .container {
+    max-width: var(--container-width);
   }
 
-  @media (max-width: 768px) {
-    .terminal-content {
-      padding: 1rem;
-    }
+  h2 {
+    border-left: 4px solid #2ea043;
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .category {
+    margin-bottom: 2rem;
+  }
+
+  .category-title {
+    border-left: 4px solid var(--color-accent);
+    padding-left: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--color-text-primary);
+  }
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-left: 1.75rem;
   }
 </style>

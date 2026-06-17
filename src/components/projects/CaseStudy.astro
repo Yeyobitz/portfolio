@@ -1,136 +1,149 @@
 ---
 interface Props {
-  process: {
-    planning?: string;
-    challenges?: string[];
-    solutions?: string[];
-    learnings?: string[];
+  caseStudy: {
+    process?: {
+      planning?: string;
+      challenges?: string[];
+      solutions?: string[];
+      learnings?: string[];
+    };
+    timeline?: { date: string; milestone: string }[];
   };
 }
 
-const { process } = Astro.props;
+const { caseStudy } = Astro.props;
+const { process, timeline } = caseStudy;
 ---
 
 <div class="case-study">
-  {process && (
-    <div class="process-section">
-      {process.planning && (
-        <div class="planning">
-          <h4 class="section-title">
-            <span class="icon">📋</span>
-            Process Overview
-          </h4>
-          <p>{process.planning}</p>
-        </div>
-      )}
+  <button class="toggle" type="button" aria-expanded="false">
+    <span class="toggle-icon">+</span>
+    Ver más
+  </button>
+  <div class="content" hidden>
+    {process && (
+      <div class="process-section">
+        {process.planning && (
+          <div class="block">
+            <h4>Planificación</h4>
+            <p>{process.planning}</p>
+          </div>
+        )}
 
-      <div class="details-grid">
-        {process.challenges && (
-          <div class="challenges">
-            <h5 class="subsection-title">
-              <span class="icon">🎯</span>
-              Challenges
-            </h5>
+        {process.challenges && process.challenges.length > 0 && (
+          <div class="block">
+            <h4>Desafíos</h4>
             <ul>
-              {process.challenges.map(challenge => (
-                <li>{challenge}</li>
+              {process.challenges.map((item) => (
+                <li>{item}</li>
               ))}
             </ul>
           </div>
         )}
 
-        {process.solutions && (
-          <div class="solutions">
-            <h5 class="subsection-title">
-              <span class="icon">💡</span>
-              Solutions
-            </h5>
+        {process.solutions && process.solutions.length > 0 && (
+          <div class="block">
+            <h4>Soluciones</h4>
             <ul>
-              {process.solutions.map(solution => (
-                <li>{solution}</li>
+              {process.solutions.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {process.learnings && process.learnings.length > 0 && (
+          <div class="block">
+            <h4>Aprendizajes</h4>
+            <ul>
+              {process.learnings.map((item) => (
+                <li>{item}</li>
               ))}
             </ul>
           </div>
         )}
       </div>
+    )}
 
-      {process.learnings && (
-        <div class="learnings">
-          <h5 class="subsection-title">
-            <span class="icon">🎓</span>
-            Key Learnings
-          </h5>
-          <ul class="learnings-list">
-            {process.learnings.map(learning => (
-              <li>{learning}</li>
-            ))}
-          </ul>
+    {timeline && timeline.length > 0 && (
+      <div class="block">
+        <h4>Línea de tiempo</h4>
+        <div class="timeline">
+          {timeline.map((entry) => (
+            <div class="timeline-entry">
+              <span class="timeline-date">{entry.date}</span>
+              <span class="timeline-milestone">{entry.milestone}</span>
+            </div>
+          ))}
         </div>
-      )}
-    </div>
-  )}
+      </div>
+    )}
+  </div>
 </div>
 
 <style>
   .case-study {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     padding: 1rem;
-    background: rgba(17, 17, 17, 0.3) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-radius: 8px;
-    border: 1px solid var(--color-accent-purple);
+    background: var(--color-bg-tertiary);
+    border-radius: 6px;
   }
 
-  .process-section > div {
-    margin-bottom: 1.5rem;
-  }
-
-  .process-section > div:last-child {
-    margin-bottom: 0;
-  }
-
-  .section-title {
-    display: flex;
+  .toggle {
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 1.1rem;
-    color: var(--color-accent-blue);
-    margin: 0 0 0.75rem;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-    background: rgba(26, 26, 26, 0.5) !important;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border-left: 3px solid var(--color-accent-blue);
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    font-family: var(--font-heading);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
   }
 
-  .subsection-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    color: var(--color-accent-purple);
-    margin: 0 0 0.75rem;
-    text-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
-    background: rgba(26, 26, 26, 0.4) !important;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    border-left: 3px solid var(--color-accent-purple);
+  .toggle:hover {
+    border-color: var(--color-border-highlight);
+    color: var(--color-text-primary);
   }
 
-  .icon {
+  .toggle-icon {
+    display: inline-block;
+    width: 1em;
+    text-align: center;
     font-size: 1rem;
   }
 
-  .details-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin: 1rem 0;
+  .content {
+    margin-top: 1rem;
+  }
+
+  .content[hidden] {
+    display: none;
+  }
+
+  .block {
+    margin-bottom: 1rem;
+  }
+
+  .block:last-child {
+    margin-bottom: 0;
+  }
+
+  h4 {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--color-accent-blue);
+    margin: 0 0 0.5rem;
+  }
+
+  p {
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin: 0;
   }
 
   ul {
@@ -142,45 +155,62 @@ const { process } = Astro.props;
   li {
     position: relative;
     padding-left: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-text);
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
-  li:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0.375rem;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
   }
 
   li::before {
     content: '▸';
     position: absolute;
     left: 0;
-    color: var(--color-accent-purple);
+    color: var(--color-accent-green);
   }
 
-  .learnings-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  .timeline {
+    display: flex;
+    flex-direction: column;
     gap: 0.5rem;
   }
 
-  .learnings-list li {
-    margin-bottom: 0;
+  .timeline-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 0.85rem;
   }
 
-  @media (max-width: 768px) {
-    .case-study {
-      padding: 0.75rem;
-    }
-
-    .details-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .learnings-list {
-      grid-template-columns: 1fr;
-    }
+  .timeline-date {
+    font-family: var(--font-mono);
+    color: var(--color-accent-green);
+    white-space: nowrap;
   }
-</style> 
+
+  .timeline-milestone {
+    color: var(--color-text-secondary);
+  }
+</style>
+
+<script>
+  function initCaseStudyToggles() {
+    document.querySelectorAll('.case-study .toggle').forEach((btn) => {
+      const button = btn as HTMLButtonElement;
+      if (button.dataset.initialized) return;
+      button.dataset.initialized = 'true';
+
+      const content = button.nextElementSibling as HTMLElement;
+      if (!content) return;
+
+      button.addEventListener('click', () => {
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        const next = !expanded;
+        button.setAttribute('aria-expanded', String(next));
+        content.hidden = !next;
+        button.querySelector('.toggle-icon')!.textContent = next ? '−' : '+';
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initCaseStudyToggles);
+  document.addEventListener('astro:page-load', initCaseStudyToggles);
+</script>

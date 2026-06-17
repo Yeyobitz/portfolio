@@ -1,78 +1,90 @@
-/* Theme Variables */
+/* Theme Variables — Portfolio v2 */
 :root {
-  /* Colors */
-  --color-bg-primary: #0A0A0A;
-  --color-bg-secondary: #1A1A1A;
-  --color-bg-tertiary: #2A2A2A;
-  
-  /* Accent Colors */
-  --color-accent-purple: #B829E8;
-  --color-accent-blue: #00F0FF;
-  --color-accent-green: #00ff41;
-  --color-text: #F5F5F5;
-  
-  /* Skill Levels */
-  --color-level-basic: #FF5F5F;
-  --color-level-intermediate: #FFB84D;
-  --color-level-advanced: #00ff41;
-  
-  /* Typography */
-  --font-heading: 'Press Start 2P', system-ui;
+  --color-bg-primary: #0d1117;
+  --color-bg-secondary: #161b22;
+  --color-bg-tertiary: #21262d;
+  --color-bg-card: #1c2128;
+  --color-bg-hover: #252b33;
+  --color-text-primary: #e6edf3;
+  --color-text-secondary: #8b949e;
+  --color-text-muted: #6e7681;
+  --color-accent-green: #2ea043;
+  --color-accent-blue: #58a6ff;
+  --color-accent-purple: #a371f7;
+  --color-accent-orange: #d2991d;
+  --color-accent-red: #f85149;
+  --color-border: #30363d;
+  --color-border-highlight: #58a6ff;
+  --font-heading: 'JetBrains Mono', monospace;
+  --font-body: 'IBM Plex Mono', monospace;
   --font-mono: 'IBM Plex Mono', monospace;
-  --font-body: var(--font-mono);
-  
-  /* Spacing Scale */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
-  --space-2xl: 40px;
-  
-  /* Container */
-  --container-width: 1400px;
-  --container-padding: var(--space-md);
-  
-  /* Grid */
-  --grid-gap: var(--space-md);
-  
-  /* Effects */
-  --glow-text: 0 0 8px rgba(245, 245, 245, 0.5);
-  --glow-purple: 0 0 16px rgba(184, 41, 232, 0.5);
-  --glow-blue: 0 0 16px rgba(0, 240, 255, 0.5);
-  --glow-green: 0 0 16px rgba(0, 255, 65, 0.5);
-  
-  /* Transitions */
-  --transition-smooth: 0.3s ease-in-out;
-  --transition-glitch: 0.3s cubic-bezier(.25, .46, .45, .94);
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --container-width: 1100px;
+  --container-padding: 16px;
+  --grid-gap: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.5);
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.25s ease;
+  --transition-smooth: 0.3s ease;
+  --color-level-basic: #d2991d;
+  --color-level-intermediate: #58a6ff;
+  --color-level-advanced: #2ea043;
 }
 
-/* Global Styles */
+[data-theme="light"] {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f6f8fa;
+  --color-bg-tertiary: #eaeef2;
+  --color-bg-card: #f6f8fa;
+  --color-bg-hover: #eaeef2;
+  --color-text-primary: #1f2328;
+  --color-text-secondary: #656d76;
+  --color-text-muted: #8b949e;
+  --color-accent-green: #1a7f37;
+  --color-accent-blue: #0969da;
+  --color-accent-purple: #8250df;
+  --color-accent-orange: #9a6700;
+  --color-border: #d0d7de;
+  --color-border-highlight: #0969da;
+  --shadow-sm: 0 1px 3px rgba(31,35,40,0.12);
+  --shadow-md: 0 4px 12px rgba(31,35,40,0.15);
+  --shadow-lg: 0 8px 24px rgba(31,35,40,0.2);
+}
+
 body {
   background-color: var(--color-bg-primary);
-  color: var(--color-text);
+  color: var(--color-text-primary);
   font-family: var(--font-body);
-  line-height: 1.5;
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  line-height: 1.2;
-  letter-spacing: 0.1em;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--color-text-primary);
 }
 
-.section-title {
-  background: rgba(26, 26, 26, 0.95);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  border-left: 3px solid var(--color-accent-purple);
+a {
+  color: var(--color-accent-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
+a:hover { text-decoration: underline; }
 
 code {
   font-family: var(--font-mono);
+  background: var(--color-bg-tertiary);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
 }

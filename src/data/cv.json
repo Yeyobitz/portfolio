@@ -1,16 +1,16 @@
 {
   "basics": {
-    "name": "Diego QM",
-    "label": "Full Stack Developer",
+    "name": "Diego Quiñones",
+    "label": "Analista Programador & Automation Specialist",
     "image": "https://raw.githubusercontent.com/Yeyobitz/Front-End/3198fec59cf120b03a80ab73fcba19de46af7377/certamen1/assets/img/yeyo-T.png",
     "email": "yeyobitz@proton.me",
     "url": "https://yeyobitz.dev",
-    "summary": "Coding since 2023, I'm a full stack developer with a passion for creating web applications and games. I'm a quick learner and I'm always looking to improve my skills or learn new technologies. Send me a message with your idea and I'll help you make it happen.",
+    "summary": "Analista Programador con experiencia en desarrollo web full-stack usando Python (Django/Flask) en el backend y React/Astro en el frontend. Especializado en automatización de procesos con Bash y Python, administración de servidores Linux y orquestación de agentes de IA/LLM para soluciones autónomas. Enfocado en crear sistemas eficientes mediante scripting, contenedores Docker e infraestructura cloud.",
     "profiles": [
       {
         "network": "LinkedIn",
-        "username": "Diego QM",
-        "url": "https://www.linkedin.com/in/diego-alexander-qm-650010249/"
+        "username": "Diego Quiñones",
+        "url": "https://www.linkedin.com/in/diego-qui%C3%B1ones-montecinos-650010249/"
       },
       {
         "network": "GitHub",
@@ -21,131 +21,186 @@
   },
   "skills": [
     {
+      "name": "Python",
+      "level": "advanced",
+      "keywords": ["Backend", "Scripting", "Automation"]
+    },
+    {
+      "name": "JavaScript",
+      "level": "intermediate",
+      "keywords": ["Frontend", "Web Development"]
+    },
+    {
+      "name": "TypeScript",
+      "level": "intermediate",
+      "keywords": ["Frontend", "Type Safety"]
+    },
+    {
+      "name": "SQL",
+      "level": "advanced",
+      "keywords": ["Databases", "Queries"]
+    },
+    {
       "name": "HTML",
       "level": "advanced",
-      "keywords": ["Frontend", "Semantic HTML", "Accessibility"]
+      "keywords": ["Frontend", "Semantic"]
     },
     {
       "name": "CSS",
       "level": "advanced",
-      "keywords": ["Frontend", "Responsive Design", "Animations"]
+      "keywords": ["Frontend", "Responsive"]
     },
     {
-      "name": "JavaScript",
-      "level": "Intermediate",
-      "keywords": ["Frontend", "Web Development", "DOM"]
-    },
-    {
-      "name": "TypeScript",
-      "level": "Intermediate",
-      "keywords": ["Frontend", "Web Development", "Type Safety"]
-    },
-    {
-      "name": "React",
-      "level": "Basic",
-      "keywords": ["Frontend", "Web Development", "UI"]
-    },
-    {
-      "name": "Next.js",
+      "name": "Bash",
       "level": "intermediate",
-      "keywords": ["Frontend", "SSR", "React Framework"]
-    },
-    {
-      "name": "Astro",
-      "level": "Basic",
-      "keywords": ["Frontend", "Static Sites", "Performance"]
-    },
-    {
-      "name": "Tailwind",
-      "level": "Intermediate",
-      "keywords": ["Frontend", "CSS Framework", "Utility-First"]
-    },
-    {
-      "name": "Python",
-      "level": "Intermediate",
-      "keywords": ["Backend", "Data Science", "Scripting"]
-    },
-    {
-      "name": "Django",
-      "level": "Basic",
-      "keywords": ["Backend", "Python Framework", "Web Development"]
-    },
-    {
-      "name": "MySQL",
-      "level": "Advanced",
-      "keywords": ["Database", "SQL", "Relational"]
-    },
-    {
-      "name": "MongoDB",
-      "level": "Intermediate",
-      "keywords": ["Database", "NoSQL", "Document Store"]
-    },
-    {
-      "name": "Firebase",
-      "level": "Intermediate",
-      "keywords": ["Database", "Cloud", "Real-time"]
-    },
-    {
-      "name": "Oracle",
-      "level": "Intermediate",
-      "keywords": ["Database", "SQL", "Enterprise"]
-    },
-    {
-      "name": "Git",
-      "level": "Basic",
-      "keywords": ["DevTools", "Version Control", "Collaboration"]
-    },
-    {
-      "name": "GitHub",
-      "level": "Intermediate",
-      "keywords": ["DevTools", "Version Control", "CI/CD"]
-    },
-    {
-      "name": "Make.com",
-      "level": "Basic",
-      "keywords": ["DevTools", "Automation", "Integration"]
-    },
-    {
-      "name": "Suno.com",
-      "level": "Advanced",
-      "keywords": ["DevTools", "AI", "Music Generation"]
+      "keywords": ["Linux", "Scripting", "Automation"]
     },
     {
       "name": "C#",
-      "level": "Basic",
-      "keywords": ["GameDev", "Unity", "Programming"]
+      "level": "basic",
+      "keywords": ["GameDev", "Unity"]
     },
     {
-      "name": "Unity",
-      "level": "Basic",
-      "keywords": ["GameDev", "Game Engine", "C#"]
+      "name": "Django",
+      "level": "intermediate",
+      "keywords": ["Python", "Web Framework"]
     },
     {
-      "name": "Unreal Engine 4",
-      "level": "Basic",
-      "keywords": ["GameDev", "Game Engine", "Blueprints"]
+      "name": "Flask",
+      "level": "intermediate",
+      "keywords": ["Python", "API", "Microservices"]
     },
     {
-      "name": "Photoshop",
-      "level": "Intermediate",
-      "keywords": ["Design", "Image Editing", "Graphics"]
+      "name": "Node.js",
+      "level": "basic",
+      "keywords": ["JavaScript", "Backend"]
+    },
+    {
+      "name": "React",
+      "level": "intermediate",
+      "keywords": ["UI", "SPA"]
+    },
+    {
+      "name": "Astro",
+      "level": "intermediate",
+      "keywords": ["Static Sites", "Performance"]
+    },
+    {
+      "name": "Tailwind CSS",
+      "level": "intermediate",
+      "keywords": ["Utility-First", "Responsive"]
+    },
+    {
+      "name": "Next.js",
+      "level": "basic",
+      "keywords": ["React", "SSR"]
+    },
+    {
+      "name": "MySQL",
+      "level": "advanced",
+      "keywords": ["SQL", "Relational"]
+    },
+    {
+      "name": "PostgreSQL",
+      "level": "intermediate",
+      "keywords": ["SQL", "Relational"]
+    },
+    {
+      "name": "MongoDB",
+      "level": "intermediate",
+      "keywords": ["NoSQL", "Document"]
+    },
+    {
+      "name": "Firebase",
+      "level": "intermediate",
+      "keywords": ["Cloud", "Real-time"]
+    },
+    {
+      "name": "Oracle",
+      "level": "intermediate",
+      "keywords": ["SQL", "Enterprise"]
+    },
+    {
+      "name": "Docker",
+      "level": "intermediate",
+      "keywords": ["Containers", "Deployment"]
+    },
+    {
+      "name": "Linux Server",
+      "level": "advanced",
+      "keywords": ["Ubuntu", "Systemd", "Security"]
+    },
+    {
+      "name": "Git/GitHub",
+      "level": "intermediate",
+      "keywords": ["Version Control", "CI/CD"]
+    },
+    {
+      "name": "UFW/Firewall",
+      "level": "intermediate",
+      "keywords": ["Security", "Networking"]
+    },
+    {
+      "name": "Nginx",
+      "level": "intermediate",
+      "keywords": ["Web Server", "Reverse Proxy"]
+    },
+    {
+      "name": "Cloudflare",
+      "level": "intermediate",
+      "keywords": ["DNS", "Tunnels", "Security"]
+    },
+    {
+      "name": "Tailscale",
+      "level": "intermediate",
+      "keywords": ["VPN", "Networking"]
+    },
+    {
+      "name": "LLM Prompting",
+      "level": "advanced",
+      "keywords": ["AI", "GPT", "Claude"]
+    },
+    {
+      "name": "AI Agents",
+      "level": "advanced",
+      "keywords": ["Orchestration", "Autonomous"]
+    },
+    {
+      "name": "Automation",
+      "level": "advanced",
+      "keywords": ["Bash", "Python", "Cron"]
+    },
+    {
+      "name": "Make.com",
+      "level": "basic",
+      "keywords": ["Integration", "Workflow"]
+    },
+    {
+      "name": "VS Code",
+      "level": "advanced",
+      "keywords": ["Editor", "Development"]
     },
     {
       "name": "Figma",
-      "level": "Intermediate",
-      "keywords": ["Design", "UI/UX", "Prototyping"]
+      "level": "intermediate",
+      "keywords": ["UI/UX", "Design"]
     },
     {
-      "name": "Clipchamp",
-      "level": "Intermediate",
-      "keywords": ["Media", "Video Editing", "Content Creation"]
+      "name": "Photoshop",
+      "level": "intermediate",
+      "keywords": ["Graphics", "Editing"]
+    },
+    {
+      "name": "Postman",
+      "level": "intermediate",
+      "keywords": ["API", "Testing"]
     }
   ],
   "projects": [
     {
       "name": "Super Tik-Tak-Toe",
       "isActive": true,
-      "description": "A SUPER version of a classic game with a retro design, awesome music and multiple difficulty levels.",
+      "description": "Implementación del algoritmo minimax en un tres en raya multijugador con dificultad ajustable y tablero global de puntuaciones.",
       "highlights": [
         "Game mode: 1 vs CPU or 1 vs 1",
         "Adjustable difficulty: Easy, Medium, Hard",
@@ -159,7 +214,7 @@
         "/projects/tictactoe/tictactoe3.webp"
       ],
       "technologies": ["JavaScript", "HTML", "CSS", "Firebase"],
-      "impact": "Over 1,000 games played in the first month. Used as an example for algorithm implementation in programming classes.",
+      "impact": "Utilizado como ejemplo de implementación de algoritmos de IA en entornos académicos.",
       "duration": "2 months",
       "role": "Full Stack Developer",
       "teamSize": 1,
@@ -186,23 +241,6 @@
             "Performance optimization techniques"
           ]
         },
-        "metrics": [
-          {
-            "label": "Monthly Active Users",
-            "value": "500+",
-            "change": "+200%"
-          },
-          {
-            "label": "Games Played",
-            "value": "10,000+",
-            "change": "+150%"
-          },
-          {
-            "label": "Average Session Duration",
-            "value": "15min",
-            "change": "+5min"
-          }
-        ],
         "timeline": [
           {
             "date": "Week 1",
@@ -230,7 +268,7 @@
     {
       "name": "Tregua Project",
       "isActive": true,
-      "description": "A restaurant management system built with React 18 and Vite.js, using Firebase as backend.",
+      "description": "Sistema de gestión para restaurante con panel de administración, reservas y menú dinámico, construido con React y Firebase.",
       "highlights": [
         "Reservation and menu management system",
         "Administration panel",
@@ -245,7 +283,7 @@
         "/projects/tregua/tregua3.webp"
       ],
       "technologies": ["React", "Firebase", "Tailwind", "Vite"],
-      "impact": "Increased reservation management efficiency by 40% and reduced order errors by 25%.",
+      "impact": "Sistema implementado en restaurante local para digitalizar la gestión de reservas y menú.",
       "duration": "3 months",
       "role": "Lead Developer",
       "teamSize": 2,
@@ -272,23 +310,6 @@
             "Performance optimization for concurrent users"
           ]
         },
-        "metrics": [
-          {
-            "label": "Reservation Processing Time",
-            "value": "30sec",
-            "change": "-70%"
-          },
-          {
-            "label": "Order Accuracy",
-            "value": "98%",
-            "change": "+25%"
-          },
-          {
-            "label": "Staff Training Time",
-            "value": "2hrs",
-            "change": "-50%"
-          }
-        ],
         "timeline": [
           {
             "date": "Month 1",
@@ -312,7 +333,7 @@
     {
       "name": "Generic Platformer #18001",
       "isActive": false,
-      "description": "A platformer game where the player must navigate through a series of platforms while avoiding obstacles and enemies.",
+      "description": "Juego de plataformas desarrollado en Unreal Engine 4 usando Blueprints, con múltiples niveles y música original.",
       "highlights": [
         "Developed in UE4 using blueprints",
         "Implementation of player movement",
@@ -325,7 +346,7 @@
         "/projects/platformer/platformer3.webp"
       ],
       "technologies": ["Unreal Engine", "Blueprints"],
-      "impact": "Experimental project that allowed me to learn about game development and visual programming logic.",
+      "impact": "Proyecto experimental para aprendizaje de desarrollo de videojuegos y lógica de programación visual con Blueprints.",
       "duration": "1 month",
       "role": "Game Developer",
       "teamSize": 1,
@@ -375,9 +396,9 @@
     {
       "name": "Pochita Vet-App",
       "isActive": false,
-      "description": "Web application for a veterinary clinic using Django and MySQL.",
+      "description": "Aplicación web para gestión de clínica veterinaria desarrollada con Django y MySQL como proyecto académico colaborativo.",
       "highlights": [
-        "Fully functional veterinary clinic management system",
+        "Veterinary clinic management system",
         "Collaborative project with other INACAP students",
         "Patient records management",
         "Appointment scheduling"
@@ -389,7 +410,7 @@
         "/projects/pochita/pochita3.webp"
       ],
       "technologies": ["Python", "Django", "MySQL", "Bootstrap"],
-      "impact": "Academic project that improved appointment and medical record management at a local veterinary clinic.",
+      "impact": "Proyecto académico colaborativo enfocado en la digitalización de registros médicos y gestión de citas para clínica veterinaria.",
       "duration": "2 months",
       "role": "Backend Developer",
       "teamSize": 3,
@@ -416,18 +437,6 @@
             "Security best practices"
           ]
         },
-        "metrics": [
-          {
-            "label": "Records Processing Time",
-            "value": "45sec",
-            "change": "-60%"
-          },
-          {
-            "label": "Paper Usage",
-            "value": "0",
-            "change": "-100%"
-          }
-        ],
         "timeline": [
           {
             "date": "Week 1-2",

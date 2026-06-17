@@ -1,7 +1,6 @@
 ---
 import type { Project } from '../../types/cv';
 import ProjectCard from './ProjectCard.astro';
-import TerminalHeader from '../TerminalHeader.astro';
 
 interface Props {
   projects: Project[];
@@ -9,7 +8,6 @@ interface Props {
 
 const { projects } = Astro.props;
 
-// Sort projects: active first, then by name
 const sortedProjects = [...projects].sort((a, b) => {
   if (a.isActive === b.isActive) {
     return a.name.localeCompare(b.name);
@@ -18,9 +16,9 @@ const sortedProjects = [...projects].sort((a, b) => {
 });
 ---
 
-<section class="projects crt" id="projects">
-  <TerminalHeader title="PROJECTS.EXE" />
-  <div class="terminal-content">
+<section id="projects">
+  <div class="container">
+    <h2>Proyectos</h2>
     <div class="projects-grid">
       {sortedProjects.map((project) => (
         <ProjectCard project={project} />
@@ -30,33 +28,33 @@ const sortedProjects = [...projects].sort((a, b) => {
 </section>
 
 <style>
-  .projects {
-    margin: 4rem 0;
-    background: var(--color-bg-secondary);
-    border: 2px solid var(--color-accent-purple);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+  #projects {
+    padding: var(--space-2xl) 0;
   }
 
-  .terminal-content {
-    padding: 2rem;
+  .container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--color-accent-green);
+    margin-bottom: 2rem;
+    border-left: 3px solid var(--color-accent-green);
+    padding-left: 1rem;
   }
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+    gap: 1.5rem;
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
   }
 
   @media (max-width: 768px) {
-    .terminal-content {
-      padding: 1rem;
-    }
-
     .projects-grid {
       grid-template-columns: 1fr;
     }
