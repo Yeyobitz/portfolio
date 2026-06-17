@@ -9,7 +9,7 @@ interface Props {
 const { skills } = Astro.props;
 
 const groupedSkills = skills.reduce((acc, skill) => {
-  const category = skill.keywords[0];
+  const category = skill.category || skill.keywords[0];
   if (!acc.has(category)) acc.set(category, []);
   acc.get(category)!.push(skill);
   return acc;

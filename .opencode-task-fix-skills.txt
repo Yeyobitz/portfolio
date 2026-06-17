@@ -1,0 +1,32 @@
+Fix the skills in src/data/cv.json and src/components/skills/SkillsSection.astro.
+
+FILE 1: src/data/cv.json — Add a "category" field to EVERY skill object.
+
+The categories should be:
+- Languages: Python, JavaScript, TypeScript, SQL, HTML, CSS, Bash, C#
+- Backend: Django, Flask, Node.js
+- Frontend: React, Astro, Tailwind CSS, Next.js
+- Databases: MySQL, PostgreSQL, MongoDB, Firebase, Oracle
+- DevOps & Infra: Docker, Linux Server, Git/GitHub, UFW/Firewall, Nginx, Cloudflare, Tailscale
+- AI & Automation: LLM Prompting, AI Agents, Automation, Make.com
+- Tools: VS Code, Figma, Photoshop, Postman
+
+For each skill, add a "category" field matching the list above. Keep all existing fields (name, level, keywords) unchanged. Just ADD the category field.
+
+FILE 2: src/components/skills/SkillsSection.astro — Change the grouping from `keywords[0]` to `category`.
+
+Currently it does:
+```
+const groupedSkills = skills.reduce((acc, skill) => {
+  const category = skill.keywords[0];
+```
+
+Change to:
+```
+const groupedSkills = skills.reduce((acc, skill) => {
+  const category = skill.category || skill.keywords[0];
+```
+
+This way it uses the new category field, falling back to keywords[0] for safety.
+
+WRITE both files.

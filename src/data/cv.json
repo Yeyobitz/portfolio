@@ -23,177 +23,324 @@
     {
       "name": "Python",
       "level": "advanced",
-      "keywords": ["Backend", "Scripting", "Automation"]
+      "keywords": [
+        "Backend",
+        "Scripting",
+        "Automation"
+      ],
+      "category": "Languages"
     },
     {
       "name": "JavaScript",
       "level": "intermediate",
-      "keywords": ["Frontend", "Web Development"]
+      "keywords": [
+        "Frontend",
+        "Web Development"
+      ],
+      "category": "Languages"
     },
     {
       "name": "TypeScript",
       "level": "intermediate",
-      "keywords": ["Frontend", "Type Safety"]
+      "keywords": [
+        "Frontend",
+        "Type Safety"
+      ],
+      "category": "Languages"
     },
     {
       "name": "SQL",
       "level": "advanced",
-      "keywords": ["Databases", "Queries"]
+      "keywords": [
+        "Databases",
+        "Queries"
+      ],
+      "category": "Languages"
     },
     {
       "name": "HTML",
       "level": "advanced",
-      "keywords": ["Frontend", "Semantic"]
+      "keywords": [
+        "Frontend",
+        "Semantic"
+      ],
+      "category": "Languages"
     },
     {
       "name": "CSS",
       "level": "advanced",
-      "keywords": ["Frontend", "Responsive"]
+      "keywords": [
+        "Frontend",
+        "Responsive"
+      ],
+      "category": "Languages"
     },
     {
       "name": "Bash",
       "level": "intermediate",
-      "keywords": ["Linux", "Scripting", "Automation"]
+      "keywords": [
+        "Linux",
+        "Scripting",
+        "Automation"
+      ],
+      "category": "Languages"
     },
     {
       "name": "C#",
       "level": "basic",
-      "keywords": ["GameDev", "Unity"]
+      "keywords": [
+        "GameDev",
+        "Unity"
+      ],
+      "category": "Languages"
     },
     {
       "name": "Django",
       "level": "intermediate",
-      "keywords": ["Python", "Web Framework"]
+      "keywords": [
+        "Python",
+        "Web Framework"
+      ],
+      "category": "Backend"
     },
     {
       "name": "Flask",
       "level": "intermediate",
-      "keywords": ["Python", "API", "Microservices"]
+      "keywords": [
+        "Python",
+        "API",
+        "Microservices"
+      ],
+      "category": "Backend"
     },
     {
       "name": "Node.js",
       "level": "basic",
-      "keywords": ["JavaScript", "Backend"]
+      "keywords": [
+        "JavaScript",
+        "Backend"
+      ],
+      "category": "Backend"
     },
     {
       "name": "React",
       "level": "intermediate",
-      "keywords": ["UI", "SPA"]
+      "keywords": [
+        "UI",
+        "SPA"
+      ],
+      "category": "Frontend"
     },
     {
       "name": "Astro",
       "level": "intermediate",
-      "keywords": ["Static Sites", "Performance"]
+      "keywords": [
+        "Static Sites",
+        "Performance"
+      ],
+      "category": "Frontend"
     },
     {
       "name": "Tailwind CSS",
       "level": "intermediate",
-      "keywords": ["Utility-First", "Responsive"]
+      "keywords": [
+        "Utility-First",
+        "Responsive"
+      ],
+      "category": "Frontend"
     },
     {
       "name": "Next.js",
       "level": "basic",
-      "keywords": ["React", "SSR"]
+      "keywords": [
+        "React",
+        "SSR"
+      ],
+      "category": "Frontend"
     },
     {
       "name": "MySQL",
       "level": "advanced",
-      "keywords": ["SQL", "Relational"]
+      "keywords": [
+        "SQL",
+        "Relational"
+      ],
+      "category": "Databases"
     },
     {
       "name": "PostgreSQL",
       "level": "intermediate",
-      "keywords": ["SQL", "Relational"]
+      "keywords": [
+        "SQL",
+        "Relational"
+      ],
+      "category": "Databases"
     },
     {
       "name": "MongoDB",
       "level": "intermediate",
-      "keywords": ["NoSQL", "Document"]
+      "keywords": [
+        "NoSQL",
+        "Document"
+      ],
+      "category": "Databases"
     },
     {
       "name": "Firebase",
       "level": "intermediate",
-      "keywords": ["Cloud", "Real-time"]
+      "keywords": [
+        "Cloud",
+        "Real-time"
+      ],
+      "category": "Databases"
     },
     {
       "name": "Oracle",
       "level": "intermediate",
-      "keywords": ["SQL", "Enterprise"]
+      "keywords": [
+        "SQL",
+        "Enterprise"
+      ],
+      "category": "Databases"
     },
     {
       "name": "Docker",
       "level": "intermediate",
-      "keywords": ["Containers", "Deployment"]
+      "keywords": [
+        "Containers",
+        "Deployment"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "Linux Server",
       "level": "advanced",
-      "keywords": ["Ubuntu", "Systemd", "Security"]
+      "keywords": [
+        "Ubuntu",
+        "Systemd",
+        "Security"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "Git/GitHub",
       "level": "intermediate",
-      "keywords": ["Version Control", "CI/CD"]
+      "keywords": [
+        "Version Control",
+        "CI/CD"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "UFW/Firewall",
       "level": "intermediate",
-      "keywords": ["Security", "Networking"]
+      "keywords": [
+        "Security",
+        "Networking"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "Nginx",
       "level": "intermediate",
-      "keywords": ["Web Server", "Reverse Proxy"]
+      "keywords": [
+        "Web Server",
+        "Reverse Proxy"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "Cloudflare",
       "level": "intermediate",
-      "keywords": ["DNS", "Tunnels", "Security"]
+      "keywords": [
+        "DNS",
+        "Tunnels",
+        "Security"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "Tailscale",
       "level": "intermediate",
-      "keywords": ["VPN", "Networking"]
+      "keywords": [
+        "VPN",
+        "Networking"
+      ],
+      "category": "DevOps & Infra"
     },
     {
       "name": "LLM Prompting",
       "level": "advanced",
-      "keywords": ["AI", "GPT", "Claude"]
+      "keywords": [
+        "AI",
+        "GPT",
+        "Claude"
+      ],
+      "category": "AI & Automation"
     },
     {
       "name": "AI Agents",
       "level": "advanced",
-      "keywords": ["Orchestration", "Autonomous"]
+      "keywords": [
+        "Orchestration",
+        "Autonomous"
+      ],
+      "category": "AI & Automation"
     },
     {
       "name": "Automation",
       "level": "advanced",
-      "keywords": ["Bash", "Python", "Cron"]
+      "keywords": [
+        "Bash",
+        "Python",
+        "Cron"
+      ],
+      "category": "AI & Automation"
     },
     {
       "name": "Make.com",
       "level": "basic",
-      "keywords": ["Integration", "Workflow"]
+      "keywords": [
+        "Integration",
+        "Workflow"
+      ],
+      "category": "AI & Automation"
     },
     {
       "name": "VS Code",
       "level": "advanced",
-      "keywords": ["Editor", "Development"]
+      "keywords": [
+        "Editor",
+        "Development"
+      ],
+      "category": "Tools"
     },
     {
       "name": "Figma",
       "level": "intermediate",
-      "keywords": ["UI/UX", "Design"]
+      "keywords": [
+        "UI/UX",
+        "Design"
+      ],
+      "category": "Tools"
     },
     {
       "name": "Photoshop",
       "level": "intermediate",
-      "keywords": ["Graphics", "Editing"]
+      "keywords": [
+        "Graphics",
+        "Editing"
+      ],
+      "category": "Tools"
     },
     {
       "name": "Postman",
       "level": "intermediate",
-      "keywords": ["API", "Testing"]
+      "keywords": [
+        "API",
+        "Testing"
+      ],
+      "category": "Tools"
     }
   ],
   "projects": [
@@ -213,7 +360,12 @@
         "/projects/tictactoe/tictactoe2.webp",
         "/projects/tictactoe/tictactoe3.webp"
       ],
-      "technologies": ["JavaScript", "HTML", "CSS", "Firebase"],
+      "technologies": [
+        "JavaScript",
+        "HTML",
+        "CSS",
+        "Firebase"
+      ],
       "impact": "Utilizado como ejemplo de implementación de algoritmos de IA en entornos académicos.",
       "duration": "2 months",
       "role": "Full Stack Developer",
@@ -282,7 +434,12 @@
         "/projects/tregua/tregua2.webp",
         "/projects/tregua/tregua3.webp"
       ],
-      "technologies": ["React", "Firebase", "Tailwind", "Vite"],
+      "technologies": [
+        "React",
+        "Firebase",
+        "Tailwind",
+        "Vite"
+      ],
       "impact": "Sistema implementado en restaurante local para digitalizar la gestión de reservas y menú.",
       "duration": "3 months",
       "role": "Lead Developer",
@@ -345,7 +502,10 @@
         "/projects/platformer/platformer2.webp",
         "/projects/platformer/platformer3.webp"
       ],
-      "technologies": ["Unreal Engine", "Blueprints"],
+      "technologies": [
+        "Unreal Engine",
+        "Blueprints"
+      ],
       "impact": "Proyecto experimental para aprendizaje de desarrollo de videojuegos y lógica de programación visual con Blueprints.",
       "duration": "1 month",
       "role": "Game Developer",
@@ -409,7 +569,12 @@
         "/projects/pochita/pochita2.webp",
         "/projects/pochita/pochita3.webp"
       ],
-      "technologies": ["Python", "Django", "MySQL", "Bootstrap"],
+      "technologies": [
+        "Python",
+        "Django",
+        "MySQL",
+        "Bootstrap"
+      ],
       "impact": "Proyecto académico colaborativo enfocado en la digitalización de registros médicos y gestión de citas para clínica veterinaria.",
       "duration": "2 months",
       "role": "Backend Developer",
