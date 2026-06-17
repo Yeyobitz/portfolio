@@ -349,10 +349,10 @@
       "isActive": true,
       "description": "Implementación del algoritmo minimax en un tres en raya multijugador con dificultad ajustable y tablero global de puntuaciones.",
       "highlights": [
-        "Game mode: 1 vs CPU or 1 vs 1",
-        "Adjustable difficulty: Easy, Medium, Hard",
-        "Implementation of minimax algorithm",
-        "Global leaderboard"
+        "Modo de juego: 1 vs CPU o 1 vs 1",
+        "Dificultad ajustable: Fácil, Medio, Difícil",
+        "Implementación del algoritmo minimax",
+        "Tablero global de puntuaciones"
       ],
       "url": "https://multiuniversalgato.netlify.app/",
       "images": [
@@ -422,10 +422,10 @@
       "isActive": true,
       "description": "Sistema de gestión para restaurante con panel de administración, reservas y menú dinámico, construido con React y Firebase.",
       "highlights": [
-        "Reservation and menu management system",
-        "Administration panel",
-        "Real-time updates",
-        "Responsive design"
+        "Sistema de gestión de reservas y menú",
+        "Panel de administración",
+        "Actualizaciones en tiempo real",
+        "Diseño responsive"
       ],
       "url": "https://treguarestaurant.netlify.app/",
       "github": "https://github.com/Yeyobitz/treguaReact",
@@ -492,10 +492,10 @@
       "isActive": false,
       "description": "Juego de plataformas desarrollado en Unreal Engine 4 usando Blueprints, con múltiples niveles y música original.",
       "highlights": [
-        "Developed in UE4 using blueprints",
-        "Implementation of player movement",
-        "Original BGM",
-        "Multiple levels"
+        "Desarrollado en UE4 usando Blueprints",
+        "Implementación de movimiento del jugador",
+        "Música original (BGM)",
+        "Múltiples niveles"
       ],
       "images": [
         "/projects/platformer/platformer1.webp",
@@ -558,10 +558,10 @@
       "isActive": false,
       "description": "Aplicación web para gestión de clínica veterinaria desarrollada con Django y MySQL como proyecto académico colaborativo.",
       "highlights": [
-        "Veterinary clinic management system",
-        "Collaborative project with other INACAP students",
-        "Patient records management",
-        "Appointment scheduling"
+        "Sistema de gestión de clínica veterinaria",
+        "Proyecto colaborativo con estudiantes de INACAP",
+        "Gestión de fichas de pacientes",
+        "Agendamiento de citas"
       ],
       "github": "https://github.com/Yeyobitz/Pochita",
       "images": [
