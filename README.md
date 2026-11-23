@@ -103,6 +103,14 @@ Useful during development:
 - `G` / `A` / `M` — graphics panel, achievements, mute
 - `window.yb` — exposes the tier and save helpers in the console
 
+## Repo hygiene
+
+- CI runs `npm ci` → typecheck → build on every push and PR (`.github/workflows/ci.yml`).
+- `npm run build` also writes `sitemap-index.xml` + `sitemap-0.xml` (see
+  `scripts/build-sitemap.mjs`), because `@astrojs/sitemap` is incompatible with this
+  hybrid output.
+- Code is MIT (`LICENSE`); the copy, CV data and images are not.
+
 ## Notes
 
 - The site is usable with JavaScript disabled: content, projects and contact are plain
