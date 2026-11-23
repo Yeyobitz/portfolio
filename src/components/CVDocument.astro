@@ -1,0 +1,388 @@
+---
+import DocumentLayout from '../layouts/DocumentLayout.astro';
+import cvEs from '../data/cv.es.json';
+import cvEn from '../data/cv.json';
+import { getDict, normalizeLang } from '../i18n/ui';
+import type { CV } from '../types/cv';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const l = normalizeLang(lang);
+const t = getDict(l);
+const cv = (l === 'en' ? cvEn : cvEs) as unknown as CV;
+const { basics } = cv;
+
+const homeHref = l === 'en' ? '/en/' : '/';
+const altCvHref = l === 'en' ? '/cv' : '/en/cv';
+const altLang = l === 'en' ? 'es-CL' : 'en';
+const pdfHref = `/cv/diego-quinones-cv-${l}.pdf`;
+
+const categories = ['Frontend', 'Backend', 'Database', 'Infra', 'AI', 'DevTools'] as const;
+const grouped = categories
+  .map((cat) => ({
+    label: (t.skills.categories as Record<string, string>)[cat] ?? cat,
+    items: cv.skills.filter((s) => s.keywords[0] === cat).map((s) => s.name),
+  }))
+  .filter((g) => g.items.length > 0);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Diego Quiñones Montecinos',
+  jobTitle: basics.headline,
+  email: basics.email,
+  url: 'https://yeyobitz.dev',
+  sameAs: basics.profiles.map((p) => p.url),
+};
+
+const links = basics.profiles.map((p) => ({ ...p, short: p.url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') }));
+---
+
+<DocumentLayout title={t.cv.metaTitle} description={t.cv.metaDescription} lang={l} jsonLd={jsonLd}>
+  <main class="sheet">
+    <nav class="doc-top" aria-label={t.cv.metaTitle}>
+      <a href={homeHref}>← {t.cv.back}</a>
+      <div class="doc-actions">
+        <a class="doc-pdf" href={pdfHref} download>⤓ {t.cv.print}</a>
+        <button id="print-cv" type="button" aria-label={t.cv.print}>🖶</button>
+        <a href={altCvHref} hreflang={altLang}>{l === 'es' ? 'EN' : 'ES'}</a>
+      </div>
+    </nav>
+
+    <header class="doc-head">
+      <p class="doc-kicker">{t.cv.kicker}</p>
+      <h1>{basics.name}</h1>
+      <p class="doc-role">{basics.headline} · {basics.label}</p>
+
+      <ul class="doc-contact">
+        <li><a href={`mailto:${basics.email}`}>{basics.email}</a></li>
+        <li>{basics.location} · {basics.timezone}</li>
+        {links.map((p) => (
+          <li><a href={p.url} target="_blank" rel="noopener noreferrer">{p.short}</a></li>
+        ))}
+      </ul>
+
+      <dl class="doc-facts">
+        <div><dt>{t.cv.labels.availability}</dt><dd>{basics.availabilityShort}</dd></div>
+        <div><dt>{t.cv.labels.english}</dt><dd>{basics.english}</dd></div>
+        <div><dt>{t.cv.labels.rate}</dt><dd>{basics.rate}</dd></div>
+      </dl>
+    </header>
+
+    <section>
+      <h2>{t.cv.summary}</h2>
+      <p>{basics.summary} {basics.lookingFor}</p>
+    </section>
+
+    <section>
+      <h2>{t.cv.experience}</h2>
+      {cv.experience.map((job) => (
+        <article class="doc-job">
+          <div class="doc-job__head">
+            <h3>{job.role} · {job.company}</h3>
+            <span class="doc-period">{job.period}</span>
+          </div>
+          <p class="doc-meta">{job.mode}{job.promotion ? ` · ${job.promotion}` : ''}</p>
+          <p>{job.summary}</p>
+          <ul>
+            {job.highlights.map((h) => <li>{h}</li>)}
+          </ul>
+          <p class="doc-tools">{t.experience.tools}: {job.tools.join(' · ')}</p>
+        </article>
+      ))}
+    </section>
+
+    <section>
+      <h2>{t.cv.projects}</h2>
+      {cv.projects.map((project) => (
+        <article class="doc-project">
+          <div class="doc-job__head">
+            <h3>{project.name}</h3>
+            <span class="doc-period">{project.year}</span>
+          </div>
+          <p>{project.description}</p>
+          {project.impact && <p class="doc-impact">{t.cv.labels.impact}: {project.impact}</p>}
+          {project.repo && (
+            <p class="doc-tools doc-repo">
+              <a href={project.repo}>{project.repo.replace('https://github.com/', 'github.com/')}</a>
+            </p>
+          )}
+        </article>
+      ))}
+    </section>
+
+    <section>
+      <h2>{t.cv.skills}</h2>
+      <dl class="doc-skills">
+        {grouped.map((group) => (
+          <div>
+            <dt>{group.label}</dt>
+            <dd>{group.items.join(' · ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <div class="doc-columns">
+      <section>
+        <h2>{t.cv.education}</h2>
+        {cv.education.map((item) => (
+          <p class="doc-edu">
+            <strong>{item.title}</strong><br />
+            {item.institution} · {item.period}
+          </p>
+        ))}
+      </section>
+
+      <section>
+        <h2>{t.cv.certifications}</h2>
+        {cv.certifications.map((cert) => (
+          <p class="doc-edu">
+            <strong>{cert.name}</strong><br />
+            {cert.issuer} · {cert.date}<br />
+            <a href={cert.url}>{cert.url.replace('https://', '')}</a>
+          </p>
+        ))}
+      </section>
+    </div>
+  </main>
+</DocumentLayout>
+
+<style>
+  .doc-kicker {
+    margin: 0 0 0.4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+  }
+
+  .doc-role {
+    margin: 0.35rem 0 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--teal);
+    text-transform: uppercase;
+  }
+
+  .doc-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+  }
+
+  .doc-contact a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .doc-contact a:hover {
+    border-bottom-color: var(--green);
+    color: var(--green);
+  }
+
+  .doc-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.55rem 1rem;
+    margin: 0;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--rule);
+    background: #fafbfa;
+  }
+
+  .doc-facts dt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .doc-facts dd {
+    margin: 0.1rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .doc-muted {
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .doc-job,
+  .doc-project {
+    margin-bottom: 1.1rem;
+  }
+
+  .doc-job:last-child,
+  .doc-project:last-child {
+    margin-bottom: 0;
+  }
+
+  .doc-job__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 0.8rem;
+  }
+
+  .doc-period {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .doc-meta {
+    margin: 0.1rem 0 0.35rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    color: var(--teal);
+    text-transform: uppercase;
+  }
+
+  .doc-tools {
+    margin: 0.35rem 0 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: #55616c;
+  }
+
+  .doc-tools a {
+    color: var(--teal);
+  }
+
+  .doc-repo {
+    margin-top: -0.15rem;
+  }
+
+  .doc-impact {
+    margin: 0.35rem 0;
+    padding-left: 0.6rem;
+    border-left: 2px solid var(--green);
+    font-size: 0.86rem;
+  }
+
+  .doc-skills {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .doc-skills div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+
+  .doc-skills dt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+  }
+
+  .doc-skills dd {
+    margin: 0;
+    font-size: 0.84rem;
+  }
+
+  .doc-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .doc-edu {
+    margin: 0 0 0.7rem;
+    font-size: 0.84rem;
+  }
+
+  .doc-edu a {
+    color: var(--teal);
+    word-break: break-all;
+  }
+
+  @media print {
+    .doc-facts {
+      gap: 0.25rem 0.6rem;
+      padding: 0.35rem 0.55rem;
+      background: #fff;
+    }
+
+    .doc-role {
+      margin: 0.2rem 0 0.5rem;
+      font-size: 0.68rem;
+    }
+
+    .doc-contact {
+      margin-bottom: 0.5rem;
+      font-size: 0.64rem;
+    }
+
+    .doc-job,
+    .doc-project {
+      margin-bottom: 0.42rem;
+    }
+
+    .doc-job p,
+    .doc-project p {
+      margin-bottom: 0.3rem;
+    }
+
+    .doc-impact {
+      margin: 0.2rem 0;
+      font-size: 0.76rem;
+    }
+
+    .doc-tools {
+      font-size: 0.6rem;
+      margin-top: 0.15rem;
+    }
+
+    .doc-skills {
+      gap: 0.15rem;
+    }
+
+    .doc-columns {
+      gap: 1.1rem;
+      margin-top: 0.1rem;
+    }
+
+    .doc-edu {
+      margin-bottom: 0.4rem;
+      font-size: 0.76rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .doc-columns {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .doc-skills div {
+      grid-template-columns: 1fr;
+      gap: 0.05rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector<HTMLButtonElement>('#print-cv')?.addEventListener('click', () => window.print());
+</script>

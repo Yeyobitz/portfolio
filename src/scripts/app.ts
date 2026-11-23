@@ -384,7 +384,7 @@ function bindExploration(): void {
         const id = entry.target.id;
         if (!entry.isIntersecting || seen.has(id)) return;
         seen.add(id);
-        if (['about', 'projects', 'skills', 'contact'].includes(id)) markExplored(id);
+        if (['experience', 'projects', 'skills', 'contact'].includes(id)) markExplored(id);
       });
     },
     { threshold: 0.35 }

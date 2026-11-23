@@ -157,9 +157,9 @@ export function markExplored(id: string): void {
   save.explored.push(id);
   persist();
   const d = getDict(clientLang());
-  const reason = ({ about: d.nav.about, projects: d.nav.quests, skills: d.nav.skills, contact: d.nav.contact } as Record<string, string>)[id] ?? id;
+  const reason = ({ experience: d.nav.experience, projects: d.nav.projects, skills: d.nav.skills, contact: d.nav.contact } as Record<string, string>)[id] ?? id;
   addXp(25, reason);
-  if (['about', 'projects', 'skills', 'contact'].every((s) => save.explored.includes(s))) award('explorer');
+  if (['experience', 'projects', 'skills', 'contact'].every((s) => save.explored.includes(s))) award('explorer');
 }
 
 export function markProject(name: string): void {

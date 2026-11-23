@@ -7,10 +7,12 @@ quality tiers (Low / Medium / High) so the same site can run on a phone and on a
 dedicated GPU.
 
 Bilingual, statically rendered: Spanish (Chile) at `/`, English at `/en/`.
+A light, print-ready CV lives at `/cv` (and `/en/cv`) with a generated PDF.
 
 ```
 https://yeyobitz.dev        (ES)
 https://yeyobitz.dev/en/    (EN)
+https://yeyobitz.dev/cv     (CV, ES)
 ```
 
 ## What is in here
@@ -21,7 +23,8 @@ https://yeyobitz.dev/en/    (EN)
 | `#about` | Player profile: character sheet, attribute bars, three "perks". |
 | `#projects` | Quest log. Each card is a project; opening a case study grants XP. |
 | `#skills` | Draggable 3D constellation. Node size = confidence, colour = category. |
-| `#contact` | Summon panel with copy-to-clipboard email. |
+| `#contact` | Contact panel with copy-to-clipboard email. |
+| `/cv` + `/en/cv` | Recruiter mode: one page, no 3D, print styles, PDF download. |
 | HUD | Level, XP bar, FPS, achievements log, sound toggle and the graphics panel. |
 | Secrets | Three floppy disks hidden in the diorama and a very old cheat code. |
 
@@ -94,7 +97,12 @@ npm install
 npm run dev      # http://localhost:4321
 npm run build    # dist/
 npm run preview
+npm run cv:pdf   # rebuild public/cv/*.pdf from the built site
 ```
+
+`cv:pdf` needs Chrome/Chromium (`CHROME_PATH` to override). The Vercel-style
+workflow is: `npm run build` → `npm run cv:pdf` → `npm run build` again, so the
+regenerated PDFs are copied into `dist/`.
 
 Useful during development:
 

@@ -1,17 +1,20 @@
 ---
-import { getDict } from '../../i18n/ui';
+import { getDict, normalizeLang } from '../../i18n/ui';
 
 interface Props {
   name: string;
+  headline: string;
   label: string;
   summary: string;
-  projects: number;
+  email: string;
 }
 
-const { name, label, summary, projects } = Astro.props;
+const { name, headline, label, summary, email } = Astro.props;
 const t = getDict(Astro.currentLocale);
+const lang = normalizeLang(Astro.currentLocale);
 const [first, ...rest] = name.split(' ');
-const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
+const last = rest.join(' ');
+const cvHref = lang === 'en' ? '/en/cv' : '/cv';
 ---
 
 <section class="hero" id="top">
@@ -21,37 +24,48 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
     <div class="hero__copy">
       <p class="hero__kicker">
         <span class="hero__dot" aria-hidden="true"></span>
-        {t.hero.kicker}
+        {t.hero.kicker.map((part, i) => (
+          <span class="hero__kicker-part">
+            {i > 0 && <i class="hero__sep" aria-hidden="true">·</i>}
+            {part}
+          </span>
+        ))}
       </p>
 
-      <h1 class="hero__title">
-        <span class="hero__line">{handle}<span class="hero__caret" aria-hidden="true">_</span></span>
-      </h1>
+      <p class="hero__role">{headline}</p>
 
-      <p class="hero__role">{label}</p>
+      <h1 class="hero__title">
+        <span class="hero__line">{first}</span>
+        <span class="hero__line hero__line--accent">{last}<span class="hero__caret" aria-hidden="true">_</span></span>
+      </h1>
 
       <p class="hero__blurb">{summary}</p>
 
       <div class="hero__cta">
-        <a class="btn-hero btn-hero--primary" href="#about">
-          <span aria-hidden="true">▶</span> {t.hero.start}
+        <a class="btn-hero btn-hero--primary" href={cvHref}>
+          <span aria-hidden="true">↓</span> {t.hero.start}
         </a>
-        <a class="btn-hero" href="#projects">
-          <span aria-hidden="true">◇</span> {t.hero.questlog} <b>{String(projects).padStart(2, '0')}</b>
+        <a class="btn-hero" href="#experience">
+          <span aria-hidden="true">◇</span> {t.hero.questlog}
         </a>
       </div>
 
+      <p class="hero__mail">
+        <span>{t.hero.emailLabel}:</span>
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+
       <ul class="hero__stats">
-        <li><b>3+</b><span>{t.hero.years}</span></li>
-        <li><b>{String(projects).padStart(2, '0')}</b><span>{t.hero.quests}</span></li>
-        <li><b>15+</b><span>{t.hero.containers}</span></li>
-        <li><b>∞</b><span>{t.hero.coffee}</span></li>
+        <li><b>300+</b><span>{t.hero.stats.users}</span></li>
+        <li><b>15+</b><span>{t.hero.stats.containers}</span></li>
+        <li><b>C2</b><span>{t.hero.stats.english}</span></li>
+        <li><b>03</b><span>{t.hero.stats.projects}</span></li>
       </ul>
     </div>
 
     <div class="hero__hints">
       <span class="hero__hint">{t.hero.hint}</span>
-      <a class="hero__scroll" href="#about">
+      <a class="hero__scroll" href="#experience">
         <span>{t.hero.scroll}</span>
         <i aria-hidden="true">↓</i>
       </a>
@@ -100,7 +114,8 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
 
   .hero__kicker {
     margin: 0;
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 0.55rem;
     font-family: var(--font-mono);
@@ -108,6 +123,18 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
     letter-spacing: 0.34em;
     color: rgba(0, 240, 255, 0.82);
     text-transform: uppercase;
+  }
+
+  .hero__kicker-part {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    white-space: nowrap;
+  }
+
+  .hero__sep {
+    font-style: normal;
+    color: rgba(150, 180, 200, 0.4);
   }
 
   .hero__dot {
@@ -122,7 +149,7 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
   .hero__title {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: clamp(1.7rem, 6.4vw, 4.6rem);
+    font-size: clamp(1.5rem, 4.8vw, 3.5rem);
     line-height: 1.12;
     letter-spacing: 0.03em;
     color: #f2fbff;
@@ -140,13 +167,24 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
   .hero__role {
     margin: 0;
     font-family: var(--font-mono);
-    font-size: clamp(0.78rem, 1.5vw, 0.95rem);
-    letter-spacing: 0.26em;
+    font-size: clamp(0.88rem, 1.8vw, 1.1rem);
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #ff8ce6;
     display: inline-flex;
     align-items: center;
     gap: 0.7rem;
+  }
+
+  .hero__line {
+    display: block;
+  }
+
+  .hero__line--accent {
+    color: #00f0ff;
+    text-shadow:
+      0 0 3px rgba(255, 255, 255, 0.35),
+      0 0 30px rgba(0, 240, 255, 0.4);
   }
 
   .hero__role::before {
@@ -158,10 +196,10 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
 
   .hero__blurb {
     margin: 0.4rem 0 0;
-    max-width: 46ch;
-    font-size: clamp(0.9rem, 1.5vw, 1.04rem);
-    line-height: 1.75;
-    color: #d9e6ef;
+    max-width: 52ch;
+    font-size: clamp(0.98rem, 1.7vw, 1.12rem);
+    line-height: 1.7;
+    color: #e4eff7;
   }
 
   .hero__cta {
@@ -196,9 +234,9 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
 
   .hero__stats span {
     font-family: var(--font-mono);
-    font-size: 0.52rem;
-    letter-spacing: 0.22em;
-    color: rgba(150, 180, 200, 0.7);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: rgba(175, 200, 215, 0.8);
   }
 
   .hero__hints {
@@ -245,7 +283,30 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
   }
 
   .hero__loc {
-    color: rgba(150, 180, 200, 0.4);
+    color: rgba(160, 185, 205, 0.6);
+  }
+
+  .hero__mail {
+    margin: 0.2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: rgba(160, 185, 205, 0.7);
+  }
+
+  .hero__mail a {
+    color: #bff3ff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+  }
+
+  .hero__mail a:hover {
+    color: #fff;
+    border-bottom-color: #00f0ff;
   }
 
   .hero__copy > * {
@@ -276,6 +337,17 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
   @keyframes heroBounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(4px); }
+  }
+
+  @media (max-width: 380px) {
+    .hero__cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn-hero {
+      justify-content: center;
+    }
   }
 
   @media (max-width: 900px) {

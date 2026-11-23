@@ -111,6 +111,7 @@ const pins = cv.projects.map((p, i) => ({
   html {
     scroll-padding-top: 5rem;
     scroll-behavior: smooth;
+    overflow-x: clip;
     scrollbar-color: #17434f #05080d;
     scrollbar-width: thin;
   }
@@ -174,7 +175,7 @@ const pins = cv.projects.map((p, i) => ({
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
     z-index: 90;
   }
 

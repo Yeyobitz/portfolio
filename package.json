@@ -11,7 +11,8 @@
     "astro": "astro",
     "check": "astro check",
     "postbuild": "node scripts/build-sitemap.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cv:pdf": "node scripts/make-cv-pdf.mjs"
   },
   "dependencies": {
     "@astrojs/netlify": "^5.0.0",

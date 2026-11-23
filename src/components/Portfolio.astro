@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from './hero/Hero.astro';
-import About from './About.astro';
+import Experience from './Experience.astro';
 import ProjectsSection from './projects/ProjectsSection.astro';
 import SkillsSection from './skills/SkillsSection.astro';
 import ContactSection from './contact/ContactSection.astro';
@@ -24,13 +24,31 @@ const jsonLd = {
   '@type': 'Person',
   name: 'Diego Quiñones Montecinos',
   alternateName: 'Yeyobitz',
-  jobTitle: l === 'es' ? 'Especialista de soporte IT y desarrollador full stack' : 'IT Support Specialist & Full Stack Developer',
+  jobTitle:
+    l === 'es'
+      ? 'Especialista en automatización con IA y desarrollador full stack'
+      : 'AI Automation Engineer & Full Stack Developer',
   url: 'https://yeyobitz.dev',
   email: cv.basics.email,
-  sameAs: ['https://github.com/Yeyobitz', 'https://www.linkedin.com/in/diego-alexander-qm-650010249/'],
-  knowsAbout: ['Linux', 'Docker', 'TypeScript', 'Python', 'Three.js', 'Astro', 'Homelab'],
+  sameAs: cv.basics.profiles.map((p) => p.url),
+  knowsAbout: [
+    'Linux',
+    'Docker',
+    'TypeScript',
+    'Python',
+    'FastAPI',
+    'Three.js',
+    'Astro',
+    'RAG',
+    'LLM agents',
+    'Homelab',
+  ],
   address: { '@type': 'PostalAddress', addressCountry: 'CL' },
   description: t.meta.description,
+  seeks: {
+    '@type': 'Demand',
+    name: l === 'es' ? 'Rol remoto de automatización con IA' : 'Remote AI automation role',
+  },
 };
 ---
 
@@ -38,17 +56,14 @@ const jsonLd = {
   <main id="main-content" data-project-total={cv.projects.length}>
     <Hero
       name={cv.basics.name}
+      headline={cv.basics.headline}
       label={cv.basics.label}
       summary={cv.basics.summary}
-      projects={cv.projects.length}
+      email={cv.basics.email}
     />
 
     <div class="shell">
-      <About
-        summary={cv.basics.summary}
-        role={cv.basics.label}
-        projects={cv.projects.length}
-      />
+      <Experience experience={cv.experience} />
 
       <ProjectsSection projects={cv.projects} />
 

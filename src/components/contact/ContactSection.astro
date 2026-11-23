@@ -31,6 +31,7 @@ const t = getDict(Astro.currentLocale);
           <span aria-hidden="true">⧉</span> {email}
         </button>
         <span class="copy-hint">{t.contact.copyHint}</span>
+        <span class="contact-availability">{t.contact.availability}</span>
       </div>
 
       <div class="contact-form-wrapper">
@@ -71,6 +72,14 @@ const t = getDict(Astro.currentLocale);
     border-style: solid;
     color: #fff;
     box-shadow: 0 0 18px rgba(0, 240, 255, 0.2);
+  }
+
+  .contact-availability {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: rgba(0, 255, 65, 0.7);
   }
 
   .copy-hint {

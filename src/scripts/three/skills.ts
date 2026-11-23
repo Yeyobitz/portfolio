@@ -23,10 +23,11 @@ const CATEGORY_COLOR: Record<string, number> = {
   Frontend: 0x00f0ff,
   Backend: 0x00ff41,
   Database: 0xb24bff,
+  Infra: 0x4f8cff,
+  AI: 0x7dffcf,
   GameDev: 0xffb020,
   Design: 0xff2bd6,
   DevTools: 0x4f8cff,
-  AI: 0x7dffcf,
 };
 
 const LEVEL_WEIGHT: Record<string, number> = {

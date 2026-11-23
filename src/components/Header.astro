@@ -6,9 +6,10 @@ const t = getDict(lang);
 const altHref = lang === 'en' ? '/' : '/en/';
 const altLang = lang === 'en' ? 'es-CL' : 'en';
 
+const cvHref = lang === 'en' ? '/en/cv' : '/cv';
 const navLinks = [
-  { href: '#about', num: '01', label: t.nav.about, glitch: t.nav.about },
-  { href: '#projects', num: '02', label: t.nav.quests, glitch: t.nav.quests },
+  { href: '#experience', num: '01', label: t.nav.experience, glitch: t.nav.experience },
+  { href: '#projects', num: '02', label: t.nav.projects, glitch: t.nav.projects },
   { href: '#skills', num: '03', label: t.nav.skills, glitch: t.nav.skills },
   { href: '#contact', num: '04', label: t.nav.contact, glitch: t.nav.contact },
 ];
@@ -41,6 +42,8 @@ const navLinks = [
         <span class="nav-status__dot"></span>
         <span class="nav-status__txt">{t.nav.online}</span>
       </div>
+
+      <a class="nav-cv" href={cvHref} aria-label={`${t.nav.cv} — ${t.cv.print}`}>{t.nav.cv}</a>
 
       <a class="lang-switch" href={altHref} hreflang={altLang} aria-label={t.nav.switchLabel}>
         <span class="lang-switch__on">{lang === 'es' ? 'ES' : 'EN'}</span>
@@ -99,13 +102,13 @@ const navLinks = [
 
   .nav-content {
     display: grid;
-    grid-template-columns: auto 1fr auto auto auto;
+    grid-template-columns: auto 1fr auto auto auto auto;
     align-items: center;
     gap: clamp(0.6rem, 2vw, 2rem);
-    width: var(--container-width);
+    width: 100%;
     max-width: 1240px;
     margin: 0 auto;
-    padding: 0.55rem var(--container-padding);
+    padding: 0.55rem max(var(--container-padding), 1rem);
   }
 
   .logo {
@@ -135,6 +138,29 @@ const navLinks = [
     display: flex;
     gap: 0.15rem;
     justify-content: center;
+  }
+
+  .nav-cv {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.2rem;
+    padding: 0.35rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-decoration: none;
+    color: #041008;
+    background: linear-gradient(180deg, #35ff74, #00d435);
+    border: 1px solid #00ff41;
+    border-radius: 2px;
+    box-shadow: 0 0 16px rgba(0, 255, 65, 0.25);
+    white-space: nowrap;
+  }
+
+  .nav-cv:hover,
+  .nav-cv:focus-visible {
+    color: #000;
+    box-shadow: 0 0 24px rgba(0, 255, 65, 0.45);
   }
 
   .lang-switch {
@@ -377,7 +403,7 @@ const navLinks = [
     }
 
     .nav-content {
-      grid-template-columns: auto 1fr auto auto;
+      grid-template-columns: auto 1fr auto auto auto;
     }
   }
 
@@ -387,7 +413,7 @@ const navLinks = [
     }
 
     .nav-content {
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr auto auto auto;
     }
 
     .menu-toggle {
@@ -396,7 +422,23 @@ const navLinks = [
 
     .lang-switch {
       font-size: 0.58rem;
-      padding: 0.25rem 0.4rem;
+      padding: 0.45rem 0.5rem;
+      min-height: 2.2rem;
+    }
+
+    .nav-cv {
+      min-height: 2.75rem;
+      padding: 0.4rem 0.7rem;
+    }
+
+    .language-switch,
+    .lang-switch {
+      min-height: 2.75rem;
+    }
+
+    .menu-toggle {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
     }
 
     .menu-toggle.active .menu-line:nth-child(1) {

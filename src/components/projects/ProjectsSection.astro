@@ -1,6 +1,6 @@
 ---
 import type { Project } from '../../types/cv';
-import ProjectCard from './ProjectCard.astro';
+import ProjectQuest from './ProjectQuest.astro';
 import TerminalHeader from '../TerminalHeader.astro';
 import { getDict } from '../../i18n/ui';
 
@@ -11,13 +11,8 @@ interface Props {
 const { projects } = Astro.props;
 const t = getDict(Astro.currentLocale);
 
-// Sort projects: active first, then by name
-const sortedProjects = [...projects].sort((a, b) => {
-  if (a.isActive === b.isActive) {
-    return a.name.localeCompare(b.name);
-  }
-  return a.isActive ? -1 : 1;
-});
+// keep the order authored in cv.json: strongest project first
+const sortedProjects = projects;
 ---
 
 <section class="projects crt" id="projects">
@@ -26,7 +21,7 @@ const sortedProjects = [...projects].sort((a, b) => {
     <p class="projects-intro">{t.projects.intro}</p>
     <div class="projects-grid">
       {sortedProjects.map((project) => (
-        <ProjectCard project={project} />
+        <ProjectQuest project={project} />
       ))}
     </div>
   </div>
@@ -64,10 +59,10 @@ const sortedProjects = [...projects].sort((a, b) => {
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 1.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.2rem;
     width: 100%;
-    align-items: start;
+    align-items: stretch;
   }
 
   @media (max-width: 768px) {

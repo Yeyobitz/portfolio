@@ -1,0 +1,234 @@
+---
+import { getDict } from '../../i18n/ui';
+import type { Project } from '../../types/cv';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const t = getDict(Astro.currentLocale);
+const isLive = project.status === 'live';
+---
+
+<article class="quest" data-project={project.name} data-status={project.status}>
+  <header class="quest__head">
+    <span class:list={['quest__status', isLive ? 'is-live' : 'is-building']}>
+      <i aria-hidden="true"></i>
+      {isLive ? t.projects.live : t.projects.building}
+    </span>
+    <span class="quest__year">{project.year}</span>
+  </header>
+
+  <h3 class="quest__title">{project.name}</h3>
+  {project.role && <p class="quest__role">{project.role}</p>}
+
+  <p class="quest__desc">{project.description}</p>
+
+  <ul class="quest__points">
+    {project.highlights.map((point) => <li>{point}</li>)}
+  </ul>
+
+  {project.impact && (
+    <div class="quest__impact">
+      <span>{t.projects.impact}</span>
+      <p>{project.impact}</p>
+    </div>
+  )}
+
+  <ul class="quest__tech" aria-label={t.projects.tech}>
+    {project.technologies.map((tech) => <li>{tech}</li>)}
+  </ul>
+
+  <footer class="quest__links">
+    {project.repo && (
+      <a href={project.repo} target="_blank" rel="noopener noreferrer">
+        <span aria-hidden="true">{'{ }'}</span> {t.projects.repo}
+      </a>
+    )}
+    {project.demo && (
+      <a href={project.demo} target="_blank" rel="noopener noreferrer">
+        <span aria-hidden="true">▶</span> {t.projects.demo}
+      </a>
+    )}
+  </footer>
+</article>
+
+<style>
+  .quest {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: clamp(1rem, 2vw, 1.35rem);
+    background: linear-gradient(180deg, rgba(8, 13, 20, 0.78), rgba(5, 9, 14, 0.88));
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .quest:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 240, 255, 0.45);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 240, 255, 0.08);
+  }
+
+  .quest__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .quest__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.15rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+    border: 1px solid rgba(0, 255, 65, 0.4);
+    color: rgba(0, 255, 65, 0.85);
+  }
+
+  .quest__status i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  .quest__status.is-building {
+    border-color: rgba(255, 176, 32, 0.4);
+    color: rgba(255, 176, 32, 0.9);
+  }
+
+  .quest__year {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    color: rgba(150, 180, 200, 0.5);
+  }
+
+  .quest__title {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    line-height: 1.5;
+    letter-spacing: 0.03em;
+    color: #eafcff;
+  }
+
+  .quest__role {
+    margin: -0.4rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 43, 214, 0.75);
+  }
+
+  .quest__desc {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.7;
+    color: rgba(215, 232, 242, 0.86);
+  }
+
+  .quest__points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .quest__points li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: rgba(180, 205, 220, 0.78);
+  }
+
+  .quest__points li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: rgba(0, 240, 255, 0.7);
+  }
+
+  .quest__impact {
+    padding: 0.6rem 0.75rem;
+    border-left: 2px solid rgba(0, 255, 65, 0.6);
+    background: rgba(0, 255, 65, 0.04);
+  }
+
+  .quest__impact span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: rgba(0, 255, 65, 0.7);
+    margin-bottom: 0.25rem;
+  }
+
+  .quest__impact p {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: rgba(205, 228, 240, 0.85);
+  }
+
+  .quest__tech {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .quest__tech li {
+    padding: 0.12rem 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.54rem;
+    letter-spacing: 0.08em;
+    color: #9fe8bb;
+    border: 1px solid rgba(0, 255, 65, 0.22);
+    background: rgba(0, 255, 65, 0.04);
+  }
+
+  .quest__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.7rem;
+    border-top: 1px dashed rgba(0, 240, 255, 0.14);
+  }
+
+  .quest__links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: #bff3ff;
+    border: 1px solid rgba(0, 240, 255, 0.35);
+    background: rgba(0, 240, 255, 0.05);
+    transition: all 0.16s ease;
+  }
+
+  .quest__links a:hover,
+  .quest__links a:focus-visible {
+    color: #fff;
+    border-color: #00f0ff;
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.25);
+  }
+</style>

@@ -1,22 +1,56 @@
 export interface CV {
   basics: Basics;
+  experience: Experience[];
+  education: Education[];
+  certifications: Certification[];
   skills: Skill[];
   projects: Project[];
 }
 
 export interface Basics {
   name: string;
+  handle: string;
+  headline: string;
   label: string;
-  image: string;
   email: string;
-  url: string;
+  location: string;
+  timezone: string;
+  availability: string;
+  availabilityShort: string;
+  english: string;
+  rate: string;
   summary: string;
+  lookingFor: string;
   profiles: Profile[];
 }
 
 export interface Profile {
   network: string;
   username: string;
+  url: string;
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+  promotion?: string;
+  period: string;
+  mode: string;
+  summary: string;
+  highlights: string[];
+  tools: string[];
+}
+
+export interface Education {
+  title: string;
+  institution: string;
+  period: string;
+}
+
+export interface Certification {
+  name: string;
+  issuer: string;
+  date: string;
   url: string;
 }
 
@@ -28,26 +62,13 @@ export interface Skill {
 
 export interface Project {
   name: string;
-  isActive: boolean;
+  status: 'live' | 'building';
+  year: string;
   description: string;
   highlights: string[];
-  url?: string;
-  github?: string;
-  images?: string[];
   technologies: string[];
+  repo?: string;
+  demo?: string;
   impact?: string;
-  duration?: string;
   role?: string;
-  teamSize?: number;
-  client?: string;
-  caseStudy?: CaseStudy;
-}
-
-export interface CaseStudy {
-  process: {
-    planning?: string;
-    challenges?: string[];
-    solutions?: string[];
-    learnings?: string[];
-  };
 }
