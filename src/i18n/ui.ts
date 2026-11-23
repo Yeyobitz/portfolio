@@ -249,13 +249,13 @@ const en: typeof es = {
   nav: {
     about: 'ABOUT',
     quests: 'QUESTS',
-    skills: 'HABILIDADES',
+    skills: 'SKILLS',
     contact: 'CONTACT',
     online: 'ONLINE',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     switchTo: 'ES',
-    switchLabel: 'Ver el sitio en español',
+    switchLabel: 'View the site in Spanish',
     home: 'Back to top',
   },
   hero: {
