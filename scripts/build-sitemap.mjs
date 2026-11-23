@@ -10,7 +10,8 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join, relative, sep } from 'node:path';
 
 const DIST = new URL('../dist/', import.meta.url);
-const SITE = 'https://yeyobitz.dev';
+const SITE = (process.env.SITE_URL ?? 'https://yeyobitz.dev').replace(/\/$/, '');
+const BASE = (process.env.BASE_PATH ?? '/').replace(/\/+$/, '');
 
 const SKIP_DIRS = new Set(['_astro', 'projects', 'sounds', '.netlify', 'node_modules']);
 
@@ -56,16 +57,16 @@ const urls = await Promise.all(
     const mod = await lastmod(file);
     const alternates = languages
       .map(({ code, prefix }) => {
-        const href = prefix ? `${SITE}/${prefix}/` : `${SITE}/`;
+        const href = prefix ? `${SITE}${BASE}/${prefix}/` : `${SITE}${BASE}/`;
         return `    <xhtml:link rel="alternate" hreflang="${code}" href="${href}"/>`;
       })
       .join('\n');
     return `  <url>
-    <loc>${SITE}${route}</loc>
+    <loc>${SITE}${BASE}${route}</loc>
     <lastmod>${mod}</lastmod>
     <changefreq>monthly</changefreq>
 ${alternates}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${BASE}/"/>
   </url>`;
   })
 );
@@ -80,12 +81,19 @@ ${urls.join('\n')}
 const index = `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
-    <loc>${SITE}/sitemap-0.xml</loc>
+    <loc>${SITE}${BASE}/sitemap-0.xml</loc>
   </sitemap>
 </sitemapindex>
 `;
 
+const robots = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE}${BASE}/sitemap-index.xml
+`;
+
 await writeFile(join(DIST.pathname, 'sitemap-0.xml'), xml, 'utf8');
 await writeFile(join(DIST.pathname, 'sitemap-index.xml'), index, 'utf8');
+await writeFile(join(DIST.pathname, 'robots.txt'), robots, 'utf8');
 
 console.log(`[sitemap] ${routes.length} routes -> sitemap-index.xml`);

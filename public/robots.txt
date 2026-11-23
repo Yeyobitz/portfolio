@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://yeyobitz.dev/sitemap-index.xml

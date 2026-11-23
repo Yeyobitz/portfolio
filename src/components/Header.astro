@@ -1,12 +1,13 @@
 ---
 import { getDict, normalizeLang } from '../i18n/ui';
+import { withBase } from '../lib/base';
 
 const lang = normalizeLang(Astro.currentLocale);
 const t = getDict(lang);
-const altHref = lang === 'en' ? '/' : '/en/';
+const altHref = withBase(lang === 'en' ? '' : 'en/');
 const altLang = lang === 'en' ? 'es-CL' : 'en';
 
-const cvHref = lang === 'en' ? '/en/cv' : '/cv';
+const cvHref = withBase(lang === 'en' ? 'en/cv' : 'cv');
 const navLinks = [
   { href: '#experience', num: '01', label: t.nav.experience, glitch: t.nav.experience },
   { href: '#projects', num: '02', label: t.nav.projects, glitch: t.nav.projects },

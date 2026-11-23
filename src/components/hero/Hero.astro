@@ -1,5 +1,6 @@
 ---
 import { getDict, normalizeLang } from '../../i18n/ui';
+import { withBase } from '../../lib/base';
 
 interface Props {
   name: string;
@@ -15,7 +16,7 @@ const t = getDict(Astro.currentLocale);
 const lang = normalizeLang(Astro.currentLocale);
 const [first, ...rest] = name.split(' ');
 const last = rest.join(' ');
-const cvHref = lang === 'en' ? '/en/cv' : '/cv';
+const cvHref = withBase(lang === 'en' ? 'en/cv' : 'cv');
 ---
 
 <section class="hero" id="top">

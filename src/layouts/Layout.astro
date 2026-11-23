@@ -1,5 +1,6 @@
 ---
 import { getDict, normalizeLang } from '../i18n/ui';
+import { withBase, absolute } from '../lib/base';
 
 interface Props {
   title: string;
@@ -11,7 +12,10 @@ interface Props {
 const { title, description, lang, jsonLd } = Astro.props;
 const l = normalizeLang(lang);
 const t = getDict(l);
-const canonical = l === 'en' ? 'https://yeyobitz.dev/en/' : 'https://yeyobitz.dev/';
+const canonical = absolute(l === 'en' ? 'en/' : '', Astro.site);
+const esUrl = absolute('', Astro.site);
+const enUrl = absolute('en/', Astro.site);
+const ogImage = absolute('og-image.jpg', Astro.site);
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -54,9 +58,9 @@ const pins = cv.projects.map((p, i) => ({
     <meta name="theme-color" content="#03050a" />
 
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="es-CL" href="https://yeyobitz.dev/" />
-    <link rel="alternate" hreflang="en" href="https://yeyobitz.dev/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://yeyobitz.dev/" />
+    <link rel="alternate" hreflang="es-CL" href={esUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={esUrl} />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={l === 'en' ? 'en_US' : 'es_CL'} />
@@ -64,17 +68,17 @@ const pins = cv.projects.map((p, i) => ({
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:image" content={ogImage} />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonical} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content="/og-image.jpg" />
+    <meta property="twitter:image" content={ogImage} />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('site.webmanifest')} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
