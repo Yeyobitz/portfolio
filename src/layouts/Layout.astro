@@ -12,39 +12,59 @@ const {
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Yeyobitz",
-  "jobTitle": "Desarrollador Web Full Stack",
+  "name": "Diego Quiñones Montecinos",
+  "alternateName": "Yeyobitz",
+  "jobTitle": "IT Support Specialist & Full Stack Developer",
   "url": "https://yeyobitz.dev",
+  "email": "yeyobitz@proton.me",
   "sameAs": [
-    "https://github.com/yeyobitz",
-    "https://www.linkedin.com/in/diego-qui%C3%B1ones-montecinos-650010249/://linkedin.com/in/yeyobitz"
+    "https://github.com/Yeyobitz",
+    "https://www.linkedin.com/in/diego-alexander-qm-650010249/"
   ],
+  "knowsAbout": ["Linux", "Docker", "TypeScript", "Python", "Three.js", "Astro", "Homelab"],
+  "address": { "@type": "PostalAddress", "addressCountry": "CL" },
   "description": description
 };
 
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LoadingScreen from '../components/LoadingScreen.astro';
-import ParticleBackground from '../components/ParticleBackground.astro';
+import Scene from '../components/gfx/Scene.astro';
+import Hud from '../components/gfx/Hud.astro';
 import EasterEggOverlay from '../components/EasterEggOverlay.astro';
+import cv from '../data/cv.json';
+
+const pins = cv.projects.map((p, i) => ({
+  name: p.name,
+  color: [0x00f0ff, 0xff2bd6, 0x00ff41, 0xffb020, 0xb24bff][i % 5],
+}));
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en" data-gfx="mid">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+
     <script is:inline>
-      (function() {
-        const theme = localStorage.getItem('theme');
-        document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+      (function () {
+        try {
+          var theme = localStorage.getItem('theme');
+          document.documentElement.setAttribute('data-theme', theme === 'light' ? 'light' : 'dark');
+          var gfx = localStorage.getItem('yb:gfx-tier');
+          if (gfx === 'low' || gfx === 'mid' || gfx === 'high') {
+            document.documentElement.setAttribute('data-gfx', gfx);
+          }
+        } catch (e) {}
       })();
     </script>
 
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="author" content="Diego Quiñones Montecinos" />
+    <meta name="theme-color" content="#03050a" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://yeyobitz.dev/" />
@@ -59,31 +79,37 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
     <meta property="twitter:image" content="/og-image.jpg" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#0a0a0a">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
 
     <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-    <ParticleBackground />
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <Scene pins={pins} />
+    <div class="crt-overlay" aria-hidden="true"></div>
     <LoadingScreen />
     <EasterEggOverlay />
 
     <Header />
 
     <div class="content-wrapper">
-      <main id="main-content" class="power-on">
+      <main id="main-content">
         <slot />
       </main>
 
       <Footer />
     </div>
+
+    <Hud />
   </body>
 </html>
 
@@ -92,6 +118,33 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
 
   html {
     scroll-padding-top: 5rem;
+    scroll-behavior: smooth;
+    scrollbar-color: #17434f #05080d;
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #05080d;
+    border-left: 1px solid rgba(0, 240, 255, 0.08);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(0, 240, 255, 0.5), rgba(255, 43, 214, 0.45));
+    border: 1px solid rgba(0, 240, 255, 0.35);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(0, 240, 255, 0.8), rgba(255, 43, 214, 0.7));
+  }
+
+  ::selection {
+    background: #00ff41;
+    color: #03050a;
   }
 
   body {
@@ -100,58 +153,29 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
-    background: var(--color-bg-primary);
+    overflow-x: hidden;
+    background: #03050a;
+    color: var(--color-text);
     position: relative;
     z-index: 1;
   }
 
-  .crt-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3;
-  }
-
-  .crt-overlay::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(
-      circle at center,
-      transparent 50%,
-      rgba(0, 0, 0, 0.15) 150%
-    );
-  }
-
-  .crt-overlay::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent 0%,
-      rgba(0, 0, 0, 0.1) 50%,
-      transparent 100%
-    );
-    background-size: 100% 4px;
-    animation: scanlineMove 10s linear infinite;
-  }
-
   .content-wrapper {
     flex: 1;
-    padding-top: 3.5rem;
     position: relative;
     z-index: 4;
+    padding-top: 4.2rem;
+  }
+
+  .crt-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    background:
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0px, rgba(0, 0, 0, 0.16) 1px, transparent 1px, transparent 4px);
+    opacity: 0.35;
+    mix-blend-mode: multiply;
   }
 
   nav {
@@ -159,163 +183,198 @@ import EasterEggOverlay from '../components/EasterEggOverlay.astro';
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(26, 26, 26, 0.95);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--color-accent-green);
+    z-index: 90;
   }
 
   .skip-link {
     position: absolute;
-    top: -40px;
+    top: -60px;
     left: 0;
     background: var(--color-accent-green);
-    color: var(--color-bg-primary);
-    padding: 0.5rem 1rem;
+    color: #03050a;
+    padding: 0.6rem 1rem;
     z-index: 1000;
     font-family: var(--font-mono);
     text-decoration: none;
-    transition: top 0.3s ease;
+    transition: top 0.2s ease;
   }
 
   .skip-link:focus {
     top: 0;
-    outline: 2px solid var(--color-accent-blue);
+    outline: 2px solid #fff;
   }
 
-  .glitch {
+  /* shared hero button */
+  .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 1.15rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-decoration: none;
+    color: #bff3ff;
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    background: rgba(0, 240, 255, 0.05);
+    border-radius: 2px;
+    transition: all 0.18s ease;
     position: relative;
-    transition: all 0.3s ease;
+    overflow: hidden;
   }
 
-  .glitch:hover {
-    animation: textFlicker 0.2s infinite;
-  }
-
-  .glitch:hover::before,
-  .glitch:hover::after {
-    content: attr(data-glitch);
+  .btn-hero::after {
+    content: '';
     position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.18), transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.5s ease;
+  }
+
+  .btn-hero:hover::after {
+    transform: translateX(120%);
+  }
+
+  .btn-hero:hover,
+  .btn-hero:focus-visible {
+    color: #fff;
+    border-color: #00f0ff;
+    box-shadow: 0 0 22px rgba(0, 240, 255, 0.3), inset 0 0 18px rgba(0, 240, 255, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .btn-hero--primary {
+    color: #041008;
+    background: linear-gradient(180deg, #35ff74, #00d435);
+    border-color: #00ff41;
+    font-weight: 600;
+    box-shadow: 0 0 24px rgba(0, 255, 65, 0.35);
+  }
+
+  .btn-hero--primary:hover,
+  .btn-hero--primary:focus-visible {
+    color: #000;
+    box-shadow: 0 0 34px rgba(0, 255, 65, 0.55);
+  }
+
+  .btn-hero b {
+    color: inherit;
+    font-weight: 600;
+    padding-left: 0.35rem;
+    border-left: 1px solid currentColor;
+    opacity: 0.85;
+  }
+
+  /* achievement toasts */
+  .game-toasts {
+    position: fixed;
+    right: 1.1rem;
+    top: 4.6rem;
+    z-index: 120;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+    width: min(340px, calc(100vw - 2rem));
+  }
+
+  .game-toast {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.7rem 0.85rem;
+    background: linear-gradient(135deg, rgba(7, 14, 20, 0.97), rgba(3, 7, 11, 0.98));
+    border: 1px solid rgba(0, 240, 255, 0.35);
+    border-left: 3px solid #00ff41;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 65, 0.12);
+    transform: translateY(-140%);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.32s ease;
+    font-family: var(--font-mono);
+  }
+
+  .game-toast.in {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .game-toast.accent-purple { border-left-color: #ff2bd6; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 43, 214, 0.14); }
+  .game-toast.accent-blue { border-left-color: #00f0ff; }
+
+  .game-toast__icon {
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  .game-toast__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    min-width: 0;
+  }
+
+  .game-toast__kicker {
+    font-size: 0.5rem;
+    letter-spacing: 0.22em;
+    color: rgba(0, 255, 65, 0.75);
+  }
+
+  .game-toast__title {
+    font-family: var(--font-heading);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: #f0fbff;
+  }
+
+  .game-toast__body {
+    font-size: 0.62rem;
+    line-height: 1.45;
+    color: rgba(190, 215, 230, 0.8);
+  }
+
+  .scene-tip {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    animation: chromaOffset 3s infinite linear alternate-reverse;
+    z-index: 30;
+    padding: 0.3rem 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: #d8f7ff;
+    background: rgba(3, 8, 13, 0.92);
+    border: 1px solid rgba(0, 240, 255, 0.45);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    white-space: nowrap;
   }
 
-  .glitch:hover::before {
-    color: #0ff;
-    left: -2px;
-    animation: glitchBefore 2s infinite;
-  }
-
-  .glitch:hover::after {
-    color: #f0f;
-    left: 2px;
-    animation: glitchAfter 2.5s infinite;
-  }
-
-  @keyframes scanlineMove {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(100%); }
-  }
-
-  @keyframes chromaOffset {
-    0%, 95% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-    96%, 97% { clip-path: polygon(0 15%, 100% 15%, 100% 85%, 0 85%); }
-    98%, 100% { clip-path: polygon(0 10%, 100% 10%, 100% 90%, 0 90%); }
-  }
-
-  @keyframes textFlicker {
-    0%, 95% { opacity: 1; }
-    96%, 97% { opacity: 0.8; }
-    98%, 100% { opacity: 0.9; }
-  }
-
-  @keyframes glitchBefore {
-    0%, 95% { transform: translate(0); }
-    96%, 97% { transform: translate(-2px, 2px); }
-    98%, 100% { transform: translate(2px, -2px); }
-  }
-
-  @keyframes glitchAfter {
-    0%, 95% { transform: translate(0); }
-    96%, 97% { transform: translate(2px, -2px); }
-    98%, 100% { transform: translate(-2px, 2px); }
-  }
-
-  .chaos-mode {
-    animation: chaosRotate 0.5s linear infinite !important;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    position: relative;
-    z-index: 100;
-  }
-
-  .chaos-mode-reverse {
-    animation: chaosRotateReverse 0.7s linear infinite !important;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    position: relative;
-    z-index: 100;
-  }
-
-  .chaos-mode-delayed {
-    animation: chaosRotate 0.6s linear infinite !important;
-    animation-delay: 0.2s !important;
-    transform-origin: center center;
-    will-change: transform;
-    backface-visibility: hidden;
-    perspective: 1000px;
-    position: relative;
-    z-index: 100;
-  }
-
-  @keyframes chaosRotate {
-    0% { transform: rotate(0deg) scale(1) translateZ(0); }
-    25% { transform: rotate(180deg) scale(1.2) translateZ(0); }
-    50% { transform: rotate(360deg) scale(0.8) translateZ(0); }
-    75% { transform: rotate(540deg) scale(1.2) translateZ(0); }
-    100% { transform: rotate(720deg) scale(1) translateZ(0); }
-  }
-
-  @keyframes chaosRotateReverse {
-    0% { transform: rotate(720deg) scale(1) translateZ(0); }
-    25% { transform: rotate(540deg) scale(1.2) translateZ(0); }
-    50% { transform: rotate(360deg) scale(0.8) translateZ(0); }
-    75% { transform: rotate(180deg) scale(1.2) translateZ(0); }
-    100% { transform: rotate(0deg) scale(1) translateZ(0); }
-  }
-
-  @keyframes glitchEffect {
-    0%, 100% { transform: translate(0); filter: hue-rotate(0deg); }
-    25% { transform: translate(2px, 2px); filter: hue-rotate(90deg); }
-    50% { transform: translate(-2px, -2px); filter: hue-rotate(180deg); }
-    75% { transform: translate(2px, -2px); filter: hue-rotate(270deg); }
+  .scene-tip.visible {
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .chaos-mode,
-    .chaos-mode-reverse,
-    .chaos-mode-delayed {
-      animation: none !important;
+    html {
+      scroll-behavior: auto;
+    }
+
+    .game-toast {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .game-toasts {
+      right: 0.6rem;
+      left: 0.6rem;
+      width: auto;
+      top: 4.2rem;
     }
   }
 </style>
 
 <script>
-  import { initSmoothScroll, initHashChange } from '../scripts/utils';
-
-  initSmoothScroll();
-  initHashChange();
+  import '../scripts/app';
 </script>

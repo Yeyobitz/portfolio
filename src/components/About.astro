@@ -3,67 +3,286 @@ import TerminalHeader from './TerminalHeader.astro';
 
 interface Props {
   summary: string;
+  role: string;
+  projects: number;
+  email: string;
 }
 
-const { summary } = Astro.props;
+const { summary, role, projects, email } = Astro.props;
+
+const sheet = [
+  { k: 'CLASS', v: 'Support / Builder' },
+  { k: 'ROLE', v: role },
+  { k: 'BASE', v: 'Concepción, CL' },
+  { k: 'STATUS', v: 'Open to work' },
+  { k: 'LOADOUT', v: 'Linux · Docker · TS · Python' },
+  { k: 'SIDE QUESTS', v: `${projects} shipped` },
+];
+
+const stats = [
+  { label: 'LINUX / INFRA', value: 88 },
+  { label: 'AUTOMATION', value: 76 },
+  { label: 'FRONTEND', value: 82 },
+  { label: 'BACKEND', value: 70 },
+  { label: 'GAMEDEV', value: 45 },
+];
 ---
 
-<section class="about crt" id="about">
-  <TerminalHeader title="ABOUT_ME.EXE" />
+<section class="about" id="about">
+  <TerminalHeader title="PLAYER_PROFILE" num="01" xp={25} tag="IDLE" />
+
   <div class="terminal-content">
-    <p class="typewriter">{summary}</p>
+    <div class="about-grid">
+      <div class="about-main">
+        <p class="about-lead">{summary}</p>
+        <p class="about-note">
+          Most of what I know came from breaking my own homelab at 2 AM and fixing it before
+          sunrise. I like tools that stay up, interfaces that explain themselves, and code
+          somebody else can read.
+        </p>
+      </div>
+
+      <dl class="sheet" aria-label="Character sheet">
+        {sheet.map((row) => (
+          <div class="sheet__row">
+            <dt>{row.k}</dt>
+            <dd>{row.v}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="stats" aria-label="Attributes">
+      {stats.map((s) => (
+        <div class="stat">
+          <span class="stat__k">{s.label}</span>
+          <span class="stat__bar"><i style={`width:${s.value}%`}></i></span>
+          <span class="stat__v">{s.value}</span>
+        </div>
+      ))}
+    </div>
+
+    <div class="perks">
+      <article class="perk">
+        <span class="perk__ico" aria-hidden="true">▤</span>
+        <div>
+          <h3>HOMELAB</h3>
+          <p>15+ containers on an Ubuntu server: Plex, Jellyfin, the *arr stack, Gitea and monitoring. Everything behind a reverse proxy I also maintain.</p>
+        </div>
+      </article>
+      <article class="perk">
+        <span class="perk__ico" aria-hidden="true">⌘</span>
+        <div>
+          <h3>SUPPORT MINDSET</h3>
+          <p>I write the runbook, not just the fix. Tickets taught me to reproduce first, guess later, and document so nobody has to ask twice.</p>
+        </div>
+      </article>
+      <article class="perk">
+        <span class="perk__ico" aria-hidden="true">◈</span>
+        <div>
+          <h3>SHIPS THINGS</h3>
+          <p>Games, dashboards, bots, this portfolio. Small scope, finished and deployed beats a perfect repo that never leaves localhost.</p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
 <style>
   .about {
-    margin: 4rem 0;
-    background: var(--color-bg-secondary);
-    border: 2px solid var(--color-accent-purple);
-    border-radius: 12px;
+    position: relative;
+    margin: 0 auto 2.5rem;
+    background: linear-gradient(180deg, rgba(7, 12, 18, 0.82), rgba(5, 9, 14, 0.9));
+    border: 1px solid rgba(0, 240, 255, 0.22);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
   }
 
   .terminal-content {
-    padding: 2rem;
+    padding: clamp(1.1rem, 2.4vw, 2rem);
   }
 
-  .typewriter {
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(260px, 1fr);
+    gap: clamp(1rem, 3vw, 2.4rem);
+    align-items: start;
+  }
+
+  .about-lead {
+    margin: 0 0 0.9rem;
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+    line-height: 1.75;
+    color: rgba(226, 240, 248, 0.92);
+  }
+
+  .about-note {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.8;
+    color: rgba(175, 200, 215, 0.72);
+    padding-left: 0.9rem;
+    border-left: 1px solid rgba(0, 240, 255, 0.25);
+  }
+
+  .sheet {
+    margin: 0;
+    display: grid;
+    gap: 0;
+    border: 1px solid rgba(0, 240, 255, 0.16);
+    background: rgba(2, 5, 9, 0.55);
     font-family: var(--font-mono);
-    line-height: 1.6;
-    color: var(--color-text);
-    opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
+    font-size: 0.66rem;
+  }
+
+  .sheet__row {
+    display: grid;
+    grid-template-columns: 6.6rem 1fr;
+    gap: 0.6rem;
+    padding: 0.45rem 0.7rem;
+    border-bottom: 1px dashed rgba(0, 240, 255, 0.12);
+  }
+
+  .sheet__row:last-child {
+    border-bottom: none;
+  }
+
+  dt {
+    color: rgba(0, 240, 255, 0.5);
+    letter-spacing: 0.16em;
+    font-size: 0.58rem;
+    padding-top: 0.1rem;
+  }
+
+  dd {
+    margin: 0;
+    color: #d9f2ff;
+  }
+
+  .stats {
+    margin-top: 1.6rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    max-width: 640px;
+  }
+
+  .stat {
+    display: grid;
+    grid-template-columns: 9.4rem 1fr 2rem;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+  }
+
+  .stat__k {
+    color: rgba(180, 205, 220, 0.7);
+  }
+
+  .stat__bar {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.06);
     position: relative;
+    overflow: hidden;
   }
 
-  .typewriter::after {
-    content: "_";
-    position: absolute;
-    right: -1ch;
-    animation: blink 1s step-end infinite;
+  .stat__bar i {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 255, 65, 0.85), #00f0ff);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+    transform-origin: left;
+    animation: statGrow 1.2s 0.2s both cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
+  .stat__v {
+    color: #00ff41;
+    text-align: right;
+    font-size: 0.58rem;
+  }
+
+  .perks {
+    margin-top: 1.8rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .perk {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.85rem 0.9rem;
+    background: rgba(255, 255, 255, 0.018);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-left: 2px solid rgba(0, 255, 65, 0.4);
+    transition: all 0.2s ease;
+  }
+
+  .perk:hover {
+    background: rgba(0, 255, 65, 0.04);
+    border-left-color: #00ff41;
+    transform: translateY(-2px);
+  }
+
+  .perk__ico {
+    color: #00ff41;
+    font-size: 1rem;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+
+  .perk h3 {
+    margin: 0 0 0.3rem;
+    font-family: var(--font-heading);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: #eafcff;
+  }
+
+  .perk p {
+    margin: 0;
+    font-size: 0.76rem;
+    line-height: 1.65;
+    color: rgba(180, 205, 220, 0.72);
+  }
+
+  @keyframes statGrow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+
+    .stat {
+      grid-template-columns: 7.4rem 1fr 1.6rem;
     }
   }
 
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     .terminal-content {
-      padding: 1rem;
+      padding: 1rem 0.9rem;
+    }
+
+    .perks {
+      grid-template-columns: 1fr;
+    }
+
+    .stat {
+      grid-template-columns: 7rem 1fr 1.6rem;
+      font-size: 0.55rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stat__bar i {
+      animation: none;
     }
   }
 </style>

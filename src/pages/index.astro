@@ -8,46 +8,56 @@ import ContactSection from '../components/contact/ContactSection.astro';
 import cv from '../data/cv.json';
 ---
 
-<Layout title="Yeyobitz - Web Developer">
-  <main>
-    <Hero 
+<Layout title="Yeyobitz — Support Specialist & Full-Stack Dev">
+  <main id="main-content" data-project-total={cv.projects.length}>
+    <Hero
       name={cv.basics.name}
       label={cv.basics.label}
-      image={cv.basics.image}
+      summary={cv.basics.summary}
+      projects={cv.projects.length}
+      locations="CONCEPCIÓN · CHILE · UTC-3"
     />
-    
-    <About summary={cv.basics.summary} />
-    
-    <ProjectsSection projects={cv.projects} />
-    
-    <SkillsSection skills={cv.skills} />
-    
-    <ContactSection 
-      email={cv.basics.email}
-      profiles={cv.basics.profiles}
-    />
+
+    <div class="shell">
+      <About
+        summary={cv.basics.summary}
+        role={cv.basics.label}
+        projects={cv.projects.length}
+        email={cv.basics.email}
+      />
+
+      <ProjectsSection projects={cv.projects} />
+
+      <SkillsSection skills={cv.skills} />
+
+      <ContactSection email={cv.basics.email} profiles={cv.basics.profiles} />
+    </div>
   </main>
 </Layout>
 
 <style>
   main {
-    margin: auto;
-    padding: 0 4rem;
-    width: 1200px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
+    position: relative;
+    z-index: 4;
+    padding-bottom: 7rem;
   }
-  @media screen and (max-width: 768px) {
-    main {
-      padding: 0 2rem 2rem 2rem;
-      width: 100%;
+
+  .shell {
+    width: min(100% - 2rem, 1180px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .shell {
+      width: calc(100% - 1.2rem);
+      gap: 1.8rem;
     }
-  }
-  @media screen and (max-width: 480px) {
+
     main {
-      padding: 0 1rem 1rem 1rem;
+      padding-bottom: 10rem;
     }
   }
 </style>

@@ -1,5 +1,5 @@
 ---
-const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
+const messages = ['BOOTING…', 'MOUNTING 3D…', 'READY.'];
 ---
 
 <div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Cargando sitio">
@@ -129,22 +129,28 @@ const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
         commandText.textContent += message.charAt(i);
         i++;
         updateLoadingProgress(Math.floor((i / message.length) * 100));
-        setTimeout(type, 30);
+        setTimeout(type, 16);
       } else if (currentMessage < messages.length - 1) {
         currentMessage++;
         setTimeout(() => {
           typeMessage(messages[currentMessage]);
-        }, 300);
+        }, 140);
       } else {
         setTimeout(() => {
           loadingScreen?.classList.add('hidden');
           document.body.classList.add('loaded');
           localStorage.setItem(STORAGE_KEYS.loadingShown, 'true');
-        }, 300);
+        }, 220);
       }
     }
 
     type();
+  }
+
+  function dismiss() {
+    loadingScreen?.classList.add('hidden');
+    document.body.classList.add('loaded');
+    localStorage.setItem(STORAGE_KEYS.loadingShown, 'true');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -152,9 +158,10 @@ const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
 
     if (!hasSeenLoading) {
       typeMessage(messages[0]);
+      // the intro is decoration: it must never trap the page behind a busy main thread
+      setTimeout(dismiss, 2200);
     } else {
-      loadingScreen?.classList.add('hidden');
-      document.body.classList.add('loaded');
+      dismiss();
     }
   });
 </script>

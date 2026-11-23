@@ -1,0 +1,22 @@
+{
+  "name": "Yeyobitz — Diego Quiñones",
+  "short_name": "YEYOBITZ",
+  "description": "IT support specialist & full-stack developer. Interactive 3D portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#03050a",
+  "theme_color": "#03050a",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

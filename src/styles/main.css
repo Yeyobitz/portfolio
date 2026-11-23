@@ -13,27 +13,6 @@
 /* Effects */
 @import './theme/_effects.css';
 
-/* Minimize Animation */
-section {
-  transition: max-height 0.3s ease-out;
-  overflow: hidden;
-}
-
-section.minimized {
-  max-height: 4rem;
-}
-
-section.minimized .terminal-content,
-section.minimized .project-grid,
-section.minimized .skills-grid,
-section.minimized .contact-form {
-  display: none;
-}
-
-section.minimized .terminal-header {
-  border-bottom: none;
-}
-
 :root {
   /* Common variables */
   --font-mono: 'IBM Plex Mono', monospace;

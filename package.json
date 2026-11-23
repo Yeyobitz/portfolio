@@ -1,17 +1,21 @@
 {
-  "name": "@example/basics",
+  "name": "yeyobitz-portfolio",
   "type": "module",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/netlify": "^5.0.0",
-    "astro": "^4.15.3"
-  }
+    "@types/three": "^0.169.0",
+    "astro": "^4.15.3",
+    "three": "^0.169.0"
+  },
+  "description": "Gamified 3D portfolio: isometric diorama, skill constellation and selectable graphics tiers."
 }
