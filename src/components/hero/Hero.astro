@@ -7,9 +7,10 @@ interface Props {
   label: string;
   summary: string;
   email: string;
+  projects: number;
 }
 
-const { name, headline, label, summary, email } = Astro.props;
+const { name, headline, label, summary, email, projects } = Astro.props;
 const t = getDict(Astro.currentLocale);
 const lang = normalizeLang(Astro.currentLocale);
 const [first, ...rest] = name.split(' ');
@@ -59,7 +60,7 @@ const cvHref = lang === 'en' ? '/en/cv' : '/cv';
         <li><b>300+</b><span>{t.hero.stats.users}</span></li>
         <li><b>15+</b><span>{t.hero.stats.containers}</span></li>
         <li><b>C2</b><span>{t.hero.stats.english}</span></li>
-        <li><b>03</b><span>{t.hero.stats.projects}</span></li>
+        <li><b>{String(projects).padStart(2, '0')}</b><span>{t.hero.stats.projects}</span></li>
       </ul>
     </div>
 
