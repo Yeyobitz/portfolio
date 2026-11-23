@@ -1,0 +1,147 @@
+---
+/**
+ * Fixed 3D stage. The canvas only appears when the graphics tier allows
+ * WebGL; otherwise the CSS backdrop below carries the whole design.
+ */
+interface Props {
+  pins?: { name: string; color: number }[];
+}
+const { pins = [] } = Astro.props;
+---
+
+<div id="stage" class="stage" aria-hidden="true">
+  <div class="stage__fallback">
+    <div class="stage__grid"></div>
+    <div class="stage__glow stage__glow--a"></div>
+    <div class="stage__glow stage__glow--b"></div>
+    <div class="stage__glow stage__glow--c"></div>
+    <div class="stage__stars" id="stage-stars"></div>
+  </div>
+  <canvas id="world-canvas" class="stage__canvas" data-pins={JSON.stringify(pins)}></canvas>
+  <div class="stage__vignette"></div>
+</div>
+
+<style is:global>
+  .stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    background: radial-gradient(ellipse 90% 70% at 50% 0%, #0b1420 0%, #05070c 55%, #030407 100%);
+  }
+
+  .stage__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+
+  .stage__canvas.is-on {
+    opacity: 1;
+  }
+
+  html[data-gfx='low'] .stage__canvas {
+    display: none;
+  }
+
+  .stage__fallback {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .stage__grid {
+    position: absolute;
+    left: 50%;
+    bottom: -18%;
+    width: 220vw;
+    height: 90vh;
+    transform: translateX(-50%) perspective(60vh) rotateX(62deg);
+    background-image:
+      linear-gradient(90deg, rgba(0, 240, 255, 0.18) 1px, transparent 1px),
+      linear-gradient(rgba(255, 43, 214, 0.14) 1px, transparent 1px);
+    background-size: 5rem 5rem;
+    mask-image: radial-gradient(ellipse 60% 65% at 50% 50%, #000 10%, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 65% at 50% 50%, #000 10%, transparent 72%);
+    opacity: 0.65;
+  }
+
+  .stage__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.4;
+    animation: stageFloat 18s ease-in-out infinite;
+  }
+
+  .stage__glow--a {
+    width: 46vw;
+    height: 46vw;
+    top: -14vw;
+    left: 6vw;
+    background: rgba(0, 240, 255, 0.24);
+  }
+
+  .stage__glow--b {
+    width: 40vw;
+    height: 40vw;
+    top: 28vh;
+    right: -6vw;
+    background: rgba(255, 43, 214, 0.2);
+    animation-delay: -6s;
+  }
+
+  .stage__glow--c {
+    width: 34vw;
+    height: 34vw;
+    bottom: -12vw;
+    left: 24vw;
+    background: rgba(0, 255, 65, 0.14);
+    animation-delay: -12s;
+  }
+
+  .stage__stars {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1.4px 1.4px at 20% 30%, rgba(0, 240, 255, 0.85) 50%, transparent 51%),
+      radial-gradient(1.2px 1.2px at 68% 18%, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+      radial-gradient(1.6px 1.6px at 82% 62%, rgba(255, 43, 214, 0.7) 50%, transparent 51%),
+      radial-gradient(1.1px 1.1px at 38% 74%, rgba(0, 255, 65, 0.6) 50%, transparent 51%),
+      radial-gradient(1.3px 1.3px at 12% 82%, rgba(255, 255, 255, 0.5) 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 52% 48%, rgba(0, 240, 255, 0.45) 50%, transparent 51%);
+    background-size: 640px 640px, 520px 520px, 720px 720px, 460px 460px, 580px 580px, 800px 800px;
+    animation: stageDrift 90s linear infinite;
+    opacity: 0.8;
+  }
+
+  .stage__vignette {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 40%, transparent 30%, rgba(2, 3, 6, 0.55) 100%),
+      linear-gradient(180deg, rgba(2, 3, 6, 0.55) 0%, transparent 18%, transparent 74%, rgba(2, 3, 6, 0.9) 100%);
+  }
+
+  @keyframes stageFloat {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(2vw, 3vh, 0) scale(1.08); }
+  }
+
+  @keyframes stageDrift {
+    from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+    to { background-position: 640px 640px, -520px 520px, 720px -720px, 460px 460px, -580px 580px, 800px -800px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stage__glow,
+    .stage__stars {
+      animation: none !important;
+    }
+  }
+</style>

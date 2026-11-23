@@ -1,10 +1,13 @@
 ---
-const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
+import { getDict } from '../i18n/ui';
+
+const t = getDict(Astro.currentLocale);
+const messages = t.loading.messages;
 ---
 
-<div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Cargando sitio">
+<div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label={t.loading.brand}>
   <div class="loading-content">
-    <div class="loading-text" aria-live="polite">BOOTING SYSTEM</div>
+    <div class="loading-text" aria-live="polite">{t.loading.brand}</div>
     <div class="loading-progress">
       <div class="progress-bar"></div>
     </div>
@@ -18,6 +21,9 @@ const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
 
 <style>
   .loading-screen {
+    /* CSS safety net: even if the main thread is busy booting WebGL and every
+       timer is delayed, the overlay fades itself out on the compositor. */
+    animation: loaderOut 0.5s ease 2.6s forwards;
     position: fixed;
     top: 0;
     left: 0;
@@ -36,6 +42,20 @@ const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
   .loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    animation: none;
+  }
+
+  @keyframes loaderOut {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-screen {
+      animation-delay: 0.1s;
+    }
   }
 
   .loading-content {
@@ -129,22 +149,28 @@ const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
         commandText.textContent += message.charAt(i);
         i++;
         updateLoadingProgress(Math.floor((i / message.length) * 100));
-        setTimeout(type, 30);
+        setTimeout(type, 16);
       } else if (currentMessage < messages.length - 1) {
         currentMessage++;
         setTimeout(() => {
           typeMessage(messages[currentMessage]);
-        }, 300);
+        }, 140);
       } else {
         setTimeout(() => {
           loadingScreen?.classList.add('hidden');
           document.body.classList.add('loaded');
           localStorage.setItem(STORAGE_KEYS.loadingShown, 'true');
-        }, 300);
+        }, 220);
       }
     }
 
     type();
+  }
+
+  function dismiss() {
+    loadingScreen?.classList.add('hidden');
+    document.body.classList.add('loaded');
+    localStorage.setItem(STORAGE_KEYS.loadingShown, 'true');
   }
 
   document.addEventListener('DOMContentLoaded', () => {
@@ -152,9 +178,10 @@ const messages = ['Iniciando...', 'Cargando...', 'Listo!'];
 
     if (!hasSeenLoading) {
       typeMessage(messages[0]);
+      // the intro is decoration: it must never trap the page behind a busy main thread
+      setTimeout(dismiss, 2200);
     } else {
-      loadingScreen?.classList.add('hidden');
-      document.body.classList.add('loaded');
+      dismiss();
     }
   });
 </script>

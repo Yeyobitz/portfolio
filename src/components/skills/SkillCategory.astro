@@ -1,6 +1,7 @@
 ---
 import type { Skill } from '../../types/cv';
 import SkillBadge from './SkillBadge.astro';
+import { getDict } from '../../i18n/ui';
 
 interface Props {
   category: string;
@@ -8,11 +9,13 @@ interface Props {
 }
 
 const { category, skills } = Astro.props;
+const t = getDict(Astro.currentLocale);
+const label = (t.skills.categories as Record<string, string>)[category] ?? category;
 ---
 
 <div class="skill-category">
   <div class="category-header">
-    <h3 class="category-title">{category}</h3>
+    <h3 class="category-title">{label}</h3>
     <div class="pixel-decoration"></div>
   </div>
   <div class="skills-grid">

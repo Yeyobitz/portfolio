@@ -1,6 +1,7 @@
 ---
 import ContactForm from './ContactForm.astro';
 import TerminalHeader from '../TerminalHeader.astro';
+import { getDict } from '../../i18n/ui';
 import type { Profile } from '../../types/cv';
 
 interface Props {
@@ -9,21 +10,30 @@ interface Props {
 }
 
 const { email, profiles } = Astro.props;
+const t = getDict(Astro.currentLocale);
 ---
 
 <section class="section terminal-section" id="contact">
-  <TerminalHeader title="CONTACT.EXE" />
+  <TerminalHeader title={t.contact.title} num="04" xp={25} tag={t.contact.tag} />
   
   <div class="terminal-window">
     <div class="terminal-content">
       <div class="terminal-line typing-effect">
         <span class="terminal-prompt">&gt;</span>
-        <span class="terminal-text">Have something in mind?</span>
+        <span class="terminal-text">{t.contact.line1}</span>
       </div>
       <div class="terminal-line typing-effect-2">
         <span class="terminal-prompt">&gt;</span>
-        <span class="terminal-text">Let's do it =)</span>
+        <span class="terminal-text">{t.contact.line2}</span>
       </div>
+      <div class="contact-quick">
+        <button class="copy-mail" type="button" data-copy-email={email}>
+          <span aria-hidden="true">⧉</span> {email}
+        </button>
+        <span class="copy-hint">{t.contact.copyHint}</span>
+        <span class="contact-availability">{t.contact.availability}</span>
+      </div>
+
       <div class="contact-form-wrapper">
         <ContactForm email={email} profiles={profiles} />
       </div>
@@ -33,7 +43,50 @@ const { email, profiles } = Astro.props;
 
 <style>
   .terminal-window {
-    padding: 2rem;
+    padding: clamp(1.1rem, 2.4vw, 2rem);
+  }
+
+  .contact-quick {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .copy-mail {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.9rem;
+    background: rgba(0, 240, 255, 0.06);
+    border: 1px dashed rgba(0, 240, 255, 0.45);
+    color: #bff3ff;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .copy-mail:hover {
+    background: rgba(0, 240, 255, 0.12);
+    border-style: solid;
+    color: #fff;
+    box-shadow: 0 0 18px rgba(0, 240, 255, 0.2);
+  }
+
+  .contact-availability {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    color: rgba(0, 255, 65, 0.7);
+  }
+
+  .copy-hint {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+    color: rgba(150, 180, 200, 0.5);
   }
 
   .terminal-content {
@@ -56,7 +109,7 @@ const { email, profiles } = Astro.props;
     gap: 0.5rem;
     align-items: center;
     font-family: var(--font-mono);
-    font-size: 1.1rem;
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
     opacity: 0;
   }
 

@@ -1,452 +1,358 @@
 {
   "basics": {
-    "name": "Diego QM",
-    "label": "Full Stack Developer",
-    "image": "https://raw.githubusercontent.com/Yeyobitz/Front-End/3198fec59cf120b03a80ab73fcba19de46af7377/certamen1/assets/img/yeyo-T.png",
+    "name": "Diego Quiñones",
+    "handle": "Yeyo",
+    "headline": "AI Automation Engineer",
+    "label": "Full-stack developer",
     "email": "yeyobitz@proton.me",
-    "url": "https://yeyobitz.dev",
-    "summary": "Coding since 2023, I'm a full stack developer with a passion for creating web applications and games. I'm a quick learner and I'm always looking to improve my skills or learn new technologies. Send me a message with your idea and I'll help you make it happen.",
+    "location": "Concepción, Chile",
+    "timezone": "UTC-3",
+    "availability": "Available from December 1, 2026",
+    "english": "English C2 — EF SET, January 2025",
+    "rate": "From USD 1,500 / month",
+    "summary": "I automate manual operations work with AI and ship it as a web tool: reports, documents and tickets that used to eat hours now run on their own. I come from IT support, so I automate what I have already seen break.",
+    "lookingFor": "Looking for a remote role where AI and automation are the job, not an experiment.",
     "profiles": [
       {
         "network": "LinkedIn",
-        "username": "Diego QM",
-        "url": "https://www.linkedin.com/in/diego-alexander-qm-650010249/"
+        "username": "yeyobitz",
+        "url": "https://www.linkedin.com/in/yeyobitz/"
       },
       {
         "network": "GitHub",
         "username": "Yeyobitz",
         "url": "https://github.com/Yeyobitz"
+      },
+      {
+        "network": "EF SET",
+        "username": "C2 English",
+        "url": "https://cert.efset.org/en/mFgEgp"
       }
-    ]
+    ],
+    "availabilityShort": "Dec 1, 2026"
   },
+  "experience": [
+    {
+      "company": "Ferrostaal Chile",
+      "role": "Technical Secretary",
+      "promotion": "Promoted from Civil Foreman II",
+      "period": "Oct 2026 — Present",
+      "mode": "On-site · ENAP plant shutdown",
+      "summary": "Night shift documenting and reporting the progress of a full plant shutdown, with compensated days every 14 days.",
+      "highlights": [
+        "Replaced repetitive spreadsheets and reports with AI-assisted workflows the crew runs without knowing how to code.",
+        "Keep technical documentation current for crews and supervision across the whole shift.",
+        "Work 20:00–08:00 with daily deliverables and zero room for a wrong sheet number or date."
+      ],
+      "tools": [
+        "Excel",
+        "Hermes Agent",
+        "opencode"
+      ]
+    },
+    {
+      "company": "Compañía Puerto Coronel",
+      "role": "IT Support",
+      "period": "Nov 2025 — Jun 2026",
+      "mode": "On-site · 300+ users",
+      "summary": "Help desk for 300+ users at a port company: hardware, Windows and office software.",
+      "highlights": [
+        "Around 15 tickets a day: formatting, system imaging, Windows 11 upgrades and Microsoft Office.",
+        "Automated report and image generation with AI: batches that took about an hour dropped to under five minutes.",
+        "Mass cloning and device restoration without stopping operations."
+      ],
+      "tools": [
+        "Windows 10/11",
+        "Microsoft 365",
+        "Excel",
+        "Imaging"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Programmer Analyst",
+      "institution": "INACAP",
+      "period": "2023 — 2025"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "EF SET English Certificate — C2 Proficient",
+      "issuer": "EF SET",
+      "date": "January 2025",
+      "url": "https://cert.efset.org/en/mFgEgp"
+    }
+  ],
   "skills": [
     {
-      "name": "HTML",
+      "name": "Python",
       "level": "advanced",
-      "keywords": ["Frontend", "Semantic HTML", "Accessibility"]
-    },
-    {
-      "name": "CSS",
-      "level": "advanced",
-      "keywords": ["Frontend", "Responsive Design", "Animations"]
-    },
-    {
-      "name": "JavaScript",
-      "level": "Intermediate",
-      "keywords": ["Frontend", "Web Development", "DOM"]
+      "keywords": [
+        "Backend",
+        "Automation",
+        "APIs"
+      ]
     },
     {
       "name": "TypeScript",
-      "level": "Intermediate",
-      "keywords": ["Frontend", "Web Development", "Type Safety"]
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "Type safety",
+        "Node"
+      ]
     },
     {
       "name": "React",
-      "level": "Basic",
-      "keywords": ["Frontend", "Web Development", "UI"]
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "UI",
+        "SPA"
+      ]
+    },
+    {
+      "name": "Astro",
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "SSG",
+        "Performance"
+      ]
     },
     {
       "name": "Next.js",
       "level": "intermediate",
-      "keywords": ["Frontend", "SSR", "React Framework"]
+      "keywords": [
+        "Frontend",
+        "SSR",
+        "React"
+      ]
     },
     {
-      "name": "Astro",
-      "level": "Basic",
-      "keywords": ["Frontend", "Static Sites", "Performance"]
+      "name": "HTML / CSS",
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "Accessibility",
+        "Responsive"
+      ]
     },
     {
-      "name": "Tailwind",
-      "level": "Intermediate",
-      "keywords": ["Frontend", "CSS Framework", "Utility-First"]
+      "name": "FastAPI",
+      "level": "intermediate",
+      "keywords": [
+        "Backend",
+        "Python",
+        "REST"
+      ]
     },
     {
-      "name": "Python",
-      "level": "Intermediate",
-      "keywords": ["Backend", "Data Science", "Scripting"]
+      "name": "Node.js",
+      "level": "intermediate",
+      "keywords": [
+        "Backend",
+        "JavaScript",
+        "Tooling"
+      ]
     },
     {
-      "name": "Django",
-      "level": "Basic",
-      "keywords": ["Backend", "Python Framework", "Web Development"]
+      "name": "Bash / PowerShell",
+      "level": "advanced",
+      "keywords": [
+        "DevTools",
+        "Automation",
+        "Shell"
+      ]
     },
     {
-      "name": "MySQL",
-      "level": "Advanced",
-      "keywords": ["Database", "SQL", "Relational"]
+      "name": "Linux (Ubuntu Server)",
+      "level": "advanced",
+      "keywords": [
+        "Infra",
+        "systemd",
+        "Hardening"
+      ]
+    },
+    {
+      "name": "Docker / Compose",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "Containers",
+        "Deploy"
+      ]
+    },
+    {
+      "name": "Cloudflare Tunnel",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "Networking",
+        "Safe exposure"
+      ]
+    },
+    {
+      "name": "Tailscale",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "VPN",
+        "Mesh"
+      ]
+    },
+    {
+      "name": "UFW / Firewall",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "Security",
+        "Default deny"
+      ]
+    },
+    {
+      "name": "Git / GitHub",
+      "level": "advanced",
+      "keywords": [
+        "DevTools",
+        "Versioning",
+        "Collaboration"
+      ]
+    },
+    {
+      "name": "GitHub Actions",
+      "level": "intermediate",
+      "keywords": [
+        "DevTools",
+        "CI/CD",
+        "Automation"
+      ]
     },
     {
       "name": "MongoDB",
-      "level": "Intermediate",
-      "keywords": ["Database", "NoSQL", "Document Store"]
+      "level": "advanced",
+      "keywords": [
+        "Database",
+        "NoSQL",
+        "Documents"
+      ]
     },
     {
-      "name": "Firebase",
-      "level": "Intermediate",
-      "keywords": ["Database", "Cloud", "Real-time"]
+      "name": "MySQL",
+      "level": "intermediate",
+      "keywords": [
+        "Database",
+        "SQL",
+        "Relational"
+      ]
     },
     {
-      "name": "Oracle",
-      "level": "Intermediate",
-      "keywords": ["Database", "SQL", "Enterprise"]
+      "name": "RAG / embeddings",
+      "level": "intermediate",
+      "keywords": [
+        "AI",
+        "Semantic search",
+        "Chunking"
+      ]
     },
     {
-      "name": "Git",
-      "level": "Basic",
-      "keywords": ["DevTools", "Version Control", "Collaboration"]
+      "name": "LLM agents (Hermes, opencode)",
+      "level": "advanced",
+      "keywords": [
+        "AI",
+        "Automation",
+        "Workflows"
+      ]
     },
     {
-      "name": "GitHub",
-      "level": "Intermediate",
-      "keywords": ["DevTools", "Version Control", "CI/CD"]
+      "name": "OCR / document extraction",
+      "level": "intermediate",
+      "keywords": [
+        "AI",
+        "PyMuPDF",
+        "Tesseract"
+      ]
     },
     {
-      "name": "Make.com",
-      "level": "Basic",
-      "keywords": ["DevTools", "Automation", "Integration"]
-    },
-    {
-      "name": "Suno.com",
-      "level": "Advanced",
-      "keywords": ["DevTools", "AI", "Music Generation"]
-    },
-    {
-      "name": "C#",
-      "level": "Basic",
-      "keywords": ["GameDev", "Unity", "Programming"]
-    },
-    {
-      "name": "Unity",
-      "level": "Basic",
-      "keywords": ["GameDev", "Game Engine", "C#"]
-    },
-    {
-      "name": "Unreal Engine 4",
-      "level": "Basic",
-      "keywords": ["GameDev", "Game Engine", "Blueprints"]
-    },
-    {
-      "name": "Photoshop",
-      "level": "Intermediate",
-      "keywords": ["Design", "Image Editing", "Graphics"]
-    },
-    {
-      "name": "Figma",
-      "level": "Intermediate",
-      "keywords": ["Design", "UI/UX", "Prototyping"]
-    },
-    {
-      "name": "Clipchamp",
-      "level": "Intermediate",
-      "keywords": ["Media", "Video Editing", "Content Creation"]
+      "name": "Playwright",
+      "level": "intermediate",
+      "keywords": [
+        "DevTools",
+        "Testing",
+        "E2E"
+      ]
     }
   ],
   "projects": [
     {
-      "name": "Super Tik-Tak-Toe",
-      "isActive": true,
-      "description": "A SUPER version of a classic game with a retro design, awesome music and multiple difficulty levels.",
+      "name": "Panshulo Homelab",
+      "status": "live",
+      "year": "2026",
+      "description": "Self-hosted server on a 7 GB ThinkPad: 15+ containers, no cloud hosting and everything behind a VPN. It is my real operations lab.",
       "highlights": [
-        "Game mode: 1 vs CPU or 1 vs 1",
-        "Adjustable difficulty: Easy, Medium, Hard",
-        "Implementation of minimax algorithm",
-        "Global leaderboard"
+        "15+ Docker services declared with Compose: media, *arr stack, Gitea and monitoring.",
+        "Access through Cloudflare Tunnel and Tailscale; UFW in default-deny mode on the host.",
+        "Custom Flask dashboard (psutil) plus Netdata, with health checks on systemd timers.",
+        "OS on NVMe and media on a USB HDD, with automount and a mixed pool."
       ],
-      "url": "https://multiuniversalgato.netlify.app/",
-      "images": [
-        "/projects/tictactoe/tictactoe1.webp",
-        "/projects/tictactoe/tictactoe2.webp",
-        "/projects/tictactoe/tictactoe3.webp"
+      "technologies": [
+        "Ubuntu Server",
+        "Docker",
+        "Cloudflare Tunnel",
+        "Tailscale",
+        "UFW",
+        "Python",
+        "Netdata"
       ],
-      "technologies": ["JavaScript", "HTML", "CSS", "Firebase"],
-      "impact": "Over 1,000 games played in the first month. Used as an example for algorithm implementation in programming classes.",
-      "duration": "2 months",
-      "role": "Full Stack Developer",
-      "teamSize": 1,
-      "client": "Personal Project",
-      "caseStudy": {
-        "process": {
-          "planning": "The project started as a challenge to implement the minimax algorithm in a fun and engaging way. I wanted to create a game that would be both entertaining and educational.",
-          "challenges": [
-            "Implementing an efficient minimax algorithm for different difficulty levels",
-            "Creating a responsive and intuitive UI that works on all devices",
-            "Optimizing performance for real-time gameplay",
-            "Implementing a global leaderboard system"
-          ],
-          "solutions": [
-            "Used alpha-beta pruning to optimize the minimax algorithm",
-            "Implemented difficulty levels by limiting the search depth",
-            "Created a mobile-first design with touch controls",
-            "Used Firebase Realtime Database for leaderboard updates"
-          ],
-          "learnings": [
-            "Deep understanding of game theory and AI algorithms",
-            "Importance of UX in game design",
-            "Real-time database management",
-            "Performance optimization techniques"
-          ]
-        },
-        "metrics": [
-          {
-            "label": "Monthly Active Users",
-            "value": "500+",
-            "change": "+200%"
-          },
-          {
-            "label": "Games Played",
-            "value": "10,000+",
-            "change": "+150%"
-          },
-          {
-            "label": "Average Session Duration",
-            "value": "15min",
-            "change": "+5min"
-          }
-        ],
-        "timeline": [
-          {
-            "date": "Week 1",
-            "milestone": "Initial planning and algorithm research"
-          },
-          {
-            "date": "Week 3",
-            "milestone": "Basic game mechanics implementation"
-          },
-          {
-            "date": "Week 5",
-            "milestone": "AI implementation and difficulty levels"
-          },
-          {
-            "date": "Week 7",
-            "milestone": "UI design and responsive implementation"
-          },
-          {
-            "date": "Week 8",
-            "milestone": "Launch and initial feedback"
-          }
-        ]
-      }
+      "repo": "https://github.com/Yeyobitz/panshulo-homelab",
+      "impact": "Runs 24/7 on 7 GB of RAM with no hosting bill: remote access goes through a tunnel, not someone else’s servers.",
+      "role": "Design, operations and maintenance"
     },
     {
-      "name": "Tregua Project",
-      "isActive": true,
-      "description": "A restaurant management system built with React 18 and Vite.js, using Firebase as backend.",
+      "name": "pdftoai",
+      "status": "live",
+      "year": "2026",
+      "description": "CLI and REST API that turns large PDF, DOCX, XLSX and CSV files into agent-ready Markdown, with OCR fallback and semantic search.",
       "highlights": [
-        "Reservation and menu management system",
-        "Administration panel",
-        "Real-time updates",
-        "Responsive design"
+        "PyMuPDF extraction with automatic Tesseract fallback when the PDF is scanned.",
+        "Heading detection by font size, YAML front matter with TOC and metadata.",
+        "Semantic chunking and vector indexing behind a search API.",
+        "Test suite over the API and a Docker image to run it anywhere."
       ],
-      "url": "https://treguarestaurant.netlify.app/",
-      "github": "https://github.com/Yeyobitz/treguaReact",
-      "images": [
-        "/projects/tregua/tregua1.webp",
-        "/projects/tregua/tregua2.webp",
-        "/projects/tregua/tregua3.webp"
+      "technologies": [
+        "Python",
+        "PyMuPDF",
+        "Tesseract",
+        "FastAPI",
+        "Embeddings",
+        "Docker"
       ],
-      "technologies": ["React", "Firebase", "Tailwind", "Vite"],
-      "impact": "Increased reservation management efficiency by 40% and reduced order errors by 25%.",
-      "duration": "3 months",
-      "role": "Lead Developer",
-      "teamSize": 2,
-      "client": "Tregua Restaurant",
-      "caseStudy": {
-        "process": {
-          "planning": "The project was initiated to modernize the restaurant's management system and improve operational efficiency. We focused on creating a seamless experience for both staff and customers.",
-          "challenges": [
-            "Managing real-time reservations without conflicts",
-            "Implementing a flexible menu management system",
-            "Ensuring data consistency across multiple devices",
-            "Training staff on the new system"
-          ],
-          "solutions": [
-            "Implemented Firebase transactions for reservation handling",
-            "Created a dynamic menu system with categories and modifiers",
-            "Used React Query for efficient data synchronization",
-            "Developed an intuitive admin interface with role-based access"
-          ],
-          "learnings": [
-            "Real-time database management in a production environment",
-            "Importance of user training in system adoption",
-            "Complex state management in React applications",
-            "Performance optimization for concurrent users"
-          ]
-        },
-        "metrics": [
-          {
-            "label": "Reservation Processing Time",
-            "value": "30sec",
-            "change": "-70%"
-          },
-          {
-            "label": "Order Accuracy",
-            "value": "98%",
-            "change": "+25%"
-          },
-          {
-            "label": "Staff Training Time",
-            "value": "2hrs",
-            "change": "-50%"
-          }
-        ],
-        "timeline": [
-          {
-            "date": "Month 1",
-            "milestone": "Requirements gathering and system design"
-          },
-          {
-            "date": "Month 2",
-            "milestone": "Core features implementation"
-          },
-          {
-            "date": "Month 2.5",
-            "milestone": "Admin panel and staff training"
-          },
-          {
-            "date": "Month 3",
-            "milestone": "Testing and deployment"
-          }
-        ]
-      }
+      "repo": "https://github.com/Yeyobitz/pdftoai",
+      "impact": "Unifies native and scanned documents into a single pipeline with no manual steps.",
+      "role": "Design and development"
     },
     {
-      "name": "Generic Platformer #18001",
-      "isActive": false,
-      "description": "A platformer game where the player must navigate through a series of platforms while avoiding obstacles and enemies.",
+      "name": "This portfolio",
+      "status": "live",
+      "year": "2026",
+      "description": "The site you are reading: a bilingual Astro build with a three.js diorama and three graphics tiers that pick themselves.",
       "highlights": [
-        "Developed in UE4 using blueprints",
-        "Implementation of player movement",
-        "Original BGM",
-        "Multiple levels"
+        "Three tiers (no WebGL, medium, high) with auto-downgrade when frames drop.",
+        "Zero textures: the whole 3D scene is generated in code, CRT screen included.",
+        "Static ES/EN i18n with hreflang, a typed dictionary and a build-time sitemap.",
+        "CI on every PR, a performance budget and respect for prefers-reduced-motion."
       ],
-      "images": [
-        "/projects/platformer/platformer1.webp",
-        "/projects/platformer/platformer2.webp",
-        "/projects/platformer/platformer3.webp"
+      "technologies": [
+        "Astro",
+        "TypeScript",
+        "three.js",
+        "GitHub Actions",
+        "i18n"
       ],
-      "technologies": ["Unreal Engine", "Blueprints"],
-      "impact": "Experimental project that allowed me to learn about game development and visual programming logic.",
-      "duration": "1 month",
-      "role": "Game Developer",
-      "teamSize": 1,
-      "client": "Personal Project",
-      "caseStudy": {
-        "process": {
-          "planning": "This project was conceived as a learning experience to understand game development fundamentals and Unreal Engine's Blueprint system.",
-          "challenges": [
-            "Learning Unreal Engine's Blueprint system",
-            "Implementing smooth player movement and controls",
-            "Creating engaging level designs",
-            "Optimizing game performance"
-          ],
-          "solutions": [
-            "Used Blueprint tutorials and documentation extensively",
-            "Implemented state machines for player movement",
-            "Created modular level design system",
-            "Applied UE4's built-in optimization tools"
-          ],
-          "learnings": [
-            "Visual programming concepts",
-            "Game physics and collision detection",
-            "Level design principles",
-            "Game optimization techniques"
-          ]
-        },
-        "timeline": [
-          {
-            "date": "Week 1",
-            "milestone": "Learning Unreal Engine basics"
-          },
-          {
-            "date": "Week 2",
-            "milestone": "Player character implementation"
-          },
-          {
-            "date": "Week 3",
-            "milestone": "Level design and obstacles"
-          },
-          {
-            "date": "Week 4",
-            "milestone": "Polish and optimization"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Pochita Vet-App",
-      "isActive": false,
-      "description": "Web application for a veterinary clinic using Django and MySQL.",
-      "highlights": [
-        "Fully functional veterinary clinic management system",
-        "Collaborative project with other INACAP students",
-        "Patient records management",
-        "Appointment scheduling"
-      ],
-      "github": "https://github.com/Yeyobitz/Pochita",
-      "images": [
-        "/projects/pochita/pochita1.webp",
-        "/projects/pochita/pochita2.webp",
-        "/projects/pochita/pochita3.webp"
-      ],
-      "technologies": ["Python", "Django", "MySQL", "Bootstrap"],
-      "impact": "Academic project that improved appointment and medical record management at a local veterinary clinic.",
-      "duration": "2 months",
-      "role": "Backend Developer",
-      "teamSize": 3,
-      "client": "Academic Project",
-      "caseStudy": {
-        "process": {
-          "planning": "The project was developed as part of our academic curriculum, focusing on creating a practical solution for veterinary clinics while learning full-stack development.",
-          "challenges": [
-            "Managing complex medical records relationships",
-            "Implementing secure user authentication",
-            "Coordinating work between team members",
-            "Ensuring data privacy compliance"
-          ],
-          "solutions": [
-            "Designed normalized database schema",
-            "Implemented Django's built-in authentication",
-            "Used Git for version control and collaboration",
-            "Applied Django's security best practices"
-          ],
-          "learnings": [
-            "Team collaboration and git workflow",
-            "Database design and relationships",
-            "Django MVT architecture",
-            "Security best practices"
-          ]
-        },
-        "metrics": [
-          {
-            "label": "Records Processing Time",
-            "value": "45sec",
-            "change": "-60%"
-          },
-          {
-            "label": "Paper Usage",
-            "value": "0",
-            "change": "-100%"
-          }
-        ],
-        "timeline": [
-          {
-            "date": "Week 1-2",
-            "milestone": "Requirements analysis and database design"
-          },
-          {
-            "date": "Week 3-4",
-            "milestone": "Backend development"
-          },
-          {
-            "date": "Week 5-6",
-            "milestone": "Frontend implementation"
-          },
-          {
-            "date": "Week 7-8",
-            "milestone": "Testing and documentation"
-          }
-        ]
-      }
+      "repo": "https://github.com/Yeyobitz/portfolio",
+      "impact": "The low tier never downloads three.js (126 kB gzip): a constrained device never pays that cost.",
+      "role": "Design and development"
     }
   ]
 }

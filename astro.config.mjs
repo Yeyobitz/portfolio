@@ -1,13 +1,20 @@
 import { defineConfig } from 'astro/config';
-import netlify from '@astrojs/netlify';
 
 export default defineConfig({
-  output: 'hybrid',
-  adapter: netlify(),
+  site: process.env.SITE_URL ?? 'https://yeyobitz.dev',
+  base: process.env.BASE_PATH ?? '/',
+  output: 'static',
+  i18n: {
+    defaultLocale: 'es',
+    locales: ['es', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   vite: {
     build: {
       cssMinify: true,
-      minify: 'esbuild'
-    }
-  }
+      minify: 'esbuild',
+    },
+  },
 });

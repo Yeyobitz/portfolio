@@ -1,177 +1,225 @@
 ---
+import { getDict } from '../i18n/ui';
+
 interface Props {
   title: string;
+  num?: string;
+  xp?: number;
+  tag?: string;
 }
 
-const { title } = Astro.props;
+const { title, num, xp, tag } = Astro.props;
+const t = getDict(Astro.currentLocale);
 ---
 
-<div class="terminal-header crt">
-  <div class="terminal-buttons">
-    <button class="minimize-btn active" aria-label="Minimizar sección">
-      <span></span>
-      <span></span>
-      <span></span>
+<div class="terminal-header">
+  <div class="terminal-buttons" aria-hidden="true">
+    <span class="dot dot--red"></span>
+    <span class="dot dot--amber"></span>
+    <span class="dot dot--green"></span>
+  </div>
+
+  <h2>
+    {num && <span class="terminal-num">{num}</span>}
+    <span class="terminal-title">{title}</span>
+    {tag && <span class="terminal-tag">{tag}</span>}
+  </h2>
+
+  <div class="terminal-meta">
+    {xp && <span class="terminal-xp">+{xp} XP</span>}
+    <button
+      class="minimize-btn"
+      type="button"
+      aria-expanded="true"
+      aria-label={`${t.projects.collapse} ${title}`}
+      data-label-collapse={t.projects.collapse}
+      data-label-expand={t.projects.expand}
+    >
+      <span class="minimize-icon" aria-hidden="true">▾</span>
     </button>
   </div>
-  <h2 class="glitch neon-green">{title}</h2>
 </div>
 
 <script>
-  // Función para minimizar/maximizar sección
-  function toggleSection(section: Element, shouldMinimize: boolean) {
-    const button = section.querySelector('.minimize-btn');
-    
-    if (shouldMinimize) {
-      section.classList.add('minimized');
-      button?.classList.add('active');
-    } else {
-      // Remover la clase minimized para iniciar la animación
-      section.classList.remove('minimized');
-      button?.classList.remove('active');
-      
-      // Reiniciar las animaciones
+  function setMinimized(section: Element, minimized: boolean): void {
+    const button = section.querySelector<HTMLButtonElement>('.minimize-btn');
+    section.classList.toggle('minimized', minimized);
+    button?.setAttribute('aria-expanded', String(!minimized));
+    const label = minimized ? button?.dataset.labelExpand : button?.dataset.labelCollapse;
+    if (label) button?.setAttribute('aria-label', `${label} ${section.id}`);
+    if (!minimized) {
       section.style.animation = 'none';
-      section.offsetHeight; // Forzar reflow
-      section.style.animation = null;
-      
-      // Reiniciar animaciones de los elementos internos
-      const elements = section.querySelectorAll('.terminal-content, .terminal-window, .projects-grid, .skills-grid, .terminal-line, .project-card');
-      elements.forEach(el => {
-        (el as HTMLElement).style.animation = 'none';
-        el.offsetHeight; // Forzar reflow
-        (el as HTMLElement).style.animation = null;
+      void (section as HTMLElement).offsetHeight;
+      section.style.animation = '';
+    }
+    localStorage.setItem(`section-${section.id}-minimized`, String(minimized));
+  }
+
+  function initSections(): void {
+    document.querySelectorAll<HTMLElement>('section[id]').forEach((section) => {
+      // Content is visible by default; only an explicit user choice collapses it.
+      const stored = localStorage.getItem(`section-${section.id}-minimized`) === 'true';
+      setMinimized(section, stored);
+    });
+
+    document.querySelectorAll<HTMLButtonElement>('.minimize-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const section = button.closest('section');
+        if (!section) return;
+        setMinimized(section, !section.classList.contains('minimized'));
       });
-    }
-    
-    localStorage.setItem(`section-${section.id}-minimized`, shouldMinimize.toString());
-  }
-
-  // Inicializar todas las secciones como minimizadas al cargar por primera vez
-  if (!localStorage.getItem('has-visited')) {
-    document.querySelectorAll('section[id]').forEach(section => {
-      toggleSection(section, true);
     });
-    localStorage.setItem('has-visited', 'true');
-  }
 
-  // Restaurar estados guardados si no es la primera visita
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('section[id]').forEach(section => {
-      const sectionId = section.id;
-      const isMinimized = localStorage.getItem(`section-${sectionId}-minimized`) === 'true';
-      toggleSection(section, isMinimized);
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', () => {
+        const target = document.querySelector(a.getAttribute('href') ?? '');
+        const section = target?.closest('section');
+        if (section) setMinimized(section, false);
+      });
     });
-  });
-
-  // Manejar clics en los botones de minimizar
-  document.querySelectorAll('.minimize-btn').forEach(button => {
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      const section = button.closest('section');
-      if (section) {
-        const isMinimized = !section.classList.contains('minimized');
-        toggleSection(section, isMinimized);
-      }
-    });
-  });
-
-  // Manejar navegación por hash
-  function handleHashChange() {
-    const hash = window.location.hash;
-    if (hash) {
-      const targetSection = document.querySelector(hash);
-      if (targetSection) {
-        toggleSection(targetSection, false);
-        // Pequeño retraso para asegurar que la sección esté expandida antes de hacer scroll
-        setTimeout(() => {
-          targetSection.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    }
   }
 
-  // Escuchar cambios en el hash de la URL
-  window.addEventListener('hashchange', handleHashChange);
-  
-  // Manejar hash inicial al cargar la página
-  if (window.location.hash) {
-    handleHashChange();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSections);
+  else initSections();
 </script>
 
 <style>
   .terminal-header {
-    background: var(--color-bg-tertiary);
-    padding: 1rem;
+    background: linear-gradient(180deg, rgba(15, 22, 30, 0.92), rgba(9, 14, 20, 0.92));
+    padding: 0.6rem 0.9rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    border-bottom: 2px solid var(--color-accent-purple);
-    transition: border-bottom-color 0.3s ease;
+    gap: 0.85rem;
+    border-bottom: 1px solid rgba(0, 240, 255, 0.22);
+    position: relative;
+    z-index: 3;
+  }
+
+  .terminal-header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, #00ff41, transparent);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
   }
 
   .terminal-buttons {
     display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: block;
+    transition: all 0.2s ease;
+  }
+
+  .dot--red { background: #3a1620; box-shadow: inset 0 0 0 1px rgba(255, 0, 65, 0.5); }
+  .dot--amber { background: #3a2c14; box-shadow: inset 0 0 0 1px rgba(255, 176, 32, 0.5); }
+  .dot--green { background: #00ff41; box-shadow: 0 0 8px rgba(0, 255, 65, 0.8); }
+
+  h2 {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: #eafcff;
+    min-width: 0;
+  }
+
+  .terminal-num {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    color: rgba(0, 240, 255, 0.5);
+  }
+
+  .terminal-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .terminal-tag {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.14em;
+    color: rgba(255, 43, 214, 0.75);
+    border: 1px solid rgba(255, 43, 214, 0.3);
+    padding: 0.12rem 0.35rem;
+    white-space: nowrap;
+  }
+
+  .terminal-meta {
+    display: flex;
+    align-items: center;
     gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .terminal-xp {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+    color: rgba(0, 255, 65, 0.7);
   }
 
   .minimize-btn {
-    background: none;
-    border: none;
-    padding: 0.5rem;
+    background: rgba(0, 240, 255, 0.04);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    color: #9fdcf0;
+    width: 1.7rem;
+    height: 1.7rem;
     cursor: pointer;
-    display: flex;
-    gap: 3px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+    display: grid;
+    place-items: center;
+    border-radius: 2px;
+    transition: all 0.16s ease;
+    padding: 0;
   }
 
   .minimize-btn:hover {
-    background-color: rgba(var(--accent), 0.1);
+    border-color: #00f0ff;
+    color: #fff;
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.25);
   }
 
-  .minimize-btn span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent-purple);
-    opacity: 0.7;
-    transition: all 0.3s ease;
+  .minimize-icon {
+    font-size: 0.7rem;
+    line-height: 1;
+    transition: transform 0.25s ease;
   }
 
-  .minimize-btn:hover span {
-    opacity: 1;
-    background: var(--color-accent-green);
-    box-shadow: 0 0 5px var(--color-accent-green);
+  section.minimized .minimize-icon {
+    transform: rotate(-90deg);
   }
 
-  .minimize-btn.active span {
-    background: var(--color-accent-green);
-    box-shadow: 0 0 5px var(--color-accent-green);
-  }
+  @media (max-width: 600px) {
+    .terminal-header {
+      padding: 0.55rem 0.65rem;
+      gap: 0.55rem;
+    }
 
-  h2 {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    margin: 0;
-    color: var(--color-accent-green);
-    text-shadow: 0 0 10px var(--color-accent-green);
-    letter-spacing: 0.2em;
-  }
-
-  @media (max-width: 768px) {
     h2 {
-      font-size: 1.2rem;
+      font-size: 0.62rem;
     }
 
-    .minimize-btn {
-      padding: 0.3rem;
+    .terminal-tag {
+      display: none;
     }
 
-    .minimize-btn span {
-      width: 6px;
-      height: 6px;
+    .terminal-xp {
+      display: none;
     }
   }
-</style> 
+</style>

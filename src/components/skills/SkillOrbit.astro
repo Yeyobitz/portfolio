@@ -1,0 +1,259 @@
+---
+import { getDict } from '../../i18n/ui';
+
+interface Skill {
+  name: string;
+  level: string;
+  keywords: string[];
+}
+
+interface Props {
+  skills: Skill[];
+}
+
+const { skills } = Astro.props;
+
+const t = getDict(Astro.currentLocale);
+const categories = t.skills.categories as Record<string, string>;
+
+const CATEGORY_META: Record<string, { color: string; label: string }> = {
+  Frontend: { color: '#00f0ff', label: categories.Frontend },
+  Backend: { color: '#00ff41', label: categories.Backend },
+  Database: { color: '#b24bff', label: categories.Database },
+  DevTools: { color: '#4f8cff', label: categories.DevTools },
+  Infra: { color: '#4f8cff', label: categories.Infra },
+  AI: { color: '#7dffcf', label: categories.AI },
+  GameDev: { color: '#ffb020', label: categories.GameDev },
+  Design: { color: '#ff2bd6', label: categories.Design },
+  Media: { color: '#7dffcf', label: categories.Media },
+};
+
+const nodes = skills.map((s) => ({
+  name: s.name,
+  level: s.level.toLowerCase(),
+  category: s.keywords[0] ?? 'DevTools',
+}));
+
+const present = [...new Set(nodes.map((n) => n.category))].filter((c) => CATEGORY_META[c]);
+---
+
+<div class="orbit-shell" id="skill-orbit" data-skills={JSON.stringify(nodes)}>
+  <canvas id="skill-canvas" aria-hidden="true"></canvas>
+
+  <div class="orbit-fallback" aria-hidden="true">
+    <div class="orbit-core">CORE</div>
+    <div class="orbit-ring"></div>
+  </div>
+
+  <div class="orbit-legend">
+    {present.map((cat) => (
+      <span class="orbit-key" style={`--c:${CATEGORY_META[cat].color}`}>
+        <i></i>{CATEGORY_META[cat].label}
+      </span>
+    ))}
+    <span class="orbit-hint">{t.skills.hint}</span>
+  </div>
+
+  <noscript>
+    <ul class="orbit-noscript">
+      {nodes.map((n) => <li>{n.name} — {n.level}</li>)}
+    </ul>
+  </noscript>
+</div>
+
+<style>
+  .orbit-shell {
+    position: relative;
+    height: clamp(340px, 48vw, 520px);
+    margin: 1rem 0 0;
+    border: 1px solid rgba(0, 240, 255, 0.16);
+    background:
+      radial-gradient(ellipse 55% 60% at 50% 50%, rgba(0, 240, 255, 0.07), transparent 70%),
+      linear-gradient(180deg, rgba(4, 8, 13, 0.55), rgba(4, 8, 13, 0.9));
+    overflow: hidden;
+    cursor: grab;
+    touch-action: pan-y;
+    border-radius: 4px;
+  }
+
+  .orbit-shell:active {
+    cursor: grabbing;
+  }
+
+  #skill-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  html[data-webgl='on'] #skill-canvas {
+    opacity: 1;
+  }
+
+  html[data-webgl='on'] .orbit-fallback {
+    opacity: 0;
+  }
+
+  html[data-gfx='low'] #skill-canvas {
+    display: none;
+  }
+
+  .orbit-fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transition: opacity 0.4s ease;
+  }
+
+  .orbit-core {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: #00f0ff;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+    padding: 2.2rem;
+    border: 1px dashed rgba(0, 240, 255, 0.3);
+    border-radius: 50%;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    border: 1px solid rgba(255, 43, 214, 0.18);
+    border-radius: 50%;
+    animation: orbitSpin 26s linear infinite;
+  }
+
+  .orbit-ring::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: #ff2bd6;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #ff2bd6;
+  }
+
+  .orbit-legend {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.7rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: rgba(205, 228, 240, 0.85);
+    pointer-events: none;
+  }
+
+  .orbit-key {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .orbit-key i {
+    width: 6px;
+    height: 6px;
+    background: var(--c);
+    box-shadow: 0 0 8px var(--c);
+    border-radius: 50%;
+  }
+
+  .orbit-hint {
+    color: rgba(170, 195, 215, 0.7);
+    letter-spacing: 0.06em;
+  }
+
+  :global(.skill-labels) {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-shadow:
+      0 0 2px #000,
+      0 0 8px rgba(0, 0, 0, 0.95),
+      0 1px 0 rgba(0, 0, 0, 0.8);
+    white-space: nowrap;
+  }
+
+  :global(.skill-label) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    will-change: transform;
+    padding: 0.05rem 0.28rem;
+    background: rgba(3, 7, 11, 0.55);
+    border-radius: 1px;
+  }
+
+  :global(.skill-tip) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    padding: 0.35rem 0.5rem;
+    background: rgba(3, 7, 11, 0.95);
+    border: 1px solid rgba(0, 240, 255, 0.45);
+    border-left: 3px solid #00ff41;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    color: #dff6ff;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 0.12s ease, transform 0.12s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  :global(.skill-tip.visible) {
+    opacity: 1;
+  }
+
+  :global(.skill-tip strong) {
+    font-family: var(--font-heading);
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: #00ff41;
+  }
+
+  :global(.skill-tip span) {
+    color: rgba(0, 240, 255, 0.8);
+    text-transform: uppercase;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+  }
+
+  .orbit-noscript {
+    color: #dff6ff;
+    font-family: var(--font-mono);
+    padding: 1rem;
+  }
+
+  @keyframes orbitSpin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit-ring { animation: none; }
+  }
+</style>

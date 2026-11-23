@@ -1,29 +1,27 @@
 ---
 import type { Project } from '../../types/cv';
-import ProjectCard from './ProjectCard.astro';
+import ProjectQuest from './ProjectQuest.astro';
 import TerminalHeader from '../TerminalHeader.astro';
+import { getDict } from '../../i18n/ui';
 
 interface Props {
   projects: Project[];
 }
 
 const { projects } = Astro.props;
+const t = getDict(Astro.currentLocale);
 
-// Sort projects: active first, then by name
-const sortedProjects = [...projects].sort((a, b) => {
-  if (a.isActive === b.isActive) {
-    return a.name.localeCompare(b.name);
-  }
-  return a.isActive ? -1 : 1;
-});
+// keep the order authored in cv.json: strongest project first
+const sortedProjects = projects;
 ---
 
 <section class="projects crt" id="projects">
-  <TerminalHeader title="PROJECTS.EXE" />
+  <TerminalHeader title={t.projects.title} num="02" xp={25} tag={`${projects.length} ${t.projects.tag}`} />
   <div class="terminal-content">
+    <p class="projects-intro">{t.projects.intro}</p>
     <div class="projects-grid">
       {sortedProjects.map((project) => (
-        <ProjectCard project={project} />
+        <ProjectQuest project={project} />
       ))}
     </div>
   </div>
@@ -31,12 +29,28 @@ const sortedProjects = [...projects].sort((a, b) => {
 
 <style>
   .projects {
-    margin: 4rem 0;
-    background: var(--color-bg-secondary);
-    border: 2px solid var(--color-accent-purple);
-    border-radius: 12px;
+    position: relative;
+    margin: 0 auto 2.5rem;
+    background: linear-gradient(180deg, rgba(7, 12, 18, 0.82), rgba(5, 9, 14, 0.9));
+    border: 1px solid rgba(255, 43, 214, 0.22);
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .projects.flash {
+    border-color: #00ff41;
+    box-shadow: 0 0 60px rgba(0, 255, 65, 0.25);
+  }
+
+  .projects-intro {
+    margin: 0 0 1.4rem;
+    font-size: 0.86rem;
+    line-height: 1.75;
+    color: rgba(190, 212, 225, 0.72);
+    max-width: 62ch;
   }
 
   .terminal-content {
@@ -45,11 +59,10 @@ const sortedProjects = [...projects].sort((a, b) => {
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.2rem;
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
+    align-items: stretch;
   }
 
   @media (max-width: 768px) {

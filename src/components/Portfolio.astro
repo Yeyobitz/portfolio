@@ -1,0 +1,104 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from './hero/Hero.astro';
+import Experience from './Experience.astro';
+import ProjectsSection from './projects/ProjectsSection.astro';
+import SkillsSection from './skills/SkillsSection.astro';
+import ContactSection from './contact/ContactSection.astro';
+import cvEs from '../data/cv.es.json';
+import cvEn from '../data/cv.json';
+import { getDict, normalizeLang } from '../i18n/ui';
+import { absolute } from '../lib/base';
+import type { CV } from '../types/cv';
+
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+const l = normalizeLang(lang);
+const t = getDict(l);
+const cv = (l === 'en' ? cvEn : cvEs) as unknown as CV;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Diego Quiñones Montecinos',
+  alternateName: 'Yeyobitz',
+  jobTitle:
+    l === 'es'
+      ? 'Especialista en automatización con IA y desarrollador full stack'
+      : 'AI Automation Engineer & Full Stack Developer',
+  url: absolute('', Astro.site),
+  email: cv.basics.email,
+  sameAs: cv.basics.profiles.map((p) => p.url),
+  knowsAbout: [
+    'Linux',
+    'Docker',
+    'TypeScript',
+    'Python',
+    'FastAPI',
+    'Three.js',
+    'Astro',
+    'RAG',
+    'LLM agents',
+    'Homelab',
+  ],
+  address: { '@type': 'PostalAddress', addressCountry: 'CL' },
+  description: t.meta.description,
+  seeks: {
+    '@type': 'Demand',
+    name: l === 'es' ? 'Rol remoto de automatización con IA' : 'Remote AI automation role',
+  },
+};
+---
+
+<Layout title={t.meta.title} description={t.meta.description} lang={l} jsonLd={jsonLd}>
+  <main id="main-content" data-project-total={cv.projects.length}>
+    <Hero
+      name={cv.basics.name}
+      headline={cv.basics.headline}
+      label={cv.basics.label}
+      summary={cv.basics.summary}
+      email={cv.basics.email}
+      projects={cv.projects.length}
+    />
+
+    <div class="shell">
+      <Experience experience={cv.experience} />
+
+      <ProjectsSection projects={cv.projects} />
+
+      <SkillsSection skills={cv.skills} />
+
+      <ContactSection email={cv.basics.email} profiles={cv.basics.profiles} />
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 4;
+    padding-bottom: 7rem;
+  }
+
+  .shell {
+    width: min(100% - 2rem, 1180px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  @media (max-width: 600px) {
+    .shell {
+      width: calc(100% - 1.2rem);
+      gap: 1.8rem;
+    }
+
+    main {
+      padding-bottom: 10rem;
+    }
+  }
+</style>

@@ -1,0 +1,713 @@
+---
+/**
+ * Game HUD: player card, graphics panel, achievements panel.
+ */
+import { TIERS, TIER_ORDER } from '../../scripts/core/quality';
+import { getDict } from '../../i18n/ui';
+
+const t = getDict(Astro.currentLocale);
+---
+
+<div class="hud" id="hud">
+  <div class="hud__player" aria-label={t.hud.playerProgress}>
+    <div class="hud__badge">
+      <span>{t.hud.level}</span>
+      <b id="hud-level">01</b>
+    </div>
+    <div class="hud__body">
+      <div class="hud__row">
+        <span class="hud__handle">DIEGO_QM<span class="hud__caret">_</span></span>
+        <span class="hud__xp" id="hud-xp">0/100 XP</span>
+      </div>
+      <div class="hud__track" role="progressbar" aria-label={t.hud.experience}>
+        <i id="hud-bar"></i>
+      </div>
+      <div class="hud__sub">
+        <span id="hud-fps">-- FPS</span>
+        <span class="hud__dot"></span>
+        <span>{t.hud.total} <b id="hud-total">0 XP</b></span>
+        <span class="hud__xp-pop" id="hud-toast-xp"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hud__actions">
+    <button class="hud__btn hud__btn--gfx" id="hud-gfx" type="button" aria-expanded="false" aria-controls="gfx-panel" title={`${t.hud.graphicsPanel} (G)`}>
+      <span class="hud__btn-ico" aria-hidden="true">▤</span>
+      <span class="hud__btn-txt">{t.hud.gfx}</span>
+      <b id="gfx-current">MID</b>
+    </button>
+    <button class="hud__btn" id="hud-sound" type="button" aria-pressed="true" title={`${t.hud.sfx} (M)`}>
+      <span class="hud__btn-ico" aria-hidden="true">◉</span>
+      <span class="hud__btn-txt">{t.hud.sfx}</span>
+      <b id="hud-sound-label">ON</b>
+    </button>
+    <button class="hud__btn" id="hud-ach" type="button" aria-expanded="false" aria-controls="ach-panel" title={`${t.hud.achievementsPanel} (A)`}>
+      <span class="hud__btn-ico" aria-hidden="true">★</span>
+      <span class="hud__btn-txt">{t.hud.log}</span>
+      <b id="hud-ach-count">00</b>
+    </button>
+  </div>
+</div>
+
+<!-- GRAPHICS -->
+<section class="panel panel--gfx" id="gfx-panel" aria-label={t.hud.graphicsPanel} aria-hidden="true">
+  <header class="panel__head">
+    <h2>{t.hud.graphicsTitle}<span>.CFG</span></h2>
+    <button class="panel__close" type="button" data-close-panel aria-label={t.hud.close}>✕</button>
+  </header>
+
+  <p class="panel__lead">{t.hud.panelLead}</p>
+
+  <div class="tier-grid" role="group" aria-label={t.hud.qualityAria}>
+    {TIER_ORDER.map((key, i) => {
+      const cfg = TIERS[key];
+      return (
+        <button class="tier" type="button" data-tier={key} aria-pressed="false">
+          <span class="tier__mono" aria-hidden="true">{'█'.repeat(i + 1)}{'░'.repeat(3 - i - 1)}</span>
+          <span class="tier__name">{t.gfx[key].label}<em>{cfg.short}</em></span>
+          <span class="tier__desc">{t.gfx[key].description}</span>
+        </button>
+      );
+    })}
+  </div>
+
+  <p class="panel__desc" id="gfx-desc"></p>
+
+  <div class="panel__meter">
+    <div>
+      <span class="panel__k">{t.hud.fpsNow}</span>
+      <b class="panel__fps" id="gfx-fps">--</b>
+    </div>
+    <div class="panel__facts" id="gfx-facts"></div>
+  </div>
+
+  <div class="panel__bench">
+    <button class="panel__btn" type="button" id="gfx-bench">{t.hud.perfTest}</button>
+    <p class="panel__out" id="gfx-bench-out">{t.hud.perfHelp}</p>
+  </div>
+
+  <p class="panel__hint" set:html={t.hud.shortcuts} />
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section class="panel panel--ach" id="ach-panel" aria-label={t.hud.achievementsPanel} aria-hidden="true">
+  <header class="panel__head">
+    <h2>{t.hud.achievementsTitle}<span>.LOG</span></h2>
+    <button class="panel__close" type="button" data-close-panel aria-label={t.hud.close}>✕</button>
+  </header>
+  <p class="panel__lead">{t.hud.achLead}</p>
+  <ul class="ach-list" id="ach-list"></ul>
+</section>
+
+<style>
+  .hud {
+    position: fixed;
+    left: 50%;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    width: min(100% - 2rem, 1180px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 60;
+    pointer-events: none;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  }
+
+  .hud.is-hidden {
+    transform: translateX(-50%) translateY(150%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hud__player,
+  .hud__actions {
+    pointer-events: auto;
+  }
+
+  .hud__player {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: linear-gradient(180deg, rgba(8, 14, 20, 0.92), rgba(4, 8, 13, 0.96));
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 8px 30px rgba(0, 0, 0, 0.55), inset 0 0 24px rgba(0, 240, 255, 0.06);
+    backdrop-filter: blur(10px);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 250px;
+    animation: hudIn 0.6s 0.5s both cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hud__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    padding: 0.35rem 0.55rem;
+    background: linear-gradient(160deg, rgba(0, 255, 65, 0.16), rgba(0, 240, 255, 0.05));
+    border-right: 1px solid rgba(0, 240, 255, 0.25);
+  }
+
+  .hud__badge span {
+    font-family: var(--font-heading);
+    font-size: 0.42rem;
+    letter-spacing: 0.18em;
+    color: rgba(0, 255, 65, 0.75);
+  }
+
+  .hud__badge b {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    color: #00ff41;
+    text-shadow: 0 0 12px rgba(0, 255, 65, 0.75);
+    line-height: 1;
+  }
+
+  .hud__body {
+    flex: 1;
+    padding: 0.38rem 0.7rem 0.35rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .hud__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .hud__handle {
+    display: none;
+  }
+
+  .hud__caret {
+    animation: hudBlink 1s steps(1) infinite;
+    color: #00ff41;
+  }
+
+  .hud__xp {
+    font-size: 0.62rem;
+    color: rgba(0, 240, 255, 0.85);
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .hud__track {
+    height: 6px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hud__track i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00ff41, #00f0ff);
+    box-shadow: 0 0 12px rgba(0, 255, 65, 0.8);
+    transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hud__sub {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    color: rgba(155, 180, 196, 0.75);
+    position: relative;
+  }
+
+  .hud__sub b {
+    color: #9fe8ff;
+    font-weight: 500;
+  }
+
+  .hud__dot {
+    width: 3px;
+    height: 3px;
+    background: rgba(0, 240, 255, 0.5);
+    border-radius: 50%;
+  }
+
+  .hud__xp-pop {
+    position: absolute;
+    right: 0;
+    top: -1.1rem;
+    font-size: 0.6rem;
+    color: #00ff41;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .hud__xp-pop.pop {
+    animation: xpPop 1.6s ease-out forwards;
+  }
+
+  .hud__actions {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .hud__btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.6rem;
+    background: rgba(6, 11, 17, 0.92);
+    border: 1px solid rgba(0, 240, 255, 0.28);
+    color: #cfe9f7;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    border-radius: 3px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .hud__btn:hover,
+  .hud__btn:focus-visible {
+    border-color: #00f0ff;
+    color: #fff;
+    box-shadow: 0 0 16px rgba(0, 240, 255, 0.28), inset 0 0 12px rgba(0, 240, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .hud__btn-ico {
+    color: #00f0ff;
+    font-size: 0.75rem;
+  }
+
+  .hud__btn--gfx {
+    border-color: rgba(0, 255, 65, 0.42);
+  }
+
+  .hud__btn--gfx .hud__btn-ico,
+  .hud__btn--gfx b {
+    color: #00ff41;
+  }
+
+  .hud__btn b {
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .hud__btn.is-off {
+    opacity: 0.55;
+  }
+
+  .hud__btn.is-off .hud__btn-ico {
+    color: #ff2bd6;
+  }
+
+  /* ---------------- panels ---------------- */
+  .panel {
+    position: fixed;
+    bottom: 4.7rem;
+    left: 50%;
+    width: min(100% - 2rem, 480px);
+    z-index: 70;
+    background: linear-gradient(180deg, rgba(7, 12, 18, 0.98), rgba(3, 6, 10, 0.99));
+    border: 1px solid rgba(0, 240, 255, 0.35);
+    border-top: 2px solid #00f0ff;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 240, 255, 0.1);
+    padding: 0.9rem 1rem 1rem;
+    display: none;
+    max-height: min(76vh, 640px);
+    overflow: auto;
+    border-radius: 4px;
+    color: #d7e7f2;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .panel--gfx,
+  .panel--ach {
+    left: auto;
+    right: max(1rem, calc(50% - 590px));
+    transform: translateX(0);
+  }
+
+  .panel.is-open {
+    display: block;
+    animation: panelIn 0.22s ease-out;
+  }
+
+  .panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px dashed rgba(0, 240, 255, 0.22);
+    margin-bottom: 0.7rem;
+  }
+
+  .panel__head h2 {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: #e9fbff;
+  }
+
+  .panel__head h2 span {
+    color: rgba(0, 240, 255, 0.55);
+  }
+
+  .panel__close {
+    background: none;
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    color: #9fd8ea;
+    width: 1.6rem;
+    height: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 2px;
+  }
+
+  .panel__close:hover {
+    color: #fff;
+    border-color: #00f0ff;
+  }
+
+  .panel__lead {
+    margin: 0 0 0.8rem;
+    color: rgba(200, 220, 235, 0.8);
+    line-height: 1.5;
+    font-size: 0.72rem;
+  }
+
+  .tier-grid {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .tier {
+    display: grid;
+    grid-template-columns: 3.2rem 5.2rem 1fr;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: left;
+    padding: 0.55rem 0.65rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: inherit;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+  }
+
+  .tier:hover {
+    border-color: rgba(0, 255, 65, 0.45);
+    background: rgba(0, 255, 65, 0.05);
+  }
+
+  .tier.is-active {
+    border-color: #00ff41;
+    background: linear-gradient(90deg, rgba(0, 255, 65, 0.14), rgba(0, 240, 255, 0.04));
+    box-shadow: inset 0 0 24px rgba(0, 255, 65, 0.07);
+  }
+
+  .tier__mono {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    color: rgba(0, 240, 255, 0.75);
+  }
+
+  .tier.is-active .tier__mono {
+    color: #00ff41;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+  }
+
+  .tier__name {
+    font-family: var(--font-heading);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    color: #e9fbff;
+  }
+
+  .tier__name em {
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    color: rgba(0, 240, 255, 0.6);
+    letter-spacing: 0.16em;
+  }
+
+  .tier__desc {
+    font-size: 0.7rem;
+    line-height: 1.4;
+    color: rgba(190, 210, 225, 0.72);
+  }
+
+  .panel__desc {
+    margin: 0.7rem 0 0;
+    font-size: 0.68rem;
+    color: #9fe8ff;
+    min-height: 1.2em;
+  }
+
+  .panel__meter {
+    margin-top: 0.8rem;
+    padding: 0.6rem 0.7rem;
+    border: 1px dashed rgba(0, 240, 255, 0.2);
+    display: grid;
+    gap: 0.45rem;
+    background: rgba(0, 240, 255, 0.03);
+  }
+
+  .panel__k {
+    font-size: 0.52rem;
+    letter-spacing: 0.16em;
+    color: rgba(0, 240, 255, 0.6);
+  }
+
+  .panel__fps {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: #00ff41;
+    text-shadow: 0 0 14px rgba(0, 255, 65, 0.6);
+    margin-left: 0.5rem;
+  }
+
+  .panel__fps[data-level='ok'] {
+    color: #ffb020;
+    text-shadow: 0 0 14px rgba(255, 176, 32, 0.6);
+  }
+
+  .panel__fps[data-level='bad'] {
+    color: #ff2bd6;
+    text-shadow: 0 0 14px rgba(255, 43, 214, 0.6);
+  }
+
+  .panel__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.9rem;
+    font-size: 0.62rem;
+    color: rgba(180, 205, 220, 0.72);
+  }
+
+  .panel__facts b {
+    color: rgba(0, 240, 255, 0.65);
+    font-weight: 500;
+    margin-right: 0.25rem;
+  }
+
+  .panel__bench {
+    margin-top: 0.8rem;
+  }
+
+  .panel__btn {
+    width: 100%;
+    padding: 0.65rem;
+    background: rgba(0, 255, 65, 0.08);
+    border: 1px solid rgba(0, 255, 65, 0.5);
+    color: #a8ffc0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.15s ease;
+  }
+
+  .panel__btn:hover:not(:disabled) {
+    background: rgba(0, 255, 65, 0.16);
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+  }
+
+  .panel__btn:disabled {
+    opacity: 0.5;
+    cursor: progress;
+  }
+
+  .panel__out {
+    margin: 0.5rem 0 0;
+    font-size: 0.64rem;
+    line-height: 1.45;
+    color: rgba(200, 220, 235, 0.75);
+  }
+
+  .panel__out b {
+    color: #00ff41;
+  }
+
+  .panel__hint {
+    margin: 0.9rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 1px dashed rgba(0, 240, 255, 0.18);
+    font-size: 0.6rem;
+    color: rgba(150, 175, 195, 0.65);
+    line-height: 1.6;
+  }
+
+  kbd {
+    font-family: var(--font-mono);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    padding: 0 0.25rem;
+    border-radius: 2px;
+    color: #9fe8ff;
+  }
+
+  /* achievements */
+  .ach-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .ach-list :global(li) {
+    display: grid;
+    grid-template-columns: 1.6rem 1fr auto;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+    opacity: 0.45;
+    filter: grayscale(1);
+  }
+
+  .ach-list :global(li.is-unlocked) {
+    opacity: 1;
+    filter: none;
+    border-color: rgba(0, 255, 65, 0.35);
+    background: rgba(0, 255, 65, 0.05);
+  }
+
+  .ach-list :global(.ach-icon) {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .ach-list :global(.ach-text) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    min-width: 0;
+  }
+
+  .ach-list :global(.ach-text strong) {
+    display: block;
+    margin-bottom: 0.18rem;
+    font-family: var(--font-heading);
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: #e9fbff;
+  }
+
+  .ach-list :global(.ach-text em) {
+    display: block;
+    font-style: normal;
+    font-size: 0.64rem;
+    line-height: 1.4;
+    color: rgba(170, 195, 210, 0.75);
+  }
+
+  .ach-list :global(.ach-xp) {
+    font-size: 0.6rem;
+    color: rgba(0, 240, 255, 0.8);
+  }
+
+  .ach-list :global(li.is-unlocked .ach-xp) {
+    color: #00ff41;
+  }
+
+  /* keyframes */
+  @keyframes hudIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes panelIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.99); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes hudBlink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  @keyframes xpPop {
+    0% { opacity: 0; transform: translateY(6px); }
+    15% { opacity: 1; transform: translateY(0); }
+    75% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-8px); }
+  }
+
+  @media (max-width: 720px) {
+    .hud {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      gap: 0.4rem;
+      bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .hud__player {
+      min-width: 0;
+    }
+
+    .hud__actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .hud__btn {
+      justify-content: center;
+      padding: 0.5rem 0.35rem;
+      font-size: 0.55rem;
+    }
+
+    .hud__btn-txt {
+      display: none;
+    }
+
+    .panel,
+    .panel--gfx,
+    .panel--ach {
+      left: 0.5rem;
+      right: 0.5rem;
+      width: auto;
+      bottom: 8.4rem;
+      max-height: 62vh;
+    }
+
+    .tier {
+      grid-template-columns: 2.6rem 4.4rem 1fr;
+    }
+
+    .tier__desc {
+      font-size: 0.6rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hud__player,
+    .panel.is-open,
+    .hud__caret,
+    .hud__xp-pop.pop {
+      animation: none !important;
+    }
+  }
+</style>

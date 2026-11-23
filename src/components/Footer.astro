@@ -1,4 +1,7 @@
 ---
+import { getDict } from '../i18n/ui';
+
+const t = getDict(Astro.currentLocale);
 const currentYear = new Date().getFullYear();
 const uptime = currentYear - 2023;
 ---
@@ -10,17 +13,17 @@ const uptime = currentYear - 2023;
     <div class="footer-section">
       <div class="terminal-text">
         <span class="prompt neon-white" aria-hidden="true">> </span>
-        <span class="command">status</span>
+        <span class="command">{t.footer.status}</span>
       </div>
       <div class="status-line">
-        <span class="label">SYSTEM</span>
+        <span class="label">{t.footer.system}</span>
         <span class="dots"></span>
-        <span class="value neon-green">ONLINE</span>
+        <span class="value neon-green">{t.footer.online}</span>
       </div>
       <div class="status-line">
-        <span class="label">UPTIME</span>
+        <span class="label">{t.footer.uptime}</span>
         <span class="dots"></span>
-        <span class="value neon-blue">{uptime}Y</span>
+        <span class="value neon-blue">{uptime}{t.footer.years}</span>
       </div>
     </div>
 
@@ -33,7 +36,7 @@ const uptime = currentYear - 2023;
         <span class="neon-blue">YEYOBITZ</span>
         <span class="neon-white" aria-hidden="true">]</span>
       </p>
-      <p class="credits neon-green">All systems operational</p>
+      <p class="credits neon-green">{t.footer.operational}</p>
       <p class="secret-hint">↑↑↓↓←→←→BA</p>
     </div>
   </div>

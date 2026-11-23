@@ -1,0 +1,358 @@
+{
+  "basics": {
+    "name": "Diego Quiñones",
+    "handle": "Yeyo",
+    "headline": "Automatización con IA",
+    "label": "Desarrollador full stack",
+    "email": "yeyobitz@proton.me",
+    "location": "Concepción, Chile",
+    "timezone": "UTC-3",
+    "availability": "Disponible desde el 1 de diciembre de 2026",
+    "english": "Inglés C2 — EF SET, enero 2025",
+    "rate": "Desde USD 1.500 / mes",
+    "summary": "Automatizo trabajo manual de operación con IA y lo entrego como herramienta web: reportes, documentos y tickets que antes consumían horas ahora corren solos. Vengo de soporte TI, así que automatizo lo que ya vi romperse.",
+    "lookingFor": "Busco un rol remoto donde la IA y la automatización sean parte del trabajo, no un experimento.",
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "yeyobitz",
+        "url": "https://www.linkedin.com/in/yeyobitz/"
+      },
+      {
+        "network": "GitHub",
+        "username": "Yeyobitz",
+        "url": "https://github.com/Yeyobitz"
+      },
+      {
+        "network": "EF SET",
+        "username": "C2 English",
+        "url": "https://cert.efset.org/en/mFgEgp"
+      }
+    ],
+    "availabilityShort": "1 dic 2026"
+  },
+  "experience": [
+    {
+      "company": "Ferrostaal Chile",
+      "role": "Secretario Técnico",
+      "promotion": "Promovido desde Maestro Segunda Civil",
+      "period": "Oct 2026 — Presente",
+      "mode": "Presencial · Paro de planta ENAP",
+      "summary": "Turno de noche documentando y reportando el avance de un paro de planta completo, con días compensados cada 14 días.",
+      "highlights": [
+        "Reemplacé planillas y reportes repetitivos por flujos asistidos con IA que el equipo usa sin saber programar.",
+        "Mantengo la documentación técnica al día para cuadrillas y supervisión durante todo el turno.",
+        "Trabajo de 20:00 a 08:00 con entregables diarios y cero margen para errores de folio o fecha."
+      ],
+      "tools": [
+        "Excel",
+        "Hermes Agent",
+        "opencode"
+      ]
+    },
+    {
+      "company": "Compañía Puerto Coronel",
+      "role": "Soporte TI",
+      "period": "Nov 2025 — Jun 2026",
+      "mode": "Presencial · 300+ usuarios",
+      "summary": "Mesa de ayuda para más de 300 usuarios en una empresa portuaria: hardware, Windows y ofimática.",
+      "highlights": [
+        "Alrededor de 15 tickets diarios: formateo, imagen de sistema, actualización a Windows 11 y Microsoft Office.",
+        "Automaticé la generación de reportes e imágenes con IA: lotes que tomaban cerca de una hora pasaron a menos de cinco minutos.",
+        "Clonación y restauración masiva de equipos sin detener la operación."
+      ],
+      "tools": [
+        "Windows 10/11",
+        "Microsoft 365",
+        "Excel",
+        "Imaging"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "title": "Analista Programador",
+      "institution": "INACAP",
+      "period": "2023 — 2025"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "EF SET English Certificate — C2 Proficient",
+      "issuer": "EF SET",
+      "date": "Enero 2025",
+      "url": "https://cert.efset.org/en/mFgEgp"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Python",
+      "level": "advanced",
+      "keywords": [
+        "Backend",
+        "Automatización",
+        "APIs"
+      ]
+    },
+    {
+      "name": "TypeScript",
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "Tipado",
+        "Node"
+      ]
+    },
+    {
+      "name": "React",
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "UI",
+        "SPA"
+      ]
+    },
+    {
+      "name": "Astro",
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "SSG",
+        "Performance"
+      ]
+    },
+    {
+      "name": "Next.js",
+      "level": "intermediate",
+      "keywords": [
+        "Frontend",
+        "SSR",
+        "React"
+      ]
+    },
+    {
+      "name": "HTML / CSS",
+      "level": "advanced",
+      "keywords": [
+        "Frontend",
+        "Accesibilidad",
+        "Responsive"
+      ]
+    },
+    {
+      "name": "FastAPI",
+      "level": "intermediate",
+      "keywords": [
+        "Backend",
+        "Python",
+        "REST"
+      ]
+    },
+    {
+      "name": "Node.js",
+      "level": "intermediate",
+      "keywords": [
+        "Backend",
+        "JavaScript",
+        "Tooling"
+      ]
+    },
+    {
+      "name": "Bash / PowerShell",
+      "level": "advanced",
+      "keywords": [
+        "DevTools",
+        "Automatización",
+        "Shell"
+      ]
+    },
+    {
+      "name": "Linux (Ubuntu Server)",
+      "level": "advanced",
+      "keywords": [
+        "Infra",
+        "systemd",
+        "Hardening"
+      ]
+    },
+    {
+      "name": "Docker / Compose",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "Contenedores",
+        "Deploy"
+      ]
+    },
+    {
+      "name": "Cloudflare Tunnel",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "Redes",
+        "Exposición segura"
+      ]
+    },
+    {
+      "name": "Tailscale",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "VPN",
+        "Mesh"
+      ]
+    },
+    {
+      "name": "UFW / Firewall",
+      "level": "intermediate",
+      "keywords": [
+        "Infra",
+        "Seguridad",
+        "Default deny"
+      ]
+    },
+    {
+      "name": "Git / GitHub",
+      "level": "advanced",
+      "keywords": [
+        "DevTools",
+        "Versionado",
+        "Colaboración"
+      ]
+    },
+    {
+      "name": "GitHub Actions",
+      "level": "intermediate",
+      "keywords": [
+        "DevTools",
+        "CI/CD",
+        "Automatización"
+      ]
+    },
+    {
+      "name": "MongoDB",
+      "level": "advanced",
+      "keywords": [
+        "Database",
+        "NoSQL",
+        "Documentos"
+      ]
+    },
+    {
+      "name": "MySQL",
+      "level": "intermediate",
+      "keywords": [
+        "Database",
+        "SQL",
+        "Relacional"
+      ]
+    },
+    {
+      "name": "RAG / embeddings",
+      "level": "intermediate",
+      "keywords": [
+        "AI",
+        "Búsqueda semántica",
+        "Chunking"
+      ]
+    },
+    {
+      "name": "Agentes LLM (Hermes, opencode)",
+      "level": "advanced",
+      "keywords": [
+        "AI",
+        "Automatización",
+        "Workflows"
+      ]
+    },
+    {
+      "name": "OCR / extracción de documentos",
+      "level": "intermediate",
+      "keywords": [
+        "AI",
+        "PyMuPDF",
+        "Tesseract"
+      ]
+    },
+    {
+      "name": "Playwright",
+      "level": "intermediate",
+      "keywords": [
+        "DevTools",
+        "Testing",
+        "E2E"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Panshulo Homelab",
+      "status": "live",
+      "year": "2026",
+      "description": "Servidor propio en un ThinkPad con 7 GB de RAM: 15+ contenedores, sin hosting en la nube y todo detrás de VPN. Es mi laboratorio de operación real.",
+      "highlights": [
+        "15+ servicios Docker declarados con Compose: medios, stack *arr, Gitea y monitoreo.",
+        "Acceso con Cloudflare Tunnel y Tailscale; UFW en modo default-deny en el host.",
+        "Dashboard propio en Flask (psutil) más Netdata, con health checks en timers de systemd.",
+        "SO en NVMe y medios en HDD USB, con montaje automático y pool mixto."
+      ],
+      "technologies": [
+        "Ubuntu Server",
+        "Docker",
+        "Cloudflare Tunnel",
+        "Tailscale",
+        "UFW",
+        "Python",
+        "Netdata"
+      ],
+      "repo": "https://github.com/Yeyobitz/panshulo-homelab",
+      "impact": "Corre 24/7 con 7 GB de RAM y sin pagar hosting: el acceso remoto va por túnel, no por servidores ajenos.",
+      "role": "Diseño, operación y mantenimiento"
+    },
+    {
+      "name": "pdftoai",
+      "status": "live",
+      "year": "2026",
+      "description": "CLI y API REST que convierte PDF, DOCX, XLSX y CSV grandes en Markdown listo para agentes, con OCR de respaldo y búsqueda semántica.",
+      "highlights": [
+        "Extracción con PyMuPDF y fallback automático a Tesseract cuando el PDF viene escaneado.",
+        "Detección de encabezados por tamaño de fuente, front matter YAML con TOC y metadatos.",
+        "Chunking semántico e indexación vectorial con API de búsqueda.",
+        "Suite de tests sobre la API y contenedor Docker para correrlo en cualquier lado."
+      ],
+      "technologies": [
+        "Python",
+        "PyMuPDF",
+        "Tesseract",
+        "FastAPI",
+        "Embeddings",
+        "Docker"
+      ],
+      "repo": "https://github.com/Yeyobitz/pdftoai",
+      "impact": "Unifica documentos nativos y escaneados en un solo pipeline, sin pasos manuales.",
+      "role": "Diseño y desarrollo"
+    },
+    {
+      "name": "Este portfolio",
+      "status": "live",
+      "year": "2026",
+      "description": "El sitio que estás leyendo: Astro bilingüe con un diorama en three.js y tres niveles de calidad gráfica que se eligen solos.",
+      "highlights": [
+        "Tres niveles (sin WebGL, medio, alto) con auto-downgrade si los FPS no aguantan.",
+        "Cero texturas: toda la escena 3D se genera en código, incluida la pantalla del CRT.",
+        "i18n estático ES/EN con hreflang, diccionario tipado y sitemap generado en el build.",
+        "CI en cada PR, presupuesto de rendimiento y respeto por prefers-reduced-motion."
+      ],
+      "technologies": [
+        "Astro",
+        "TypeScript",
+        "three.js",
+        "GitHub Actions",
+        "i18n"
+      ],
+      "repo": "https://github.com/Yeyobitz/portfolio",
+      "impact": "En el nivel bajo no se descarga three.js (126 kB gzip): un equipo limitado nunca paga ese costo.",
+      "role": "Diseño y desarrollo"
+    }
+  ]
+}

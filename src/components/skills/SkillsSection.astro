@@ -2,12 +2,15 @@
 import type { Skill } from '../../types/cv';
 import SkillCategory from './SkillCategory.astro';
 import TerminalHeader from '../TerminalHeader.astro';
+import SkillOrbit from './SkillOrbit.astro';
+import { getDict } from '../../i18n/ui';
 
 interface Props {
   skills: Skill[];
 }
 
 const { skills } = Astro.props;
+const t = getDict(Astro.currentLocale);
 
 // Group skills by primary keyword (category)
 const groupedSkills = skills.reduce((acc, skill) => {
@@ -35,8 +38,12 @@ const sortedCategories = Object.entries(groupedSkills).sort(([a], [b]) => {
 ---
 
 <section class="skills-section crt" id="skills">
-  <TerminalHeader title="SKILLS.EXE" />
+  <TerminalHeader title={t.skills.title} num="03" xp={25} tag={`${skills.length} ${t.skills.tag}`} />
   <div class="terminal-content">
+    <p class="skills-intro">{t.skills.intro}</p>
+
+    <SkillOrbit skills={skills} />
+
     {sortedCategories.map(([category, categorySkills]) => (
       <SkillCategory category={category} skills={categorySkills} />
     ))}
@@ -45,11 +52,22 @@ const sortedCategories = Object.entries(groupedSkills).sort(([a], [b]) => {
 
 <style>
   .skills-section {
-    margin: 4rem 0;
-    border: 2px solid var(--color-accent-purple);
-    border-radius: 12px;
+    position: relative;
+    margin: 0 auto 2.5rem;
+    background: linear-gradient(180deg, rgba(7, 12, 18, 0.82), rgba(5, 9, 14, 0.9));
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(var(--accent), 0.1);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  }
+
+  .skills-intro {
+    margin: 0 0 0.5rem;
+    font-size: 0.86rem;
+    line-height: 1.75;
+    color: rgba(190, 212, 225, 0.72);
+    max-width: 62ch;
   }
 
   .terminal-content {
