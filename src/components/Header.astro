@@ -1,16 +1,23 @@
 ---
+import { getDict, normalizeLang } from '../i18n/ui';
+
+const lang = normalizeLang(Astro.currentLocale);
+const t = getDict(lang);
+const altHref = lang === 'en' ? '/' : '/en/';
+const altLang = lang === 'en' ? 'es-CL' : 'en';
+
 const navLinks = [
-  { href: '#about', num: '01', label: 'ABOUT', glitch: 'ABOUT' },
-  { href: '#projects', num: '02', label: 'QUESTS', glitch: 'QUESTS' },
-  { href: '#skills', num: '03', label: 'SKILLS', glitch: 'SKILLS' },
-  { href: '#contact', num: '04', label: 'CONTACT', glitch: 'CONTACT' },
+  { href: '#about', num: '01', label: t.nav.about, glitch: t.nav.about },
+  { href: '#projects', num: '02', label: t.nav.quests, glitch: t.nav.quests },
+  { href: '#skills', num: '03', label: t.nav.skills, glitch: t.nav.skills },
+  { href: '#contact', num: '04', label: t.nav.contact, glitch: t.nav.contact },
 ];
 ---
 
 <header>
   <nav aria-label="Main navigation" class="site-nav">
     <div class="nav-content">
-      <a href="#top" class="logo" aria-label="Back to top">
+      <a href="#top" class="logo" aria-label={t.nav.home}>
         <span class="logo__mark" aria-hidden="true">▚</span>
         <span class="logo__text">YEYOBITZ</span>
       </a>
@@ -32,18 +39,28 @@ const navLinks = [
 
       <div class="nav-status" aria-hidden="true">
         <span class="nav-status__dot"></span>
-        <span class="nav-status__txt">ONLINE</span>
+        <span class="nav-status__txt">{t.nav.online}</span>
       </div>
 
-      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <a class="lang-switch" href={altHref} hreflang={altLang} aria-label={t.nav.switchLabel}>
+        <span class="lang-switch__on">{lang === 'es' ? 'ES' : 'EN'}</span>
+        <span class="lang-switch__sep">/</span>
+        <span class="lang-switch__off">{t.nav.switchTo}</span>
+      </a>
+
+      <button class="menu-toggle" aria-label={t.nav.openMenu} data-label-open={t.nav.openMenu} data-label-close={t.nav.closeMenu} aria-expanded="false" aria-controls="mobile-menu">
         <span class="menu-line"></span>
         <span class="menu-line"></span>
         <span class="menu-line"></span>
       </button>
     </div>
 
+  </nav>
+
     <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-      <div class="mobile-menu-content">
+      <button class="mobile-menu-close" type="button" aria-label={t.hud.close}>✕</button>
+
+    <div class="mobile-menu-content">
         {navLinks.map((link) => (
           <a
             href={link.href}
@@ -55,10 +72,15 @@ const navLinks = [
             <span class="nav-check" aria-hidden="true">✓</span>
           </a>
         ))}
+        <a class="mobile-lang" href={altHref} hreflang={altLang} aria-label={t.nav.switchLabel}>
+          <span>{lang === 'es' ? 'ES' : 'EN'}</span>
+          <i aria-hidden="true">→</i>
+          <span>{t.nav.switchTo}</span>
+        </a>
+
         <p class="mobile-menu-hint">↑↑↓↓←→←→BA</p>
       </div>
     </div>
-  </nav>
 </header>
 
 <style>
@@ -77,7 +99,7 @@ const navLinks = [
 
   .nav-content {
     display: grid;
-    grid-template-columns: auto 1fr auto auto;
+    grid-template-columns: auto 1fr auto auto auto;
     align-items: center;
     gap: clamp(0.6rem, 2vw, 2rem);
     width: var(--container-width);
@@ -113,6 +135,37 @@ const navLinks = [
     display: flex;
     gap: 0.15rem;
     justify-content: center;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.18rem;
+    padding: 0.3rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    color: rgba(150, 180, 200, 0.6);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    border-radius: 2px;
+    transition: all 0.16s ease;
+  }
+
+  .lang-switch:hover,
+  .lang-switch:focus-visible {
+    color: #fff;
+    border-color: rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 14px rgba(0, 240, 255, 0.18);
+  }
+
+  .lang-switch__on {
+    color: #00ff41;
+    font-weight: 600;
+  }
+
+  .lang-switch__sep {
+    color: rgba(150, 180, 200, 0.35);
   }
 
   .nav-link {
@@ -221,6 +274,56 @@ const navLinks = [
     visibility: visible;
   }
 
+  .mobile-menu-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: #cfefff;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 2px;
+    z-index: 2;
+  }
+
+  .mobile-menu-close:hover,
+  .mobile-menu-close:focus-visible {
+    border-color: #00ff41;
+    color: #00ff41;
+    box-shadow: 0 0 18px rgba(0, 255, 65, 0.25);
+  }
+
+  .mobile-lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.6rem;
+    padding: 0.45rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    color: rgba(0, 240, 255, 0.85);
+    text-decoration: none;
+    border: 1px dashed rgba(0, 240, 255, 0.35);
+  }
+
+  .mobile-lang:hover,
+  .mobile-lang:focus-visible {
+    color: #fff;
+    border-style: solid;
+    border-color: #00ff41;
+  }
+
+  .mobile-lang i {
+    font-style: normal;
+    color: rgba(150, 180, 200, 0.6);
+  }
+
   .mobile-menu-content {
     display: flex;
     flex-direction: column;
@@ -274,7 +377,7 @@ const navLinks = [
     }
 
     .nav-content {
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr auto auto;
     }
   }
 
@@ -284,11 +387,16 @@ const navLinks = [
     }
 
     .nav-content {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 1fr auto auto;
     }
 
     .menu-toggle {
       display: block;
+    }
+
+    .lang-switch {
+      font-size: 0.58rem;
+      padding: 0.25rem 0.4rem;
     }
 
     .menu-toggle.active .menu-line:nth-child(1) {
@@ -321,7 +429,8 @@ const navLinks = [
   function toggleMenu(): void {
     const isExpanded = menuToggle?.getAttribute('aria-expanded') === 'true';
     menuToggle?.setAttribute('aria-expanded', String(!isExpanded));
-    menuToggle?.setAttribute('aria-label', isExpanded ? 'Open menu' : 'Close menu');
+    const labels = { open: menuToggle?.dataset.labelOpen ?? 'Open menu', close: menuToggle?.dataset.labelClose ?? 'Close menu' };
+    menuToggle?.setAttribute('aria-label', isExpanded ? labels.open : labels.close);
     mobileMenu?.setAttribute('aria-hidden', String(isExpanded));
     menuToggle?.classList.toggle('active', !isExpanded);
     mobileMenu?.classList.toggle('active', !isExpanded);
@@ -330,6 +439,7 @@ const navLinks = [
   }
 
   menuToggle?.addEventListener('click', toggleMenu);
+  document.querySelector<HTMLButtonElement>('.mobile-menu-close')?.addEventListener('click', toggleMenu);
 
   mobileLinks.forEach((link) => {
     link.addEventListener('click', () => {

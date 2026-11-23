@@ -1,4 +1,6 @@
 ---
+import { getDict } from '../../i18n/ui';
+
 interface Skill {
   name: string;
   level: string;
@@ -11,13 +13,17 @@ interface Props {
 
 const { skills } = Astro.props;
 
+const t = getDict(Astro.currentLocale);
+const categories = t.skills.categories as Record<string, string>;
+
 const CATEGORY_META: Record<string, { color: string; label: string }> = {
-  Frontend: { color: '#00f0ff', label: 'FRONTEND' },
-  Backend: { color: '#00ff41', label: 'BACKEND' },
-  Database: { color: '#b24bff', label: 'DATA' },
-  DevTools: { color: '#4f8cff', label: 'TOOLING' },
-  GameDev: { color: '#ffb020', label: 'GAMEDEV' },
-  Design: { color: '#ff2bd6', label: 'DESIGN' },
+  Frontend: { color: '#00f0ff', label: categories.Frontend },
+  Backend: { color: '#00ff41', label: categories.Backend },
+  Database: { color: '#b24bff', label: categories.Database },
+  DevTools: { color: '#4f8cff', label: categories.DevTools },
+  GameDev: { color: '#ffb020', label: categories.GameDev },
+  Design: { color: '#ff2bd6', label: categories.Design },
+  Media: { color: '#7dffcf', label: categories.Media },
 };
 
 const nodes = skills.map((s) => ({
@@ -43,7 +49,7 @@ const present = [...new Set(nodes.map((n) => n.category))].filter((c) => CATEGOR
         <i></i>{CATEGORY_META[cat].label}
       </span>
     ))}
-    <span class="orbit-hint">drag to rotate · hover a node</span>
+    <span class="orbit-hint">{t.skills.hint}</span>
   </div>
 
   <noscript>

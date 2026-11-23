@@ -1,10 +1,13 @@
 ---
-const messages = ['BOOTING…', 'MOUNTING 3D…', 'READY.'];
+import { getDict } from '../i18n/ui';
+
+const t = getDict(Astro.currentLocale);
+const messages = t.loading.messages;
 ---
 
-<div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Cargando sitio">
+<div class="loading-screen" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label={t.loading.brand}>
   <div class="loading-content">
-    <div class="loading-text" aria-live="polite">BOOTING SYSTEM</div>
+    <div class="loading-text" aria-live="polite">{t.loading.brand}</div>
     <div class="loading-progress">
       <div class="progress-bar"></div>
     </div>

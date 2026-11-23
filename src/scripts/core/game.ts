@@ -4,6 +4,7 @@
  */
 
 import { blip } from './sound';
+import { getDict, clientLang } from '../../i18n/ui';
 
 export interface Save {
   xp: number;
@@ -16,24 +17,34 @@ export interface Save {
 
 export interface Achievement {
   id: string;
-  name: string;
-  desc: string;
   icon: string;
   xp: number;
 }
 
 export const ACHIEVEMENTS: Achievement[] = [
-  { id: 'boot', name: 'BOOT SEQUENCE', desc: 'You powered the system on.', icon: '⏻', xp: 10 },
-  { id: 'explorer', name: 'EXPLORER', desc: 'You visited all four zones of the map.', icon: '🗺', xp: 60 },
-  { id: 'collector', name: 'COLLECTOR', desc: 'You inspected every project quest.', icon: '💾', xp: 80 },
-  { id: 'headhunter', name: 'HEADHUNTER', desc: 'You copied the contact email.', icon: '📡', xp: 25 },
-  { id: 'tinkerer', name: 'TINKERER', desc: 'You changed the graphics preset by hand.', icon: '🎛', xp: 20 },
-  { id: 'benchmark', name: 'BENCHMARKER', desc: 'You ran the performance test.', icon: '📊', xp: 30 },
-  { id: 'archaeologist', name: 'ARCHAEOLOGIST', desc: 'You found a floppy disk hidden in the diorama.', icon: '🧭', xp: 50 },
-  { id: 'overclocked', name: 'OVERCLOCKED', desc: 'You set graphics to HIGH.', icon: '⚡', xp: 40 },
-  { id: 'konami', name: '↑↑↓↓←→←→BA', desc: 'The old code still works.', icon: '🕹', xp: 100 },
-  { id: 'completionist', name: '100%', desc: 'You unlocked everything else.', icon: '🏆', xp: 0 },
+  { id: 'boot', icon: '⏻', xp: 10 },
+  { id: 'explorer', icon: '🗺', xp: 60 },
+  { id: 'collector', icon: '💾', xp: 80 },
+  { id: 'headhunter', icon: '📡', xp: 25 },
+  { id: 'tinkerer', icon: '🎛', xp: 20 },
+  { id: 'benchmark', icon: '📊', xp: 30 },
+  { id: 'archaeologist', icon: '🧭', xp: 50 },
+  { id: 'overclocked', icon: '⚡', xp: 40 },
+  { id: 'konami', icon: '🕹', xp: 100 },
+  { id: 'completionist', icon: '🏆', xp: 0 },
 ];
+
+/** Localized name/description for an achievement id. */
+export function achievementText(id: string): { name: string; desc: string; icon: string; xp: number } {
+  const d = getDict(clientLang()).game.achievements as Record<string, { name: string; desc: string }>;
+  const meta = ACHIEVEMENTS.find((a) => a.id === id);
+  return {
+    name: d[id]?.name ?? id,
+    desc: d[id]?.desc ?? '',
+    icon: meta?.icon ?? '★',
+    xp: meta?.xp ?? 0,
+  };
+}
 
 const KEY = 'yb:save';
 const listeners = new Set<() => void>();
@@ -101,11 +112,12 @@ export function addXp(amount: number, reason: string, silent = false): void {
     window.dispatchEvent(
       new CustomEvent<XpDetail>('yb:xp', { detail: { amount, reason, levelUp: true, level: after } })
     );
+    const d = getDict(clientLang());
     toast({
       icon: '▲',
-      kicker: 'LEVEL UP',
-      title: `NIVEL ${after}`,
-      body: after >= 5 ? 'The system is starting to respect you.' : 'Keep exploring the map.',
+      kicker: d.game.levelUp.kicker,
+      title: d.game.levelUp.title(after),
+      body: after >= 5 ? d.game.levelUp.bodyHigh : d.game.levelUp.bodyLow,
       accent: 'green',
     });
   }
@@ -117,20 +129,23 @@ export function award(id: string): boolean {
     save.achievements.push(id);
     persist();
     if (meta) {
+      const d = getDict(clientLang());
+      const text = achievementText(id);
       blip('achievement');
-      addXp(meta.xp, meta.name, true);
+      addXp(meta.xp, text.name, true);
       toast({
-        icon: meta.icon,
-        kicker: 'LOGRO DESBLOQUEADO',
-        title: meta.name,
-        body: meta.desc,
+        icon: text.icon,
+        kicker: d.game.achievementKicker,
+        title: text.name,
+        body: text.desc,
         accent: 'purple',
       });
     }
     if (save.achievements.length >= ACHIEVEMENTS.length - 1 && !save.achievements.includes('completionist')) {
       save.achievements.push('completionist');
       persist();
-      toast({ icon: '🏆', kicker: '100%', title: 'COMPLETIONIST', body: 'You unlocked the whole portfolio.', accent: 'green' });
+      const dc = getDict(clientLang());
+      toast({ icon: '🏆', kicker: '100%', title: dc.game.completion.title, body: dc.game.completion.body, accent: 'green' });
     }
     return true;
   }
@@ -141,7 +156,9 @@ export function markExplored(id: string): void {
   if (save.explored.includes(id)) return;
   save.explored.push(id);
   persist();
-  addXp(25, id.toUpperCase());
+  const d = getDict(clientLang());
+  const reason = ({ about: d.nav.about, projects: d.nav.quests, skills: d.nav.skills, contact: d.nav.contact } as Record<string, string>)[id] ?? id;
+  addXp(25, reason);
   if (['about', 'projects', 'skills', 'contact'].every((s) => save.explored.includes(s))) award('explorer');
 }
 
@@ -149,7 +166,7 @@ export function markProject(name: string): void {
   if (save.projects.includes(name)) return;
   save.projects.push(name);
   persist();
-  addXp(15, `QUEST · ${name}`);
+  addXp(15, name);
   const total = Number(document.documentElement.dataset.projectTotal ?? 0);
   if (total > 0 && save.projects.length >= total) award('collector');
 }
@@ -158,7 +175,7 @@ export function markSecret(id: string): void {
   if (save.secrets.includes(id)) return;
   save.secrets.push(id);
   persist();
-  addXp(50, 'DISQUETE 3½');
+  addXp(50, getDict(clientLang()).scene.floppy);
   award('archaeologist');
 }
 

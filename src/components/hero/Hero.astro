@@ -1,13 +1,15 @@
 ---
+import { getDict } from '../../i18n/ui';
+
 interface Props {
   name: string;
   label: string;
   summary: string;
   projects: number;
-  locations: string;
 }
 
-const { name, label, summary, projects, locations } = Astro.props;
+const { name, label, summary, projects } = Astro.props;
+const t = getDict(Astro.currentLocale);
 const [first, ...rest] = name.split(' ');
 const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
 ---
@@ -19,7 +21,7 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
     <div class="hero__copy">
       <p class="hero__kicker">
         <span class="hero__dot" aria-hidden="true"></span>
-        NIGHT SHIFT · SECTOR 07 · BUILD 2.0
+        {t.hero.kicker}
       </p>
 
       <h1 class="hero__title">
@@ -32,28 +34,28 @@ const handle = [first, rest.join('')].filter(Boolean).join('_').toUpperCase();
 
       <div class="hero__cta">
         <a class="btn-hero btn-hero--primary" href="#about">
-          <span aria-hidden="true">▶</span> START GAME
+          <span aria-hidden="true">▶</span> {t.hero.start}
         </a>
         <a class="btn-hero" href="#projects">
-          <span aria-hidden="true">◇</span> QUEST LOG <b>{String(projects).padStart(2, '0')}</b>
+          <span aria-hidden="true">◇</span> {t.hero.questlog} <b>{String(projects).padStart(2, '0')}</b>
         </a>
       </div>
 
       <ul class="hero__stats">
-        <li><b>3+</b><span>YEARS</span></li>
-        <li><b>{String(projects).padStart(2, '0')}</b><span>QUESTS</span></li>
-        <li><b>15+</b><span>CONTAINERS</span></li>
-        <li><b>∞</b><span>COFFEE</span></li>
+        <li><b>3+</b><span>{t.hero.years}</span></li>
+        <li><b>{String(projects).padStart(2, '0')}</b><span>{t.hero.quests}</span></li>
+        <li><b>15+</b><span>{t.hero.containers}</span></li>
+        <li><b>∞</b><span>{t.hero.coffee}</span></li>
       </ul>
     </div>
 
     <div class="hero__hints">
-      <span class="hero__hint">◐ CLICK THE DIORAMA · FIND THE FLOPPIES</span>
+      <span class="hero__hint">{t.hero.hint}</span>
       <a class="hero__scroll" href="#about">
-        <span>SCROLL TO EXPLORE</span>
+        <span>{t.hero.scroll}</span>
         <i aria-hidden="true">↓</i>
       </a>
-      <span class="hero__loc">{locations}</span>
+      <span class="hero__loc">{t.hero.loc}</span>
     </div>
   </div>
 </section>

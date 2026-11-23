@@ -15,6 +15,7 @@ import {
 } from './core/quality';
 import {
   ACHIEVEMENTS,
+  achievementText,
   addXp,
   award,
   getSave,
@@ -25,6 +26,9 @@ import {
   toast,
 } from './core/game';
 import { blip, isMuted, setMuted } from './core/sound';
+import { getDict, clientLang } from '../i18n/ui';
+
+const t = getDict(clientLang());
 
 const $ = <T extends HTMLElement = HTMLElement>(sel: string, root: ParentNode = document): T | null =>
   root.querySelector<T>(sel);
@@ -78,7 +82,13 @@ async function mountWorld(next: Tier): Promise<void> {
     if (tier !== 'low') {
       tier = 'low';
       paintTier();
-      toast({ icon: '▁', kicker: 'GFX', title: 'FALLBACK A LOW', body: 'No se pudo iniciar WebGL en este dispositivo.', accent: 'blue' });
+      toast({
+        icon: '▁',
+        kicker: t.game.toast.graphics,
+        title: t.game.toast.fallbackTitle,
+        body: t.game.toast.fallbackBody,
+        accent: 'blue',
+      });
     }
   }
 }
@@ -90,12 +100,12 @@ async function mountWorld(next: Tier): Promise<void> {
 function gpuInfo(): string {
   try {
     const gl = document.createElement('canvas').getContext('webgl2') ?? document.createElement('canvas').getContext('webgl');
-    if (!gl) return 'no WebGL';
+    if (!gl) return t.hud.facts.na;
     const dbg = gl.getExtension('WEBGL_debug_renderer_info');
     const name = dbg ? (gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) as string) : 'GPU genérica';
     return String(name).replace(/ANGLE \(|\)/g, '').slice(0, 46);
   } catch {
-    return 'unknown';
+    return t.hud.facts.na;
   }
 }
 
@@ -115,11 +125,11 @@ function renderFacts(): void {
   const el = $('#gfx-facts');
   if (!el) return;
   el.innerHTML = `
-    <span><b>GPU</b> ${f.gpu}</span>
-    <span><b>WebGL2</b> ${f.webgl2 ? 'yes' : 'no'}</span>
-    <span><b>Cores</b> ${f.cores || 'n/a'}</span>
-    <span><b>RAM</b> ${f.mem}</span>
-    <span><b>DPR</b> ${f.dpr}</span>`;
+    <span><b>${t.hud.facts.gpu}</b> ${f.gpu}</span>
+    <span><b>${t.hud.facts.webgl}</b> ${f.webgl2 ? t.hud.facts.yes : t.hud.facts.no}</span>
+    <span><b>${t.hud.facts.cores}</b> ${f.cores || t.hud.facts.na}</span>
+    <span><b>${t.hud.facts.ram}</b> ${f.mem}</span>
+    <span><b>${t.hud.facts.dpr}</b> ${f.dpr}</span>`;
 }
 
 function paintTier(): void {
@@ -129,9 +139,9 @@ function paintTier(): void {
     btn.setAttribute('aria-pressed', String(on));
   });
   const badge = $('#gfx-current');
-  if (badge) badge.textContent = TIERS[tier].short;
+  if (badge) badge.textContent = t.gfx[tier].label.toUpperCase();
   const desc = $('#gfx-desc');
-  if (desc) desc.textContent = `> active preset: ${TIERS[tier].label.toUpperCase()} · applied instantly`;
+  if (desc) desc.textContent = t.hud.activePreset(t.gfx[tier].label);
   document.documentElement.dataset.gfx = tier;
 }
 
@@ -146,9 +156,9 @@ function chooseTier(next: Tier, manual = true): void {
     if (next === 'high') award('overclocked');
     toast({
       icon: next === 'high' ? '⚡' : next === 'mid' ? '◐' : '▁',
-      kicker: 'GRAPHICS',
-      title: `QUALITY ${TIERS[next].label.toUpperCase()}`,
-      body: TIERS[next].description,
+      kicker: t.game.toast.graphics,
+      title: t.game.toast.quality(t.gfx[next].label),
+      body: t.gfx[next].description,
       accent: next === 'high' ? 'green' : 'blue',
     });
   }
@@ -176,8 +186,8 @@ function maybeDowngrade(): void {
   toast({
     icon: '⚠',
     kicker: 'AUTO',
-    title: `BAJANDO A ${TIERS[next].label.toUpperCase()}`,
-    body: `${fpsValue} fps sostenidos. Puedes volver a subir en GRAPHICS.`,
+    title: t.game.toast.autoTitle(t.gfx[next].label),
+    body: t.game.toast.autoBody(fpsValue),
     accent: 'purple',
   });
 }
@@ -209,7 +219,7 @@ async function benchmark(): Promise<void> {
   const original = tier;
   // measure on the heaviest preset the device claims to support
   if (original === 'low') chooseTier('mid', false);
-  out.textContent = 'Measuring 3s…';
+  out.textContent = t.hud.perfMeasuring;
   const samples: number[] = [];
   let last = performance.now();
   await new Promise<void>((resolve) => {
@@ -229,22 +239,22 @@ async function benchmark(): Promise<void> {
   let suggested: Tier = original;
   if (fps >= 52 && original !== 'high') suggested = original === 'low' ? 'mid' : 'high';
   else if (fps < 38 && original !== 'low') suggested = original === 'high' ? 'mid' : 'low';
-  out.innerHTML = `Result: <b>${fps} fps</b> average · worst frame ${worst} fps → recommended <b>${TIERS[suggested].short}</b>`;
+  out.innerHTML = t.hud.perfResult(fps, worst, t.gfx[suggested].label.toUpperCase());
   btn.disabled = false;
   award('benchmark');
   if (suggested !== original) {
     toast({
       icon: '📊',
       kicker: 'BENCHMARK',
-      title: `WE SUGGEST ${TIERS[suggested].label.toUpperCase()}`,
-      body: `${fps} fps on ${TIERS[original].label}. Click to apply.`,
+      title: t.game.toast.benchTitle(t.gfx[suggested].label),
+      body: t.game.toast.benchBody(fps, t.gfx[original].label),
       accent: 'blue',
     });
     btn.dataset.suggest = suggested;
-    btn.textContent = `Aplicar ${TIERS[suggested].short}`;
+    btn.textContent = `${t.hud.apply} ${t.gfx[suggested].label.toUpperCase()}`;
     btn.onclick = () => {
       chooseTier(suggested);
-      btn.textContent = 'Performance test';
+      btn.textContent = t.hud.perfTest;
       btn.onclick = () => void benchmark();
     };
   }
@@ -278,10 +288,11 @@ function paintAchievements(): void {
   const save = getSave();
   list.innerHTML = ACHIEVEMENTS.map((a) => {
     const unlocked = save.achievements.includes(a.id);
+    const text = achievementText(a.id);
     return `<li class="${unlocked ? 'is-unlocked' : ''}">
-      <span class="ach-icon" aria-hidden="true">${a.icon}</span>
-      <span class="ach-text"><strong>${a.name}</strong><em>${a.desc}</em></span>
-      <span class="ach-xp">${unlocked ? 'OK' : `+${a.xp}`}</span>
+      <span class="ach-icon" aria-hidden="true">${text.icon}</span>
+      <span class="ach-text"><strong>${text.name}</strong><em>${text.desc}</em></span>
+      <span class="ach-xp">${unlocked ? t.hud.unlocked : `+${a.xp}`}</span>
     </li>`;
   }).join('');
 }
@@ -385,7 +396,7 @@ function bindExploration(): void {
     details.addEventListener('toggle', () => {
       if (!details.open || details.dataset.awarded === '1') return;
       details.dataset.awarded = '1';
-      addXp(10, 'CASE STUDY');
+      addXp(10, t.game.caseStudyXp);
       const project = details.closest<HTMLElement>('[data-project]')?.dataset.project;
       if (project) markProject(project);
     });
@@ -426,7 +437,7 @@ function bindContact(): void {
         award('headhunter');
         const old = btn.dataset.label ?? btn.textContent ?? '';
         btn.dataset.label = old;
-        btn.textContent = '✓ COPIADO';
+        btn.textContent = t.contact.copied;
         setTimeout(() => { btn.textContent = btn.dataset.label ?? old; }, 1800);
       } catch {
         window.location.href = `mailto:${email}`;
@@ -569,9 +580,9 @@ function boot(): void {
 
   if (prefersReducedMotion()) toast({
     icon: '◼',
-    kicker: 'ACCESSIBILITY',
-    title: 'REDUCED MOTION',
-    body: '3D motion is off because of your system preference.',
+    kicker: t.game.toast.accessibility,
+    title: t.game.toast.reducedTitle,
+    body: t.game.toast.reducedBody,
     accent: 'blue',
   });
 

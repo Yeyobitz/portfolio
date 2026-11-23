@@ -6,8 +6,11 @@ you can drag, XP for exploring, achievements, and a **GRAPHICS** panel with thre
 quality tiers (Low / Medium / High) so the same site can run on a phone and on a
 dedicated GPU.
 
+Bilingual, statically rendered: Spanish (Chile) at `/`, English at `/en/`.
+
 ```
-https://yeyobitz.dev
+https://yeyobitz.dev        (ES)
+https://yeyobitz.dev/en/    (EN)
 ```
 
 ## What is in here
@@ -42,6 +45,20 @@ The tier is detected on the first visit (cores, RAM, pointer type, WebGL support
 The **Performance test** button in the panel measures real frames for 3 seconds and
 suggests a preset (and can apply it). The FPS readout is live.
 
+## Languages
+
+| Route | Locale | Notes |
+| --- | --- | --- |
+| `/` | `es-CL` | Default. Spanish copy for the whole site and every project case study. |
+| `/en/` | `en` | English version. |
+
+- Routing uses Astro's built-in i18n (`defaultLocale: 'es'`, `prefixDefaultLocale: false`).
+- Every UI string lives in `src/i18n/ui.ts`; `en` is typed against `es`, so a missing key
+  fails `tsc` instead of shipping a blank label.
+- Project and About copy lives in `src/data/cv.es.json` and `src/data/cv.json` (same shape).
+- The switcher sits in the header (and in the mobile menu); pages emit `hreflang`
+  alternates plus a canonical URL.
+
 ## Stack
 
 - [Astro 4](https://astro.build) — static-first, zero framework runtime
@@ -62,7 +79,8 @@ src/
     app.ts        bootstrap: HUD, tiers, exploration, achievements
     core/         quality.ts (tiers), game.ts (XP/save), sound.ts (synth)
     three/        world.ts (diorama), skills.ts (constellation)
-  data/cv.json    all copy and project data
+  i18n/ui.ts      every UI string, ES + EN
+  data/           cv.es.json (default) and cv.json (English)
 ```
 
 Everything 3D is code — no `.glb`, no textures on disk. The CRT screen is a canvas
@@ -81,6 +99,7 @@ npm run preview
 Useful during development:
 
 - `?tier=low|mid|high` — force a graphics preset for the session
+- `/en/` — English version; `?tier=` works there too
 - `G` / `A` / `M` — graphics panel, achievements, mute
 - `window.yb` — exposes the tier and save helpers in the console
 
@@ -89,4 +108,6 @@ Useful during development:
 - The site is usable with JavaScript disabled: content, projects and contact are plain
   HTML; only the 3D layer, XP and the panels go away.
 - `prefers-reduced-motion` forces Low and disables the interface animations.
-- Progress lives in `localStorage` (`yb:save`). Clearing site data resets it.
+- Progress lives in `localStorage` (`yb:save`) and is shared between languages.
+- Adding a language: add it to `astro.config.mjs`, add an entry to `src/i18n/ui.ts`
+  typed against `es`, add `src/data/cv.<lang>.json`, and a page under `src/pages/<lang>/`.

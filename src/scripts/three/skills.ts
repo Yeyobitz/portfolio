@@ -6,6 +6,7 @@
 
 import * as THREE from 'three';
 import { TIERS, type Tier } from '../core/quality';
+import { getDict, clientLang } from '../../i18n/ui';
 
 export interface SkillNode {
   name: string;
@@ -198,7 +199,10 @@ export function createSkillScene(canvas: HTMLCanvasElement, host: HTMLElement, i
       hovered = node;
       if (node) {
         node.scale.setScalar(((node.userData.base as number) ?? 1) * 1.6);
-        tip.innerHTML = `<strong>${node.userData.name}</strong><span>${node.userData.level} · ${node.userData.category}</span>`;
+        const d = getDict(clientLang());
+        const lvl = (d.skills.labels as Record<string, string>)[String(node.userData.level).toLowerCase()] ?? node.userData.level;
+        const cat = (d.skills.categories as Record<string, string>)[String(node.userData.category)] ?? node.userData.category;
+        tip.innerHTML = `<strong>${node.userData.name}</strong><span>${lvl} · ${cat}</span>`;
         tip.classList.add('visible');
         autoSpin = 0;
       } else {

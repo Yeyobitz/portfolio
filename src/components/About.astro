@@ -1,48 +1,45 @@
 ---
 import TerminalHeader from './TerminalHeader.astro';
+import { getDict } from '../i18n/ui';
 
 interface Props {
   summary: string;
   role: string;
   projects: number;
-  email: string;
 }
 
-const { summary, role, projects, email } = Astro.props;
+const { summary, role, projects } = Astro.props;
+const t = getDict(Astro.currentLocale);
 
 const sheet = [
-  { k: 'CLASS', v: 'Support / Builder' },
-  { k: 'ROLE', v: role },
-  { k: 'BASE', v: 'Concepción, CL' },
-  { k: 'STATUS', v: 'Open to work' },
-  { k: 'LOADOUT', v: 'Linux · Docker · TS · Python' },
-  { k: 'SIDE QUESTS', v: `${projects} shipped` },
+  { k: t.about.sheet.class, v: t.about.values.class },
+  { k: t.about.sheet.role, v: role },
+  { k: t.about.sheet.base, v: 'Concepción, CL' },
+  { k: t.about.sheet.status, v: t.about.values.status },
+  { k: t.about.sheet.loadout, v: t.about.values.loadout },
+  { k: t.about.sheet.side, v: `${projects} ${t.about.values.shipped}` },
 ];
 
 const stats = [
-  { label: 'LINUX / INFRA', value: 88 },
-  { label: 'AUTOMATION', value: 76 },
-  { label: 'FRONTEND', value: 82 },
-  { label: 'BACKEND', value: 70 },
-  { label: 'GAMEDEV', value: 45 },
+  { label: t.about.stats.linux, value: 88 },
+  { label: t.about.stats.automation, value: 76 },
+  { label: t.about.stats.frontend, value: 82 },
+  { label: t.about.stats.backend, value: 70 },
+  { label: t.about.stats.gamedev, value: 45 },
 ];
 ---
 
 <section class="about" id="about">
-  <TerminalHeader title="PLAYER_PROFILE" num="01" xp={25} tag="IDLE" />
+  <TerminalHeader title={t.about.title} num="01" xp={25} tag={t.about.tag} />
 
   <div class="terminal-content">
     <div class="about-grid">
       <div class="about-main">
         <p class="about-lead">{summary}</p>
-        <p class="about-note">
-          Most of what I know came from breaking my own homelab at 2 AM and fixing it before
-          sunrise. I like tools that stay up, interfaces that explain themselves, and code
-          somebody else can read.
-        </p>
+        <p class="about-note">{t.about.note}</p>
       </div>
 
-      <dl class="sheet" aria-label="Character sheet">
+      <dl class="sheet" aria-label={t.about.sheetAria}>
         {sheet.map((row) => (
           <div class="sheet__row">
             <dt>{row.k}</dt>
@@ -52,7 +49,7 @@ const stats = [
       </dl>
     </div>
 
-    <div class="stats" aria-label="Attributes">
+    <div class="stats" aria-label={t.about.statsAria}>
       {stats.map((s) => (
         <div class="stat">
           <span class="stat__k">{s.label}</span>
@@ -63,19 +60,16 @@ const stats = [
     </div>
 
     <div class="perks">
-      <article class="perk">
-        <span class="perk__ico" aria-hidden="true">▤</span>
-        <div>
-          <h3>HOMELAB</h3>
-          <p>15+ containers on an Ubuntu server: Plex, Jellyfin, the *arr stack, Gitea and monitoring. Everything behind a reverse proxy I also maintain.</p>
-        </div>
-      </article>
-      <article class="perk">
-        <span class="perk__ico" aria-hidden="true">⌘</span>
-        <div>
-          <h3>SUPPORT MINDSET</h3>
-          <p>I write the runbook, not just the fix. Tickets taught me to reproduce first, guess later, and document so nobody has to ask twice.</p>
-        </div>
+      {t.about.perks.map((perk, i) => (
+        <article class="perk">
+          <span class="perk__ico" aria-hidden="true">{['▤', '⌘', '◈'][i]}</span>
+          <div>
+            <h3>{perk.title}</h3>
+            <p>{perk.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
       </article>
       <article class="perk">
         <span class="perk__ico" aria-hidden="true">◈</span>

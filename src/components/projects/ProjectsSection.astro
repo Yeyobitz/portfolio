@@ -2,12 +2,14 @@
 import type { Project } from '../../types/cv';
 import ProjectCard from './ProjectCard.astro';
 import TerminalHeader from '../TerminalHeader.astro';
+import { getDict } from '../../i18n/ui';
 
 interface Props {
   projects: Project[];
 }
 
 const { projects } = Astro.props;
+const t = getDict(Astro.currentLocale);
 
 // Sort projects: active first, then by name
 const sortedProjects = [...projects].sort((a, b) => {
@@ -19,12 +21,9 @@ const sortedProjects = [...projects].sort((a, b) => {
 ---
 
 <section class="projects crt" id="projects">
-  <TerminalHeader title="QUEST_LOG" num="02" xp={25} tag={`${projects.length} QUESTS`} />
+  <TerminalHeader title={t.projects.title} num="02" xp={25} tag={`${projects.length} ${t.projects.tag}`} />
   <div class="terminal-content">
-    <p class="projects-intro">
-      Every card below is a quest I actually finished and shipped. Dwell on one to
-      collect its XP, or jump straight to the live demo.
-    </p>
+    <p class="projects-intro">{t.projects.intro}</p>
     <div class="projects-grid">
       {sortedProjects.map((project) => (
         <ProjectCard project={project} />

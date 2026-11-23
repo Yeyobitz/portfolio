@@ -3,12 +3,14 @@ import type { Skill } from '../../types/cv';
 import SkillCategory from './SkillCategory.astro';
 import TerminalHeader from '../TerminalHeader.astro';
 import SkillOrbit from './SkillOrbit.astro';
+import { getDict } from '../../i18n/ui';
 
 interface Props {
   skills: Skill[];
 }
 
 const { skills } = Astro.props;
+const t = getDict(Astro.currentLocale);
 
 // Group skills by primary keyword (category)
 const groupedSkills = skills.reduce((acc, skill) => {
@@ -36,12 +38,9 @@ const sortedCategories = Object.entries(groupedSkills).sort(([a], [b]) => {
 ---
 
 <section class="skills-section crt" id="skills">
-  <TerminalHeader title="SKILL_TREE" num="03" xp={25} tag={`${skills.length} NODES`} />
+  <TerminalHeader title={t.skills.title} num="03" xp={25} tag={`${skills.length} ${t.skills.tag}`} />
   <div class="terminal-content">
-    <p class="skills-intro">
-      Hover a node to inspect it, drag to rotate the tree. Node size is how much I trust
-      myself with it, not how much I like it.
-    </p>
+    <p class="skills-intro">{t.skills.intro}</p>
 
     <SkillOrbit skills={skills} />
 

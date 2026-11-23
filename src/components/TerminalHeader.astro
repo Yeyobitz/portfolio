@@ -1,4 +1,6 @@
 ---
+import { getDict } from '../i18n/ui';
+
 interface Props {
   title: string;
   num?: string;
@@ -7,6 +9,7 @@ interface Props {
 }
 
 const { title, num, xp, tag } = Astro.props;
+const t = getDict(Astro.currentLocale);
 ---
 
 <div class="terminal-header">
@@ -24,7 +27,14 @@ const { title, num, xp, tag } = Astro.props;
 
   <div class="terminal-meta">
     {xp && <span class="terminal-xp">+{xp} XP</span>}
-    <button class="minimize-btn" type="button" aria-expanded="true" aria-label={`Collapse ${title}`}>
+    <button
+      class="minimize-btn"
+      type="button"
+      aria-expanded="true"
+      aria-label={`${t.projects.collapse} ${title}`}
+      data-label-collapse={t.projects.collapse}
+      data-label-expand={t.projects.expand}
+    >
       <span class="minimize-icon" aria-hidden="true">▾</span>
     </button>
   </div>
@@ -35,7 +45,8 @@ const { title, num, xp, tag } = Astro.props;
     const button = section.querySelector<HTMLButtonElement>('.minimize-btn');
     section.classList.toggle('minimized', minimized);
     button?.setAttribute('aria-expanded', String(!minimized));
-    button?.setAttribute('aria-label', `${minimized ? 'Expand' : 'Collapse'} ${section.id}`);
+    const label = minimized ? button?.dataset.labelExpand : button?.dataset.labelCollapse;
+    if (label) button?.setAttribute('aria-label', `${label} ${section.id}`);
     if (!minimized) {
       section.style.animation = 'none';
       void (section as HTMLElement).offsetHeight;

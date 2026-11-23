@@ -1,6 +1,7 @@
 ---
 import ContactForm from './ContactForm.astro';
 import TerminalHeader from '../TerminalHeader.astro';
+import { getDict } from '../../i18n/ui';
 import type { Profile } from '../../types/cv';
 
 interface Props {
@@ -9,26 +10,27 @@ interface Props {
 }
 
 const { email, profiles } = Astro.props;
+const t = getDict(Astro.currentLocale);
 ---
 
 <section class="section terminal-section" id="contact">
-  <TerminalHeader title="SUMMON" num="04" xp={25} tag="OPEN" />
+  <TerminalHeader title={t.contact.title} num="04" xp={25} tag={t.contact.tag} />
   
   <div class="terminal-window">
     <div class="terminal-content">
       <div class="terminal-line typing-effect">
         <span class="terminal-prompt">&gt;</span>
-        <span class="terminal-text">Have something in mind?</span>
+        <span class="terminal-text">{t.contact.line1}</span>
       </div>
       <div class="terminal-line typing-effect-2">
         <span class="terminal-prompt">&gt;</span>
-        <span class="terminal-text">Let's do it =)</span>
+        <span class="terminal-text">{t.contact.line2}</span>
       </div>
       <div class="contact-quick">
         <button class="copy-mail" type="button" data-copy-email={email}>
           <span aria-hidden="true">⧉</span> {email}
         </button>
-        <span class="copy-hint">click to copy · +25 XP</span>
+        <span class="copy-hint">{t.contact.copyHint}</span>
       </div>
 
       <div class="contact-form-wrapper">

@@ -11,6 +11,7 @@ import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { TIERS, type Tier } from '../core/quality';
 import { markSecret } from '../core/game';
 import { blip } from '../core/sound';
+import { getDict, clientLang } from '../../i18n/ui';
 
 export interface ProjectPin {
   name: string;
@@ -809,8 +810,9 @@ export function createWorld(canvas: HTMLCanvasElement, host: HTMLElement, initia
       if (obj) {
         obj.userData.baseScale = obj.scale.x;
         obj.scale.setScalar(obj.scale.x * 1.18);
-        const name = obj.userData.project ?? (obj.userData.secret ? 'DISQUETE 3½' : 'TERMINAL');
-        tip.textContent = obj.userData.project ? `▶ ${name}` : obj.userData.secret ? `? ${name}` : '> INSPECT';
+        const d = getDict(clientLang());
+        const name = obj.userData.project ?? (obj.userData.secret ? d.scene.floppy : d.scene.terminal);
+        tip.textContent = obj.userData.project ? `▶ ${name}` : obj.userData.secret ? `? ${name}` : d.scene.inspect;
         tip.classList.add('visible');
         blip('hover');
       } else {

@@ -3,12 +3,15 @@
  * Game HUD: player card, graphics panel, achievements panel.
  */
 import { TIERS, TIER_ORDER } from '../../scripts/core/quality';
+import { getDict } from '../../i18n/ui';
+
+const t = getDict(Astro.currentLocale);
 ---
 
 <div class="hud" id="hud">
-  <div class="hud__player" aria-label="Player progress">
+  <div class="hud__player" aria-label={t.hud.playerProgress}>
     <div class="hud__badge">
-      <span>LVL</span>
+      <span>{t.hud.level}</span>
       <b id="hud-level">01</b>
     </div>
     <div class="hud__body">
@@ -16,57 +19,54 @@ import { TIERS, TIER_ORDER } from '../../scripts/core/quality';
         <span class="hud__handle">DIEGO_QM<span class="hud__caret">_</span></span>
         <span class="hud__xp" id="hud-xp">0/100 XP</span>
       </div>
-      <div class="hud__track" role="progressbar" aria-label="Experience">
+      <div class="hud__track" role="progressbar" aria-label={t.hud.experience}>
         <i id="hud-bar"></i>
       </div>
       <div class="hud__sub">
         <span id="hud-fps">-- FPS</span>
         <span class="hud__dot"></span>
-        <span>TOTAL <b id="hud-total">0 XP</b></span>
+        <span>{t.hud.total} <b id="hud-total">0 XP</b></span>
         <span class="hud__xp-pop" id="hud-toast-xp"></span>
       </div>
     </div>
   </div>
 
   <div class="hud__actions">
-    <button class="hud__btn hud__btn--gfx" id="hud-gfx" type="button" aria-expanded="false" aria-controls="gfx-panel" title="Graphics (G)">
+    <button class="hud__btn hud__btn--gfx" id="hud-gfx" type="button" aria-expanded="false" aria-controls="gfx-panel" title={`${t.hud.graphicsPanel} (G)`}>
       <span class="hud__btn-ico" aria-hidden="true">▤</span>
-      <span class="hud__btn-txt">GFX</span>
+      <span class="hud__btn-txt">{t.hud.gfx}</span>
       <b id="gfx-current">MID</b>
     </button>
-    <button class="hud__btn" id="hud-sound" type="button" aria-pressed="true" title="Sound (M)">
+    <button class="hud__btn" id="hud-sound" type="button" aria-pressed="true" title={`${t.hud.sfx} (M)`}>
       <span class="hud__btn-ico" aria-hidden="true">◉</span>
-      <span class="hud__btn-txt">SFX</span>
+      <span class="hud__btn-txt">{t.hud.sfx}</span>
       <b id="hud-sound-label">ON</b>
     </button>
-    <button class="hud__btn" id="hud-ach" type="button" aria-expanded="false" aria-controls="ach-panel" title="Achievements (A)">
+    <button class="hud__btn" id="hud-ach" type="button" aria-expanded="false" aria-controls="ach-panel" title={`${t.hud.achievementsPanel} (A)`}>
       <span class="hud__btn-ico" aria-hidden="true">★</span>
-      <span class="hud__btn-txt">ACHV</span>
+      <span class="hud__btn-txt">{t.hud.log}</span>
       <b id="hud-ach-count">00</b>
     </button>
   </div>
 </div>
 
 <!-- GRAPHICS -->
-<section class="panel panel--gfx" id="gfx-panel" aria-label="Graphics settings" aria-hidden="true">
+<section class="panel panel--gfx" id="gfx-panel" aria-label={t.hud.graphicsPanel} aria-hidden="true">
   <header class="panel__head">
-    <h2>GRAPHICS<span>.CFG</span></h2>
-    <button class="panel__close" type="button" data-close-panel aria-label="Close">✕</button>
+    <h2>{t.hud.graphicsTitle}<span>.CFG</span></h2>
+    <button class="panel__close" type="button" data-close-panel aria-label={t.hud.close}>✕</button>
   </header>
 
-  <p class="panel__lead">
-    Same portfolio, three GPU budgets. Pick what this device can actually handle —
-    or run the test and we&rsquo;ll pick for you.
-  </p>
+  <p class="panel__lead">{t.hud.panelLead}</p>
 
-  <div class="tier-grid" role="group" aria-label="Graphics quality">
+  <div class="tier-grid" role="group" aria-label={t.hud.qualityAria}>
     {TIER_ORDER.map((key, i) => {
-      const t = TIERS[key];
+      const cfg = TIERS[key];
       return (
         <button class="tier" type="button" data-tier={key} aria-pressed="false">
           <span class="tier__mono" aria-hidden="true">{'█'.repeat(i + 1)}{'░'.repeat(3 - i - 1)}</span>
-          <span class="tier__name">{t.label}<em>{t.short}</em></span>
-          <span class="tier__desc">{t.description}</span>
+          <span class="tier__name">{t.gfx[key].label}<em>{cfg.short}</em></span>
+          <span class="tier__desc">{t.gfx[key].description}</span>
         </button>
       );
     })}
@@ -76,30 +76,27 @@ import { TIERS, TIER_ORDER } from '../../scripts/core/quality';
 
   <div class="panel__meter">
     <div>
-      <span class="panel__k">FPS NOW</span>
+      <span class="panel__k">{t.hud.fpsNow}</span>
       <b class="panel__fps" id="gfx-fps">--</b>
     </div>
     <div class="panel__facts" id="gfx-facts"></div>
   </div>
 
   <div class="panel__bench">
-    <button class="panel__btn" type="button" id="gfx-bench">▶ PERFORMANCE TEST (3s)</button>
-    <p class="panel__out" id="gfx-bench-out">Measures real frames on this GPU and recommends a preset.</p>
+    <button class="panel__btn" type="button" id="gfx-bench">{t.hud.perfTest}</button>
+    <p class="panel__out" id="gfx-bench-out">{t.hud.perfHelp}</p>
   </div>
 
-  <p class="panel__hint">
-    Shortcuts: <kbd>G</kbd> graphics · <kbd>A</kbd> achievements · <kbd>M</kbd> sound ·
-    <kbd>↑↑↓↓←→←→BA</kbd> 😉
-  </p>
+  <p class="panel__hint" set:html={t.hud.shortcuts} />
 </section>
 
 <!-- ACHIEVEMENTS -->
-<section class="panel panel--ach" id="ach-panel" aria-label="Achievements" aria-hidden="true">
+<section class="panel panel--ach" id="ach-panel" aria-label={t.hud.achievementsPanel} aria-hidden="true">
   <header class="panel__head">
-    <h2>ACHIEVEMENTS<span>.LOG</span></h2>
-    <button class="panel__close" type="button" data-close-panel aria-label="Close">✕</button>
+    <h2>{t.hud.achievementsTitle}<span>.LOG</span></h2>
+    <button class="panel__close" type="button" data-close-panel aria-label={t.hud.close}>✕</button>
   </header>
-  <p class="panel__lead">Explore the portfolio to unlock these. Each one grants XP.</p>
+  <p class="panel__lead">{t.hud.achLead}</p>
   <ul class="ach-list" id="ach-list"></ul>
 </section>
 

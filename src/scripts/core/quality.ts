@@ -11,7 +11,6 @@ export type Tier = 'low' | 'mid' | 'high';
 export const TIER_ORDER: Tier[] = ['low', 'mid', 'high'];
 
 export interface TierConfig {
-  label: string;
   short: string;
   /** webgl canvas enabled at all */
   webgl: boolean;
@@ -29,12 +28,10 @@ export interface TierConfig {
   /** how many floating project cartridges */
   cartridges: number;
   skillNodes: number;
-  description: string;
 }
 
 export const TIERS: Record<Tier, TierConfig> = {
   low: {
-    label: 'Low',
     short: 'LOW',
     webgl: false,
     maxDpr: 1,
@@ -47,10 +44,8 @@ export const TIERS: Record<Tier, TierConfig> = {
     screenFps: 0,
     cartridges: 0,
     skillNodes: 0,
-    description: 'No WebGL. Pure CSS: maximum compatibility and zero GPU cost.',
   },
   mid: {
-    label: 'Medium',
     short: 'MID',
     webgl: true,
     maxDpr: 1.5,
@@ -63,10 +58,8 @@ export const TIERS: Record<Tier, TierConfig> = {
     screenFps: 12,
     cartridges: 4,
     skillNodes: 12,
-    description: 'Basic 3D scene, no post-processing, no shadows. Built for laptops and phones.',
   },
   high: {
-    label: 'High',
     short: 'HIGH',
     webgl: true,
     maxDpr: 1.75,
@@ -79,7 +72,6 @@ export const TIERS: Record<Tier, TierConfig> = {
     screenFps: 30,
     cartridges: 6,
     skillNodes: 26,
-    description: 'Bloom, shadows, 3x particles, target 60 fps. Wants a dedicated GPU.',
   },
 };
 

@@ -1,4 +1,6 @@
 ---
+import { getDict } from '../../i18n/ui';
+
 interface Props {
   process: {
     planning?: string;
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const { process } = Astro.props;
+const t = getDict(Astro.currentLocale);
 ---
 
 <div class="case-study">
@@ -18,7 +21,7 @@ const { process } = Astro.props;
         <div class="planning">
           <h4 class="section-title">
             <span class="icon">📋</span>
-            Process Overview
+            {t.projects.process}
           </h4>
           <p>{process.planning}</p>
         </div>
@@ -29,7 +32,7 @@ const { process } = Astro.props;
           <div class="challenges">
             <h5 class="subsection-title">
               <span class="icon">🎯</span>
-              Challenges
+              {t.projects.challenges}
             </h5>
             <ul>
               {process.challenges.map(challenge => (
@@ -43,7 +46,7 @@ const { process } = Astro.props;
           <div class="solutions">
             <h5 class="subsection-title">
               <span class="icon">💡</span>
-              Solutions
+              {t.projects.solutions}
             </h5>
             <ul>
               {process.solutions.map(solution => (
@@ -58,7 +61,7 @@ const { process } = Astro.props;
         <div class="learnings">
           <h5 class="subsection-title">
             <span class="icon">🎓</span>
-            Key Learnings
+            {t.projects.learnings}
           </h5>
           <ul class="learnings-list">
             {process.learnings.map(learning => (
