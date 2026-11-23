@@ -18,6 +18,9 @@ const messages = ['BOOTING…', 'MOUNTING 3D…', 'READY.'];
 
 <style>
   .loading-screen {
+    /* CSS safety net: even if the main thread is busy booting WebGL and every
+       timer is delayed, the overlay fades itself out on the compositor. */
+    animation: loaderOut 0.5s ease 2.6s forwards;
     position: fixed;
     top: 0;
     left: 0;
@@ -36,6 +39,20 @@ const messages = ['BOOTING…', 'MOUNTING 3D…', 'READY.'];
   .loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    animation: none;
+  }
+
+  @keyframes loaderOut {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loading-screen {
+      animation-delay: 0.1s;
+    }
   }
 
   .loading-content {
